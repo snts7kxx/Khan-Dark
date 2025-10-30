@@ -1,4 +1,3 @@
-# khan-destroyer-editado
 let loadedPlugins = [];
 
 console.clear();
