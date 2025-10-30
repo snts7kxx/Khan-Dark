@@ -14,7 +14,7 @@
 
 ---
 
-<p align="center"><strong>Para usar, copie o código abaixo:</strong></p>
+<p align="left"><strong>Para usar, copie o código abaixo:</strong></p>
 
 <div align="center">
 
