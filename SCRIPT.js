@@ -32,7 +32,7 @@ function setupMain(){
     /* QuestionSpoof */
     (function () {
             const phrases = [ 
-                "🔥 Get good, get [**KhanDark**](https://github.com/snts7kxx/Khan-Dark/)!",
+                "🔍 Get [**KhanDark**](https://github.com/snts7kxx/Khan-Dark/)!",
                 "💜 by [**snts7kxx/KhanDark**](https://github.com/snts7kxx/Khan-Dark/).",
                 "😚 snts7kxx o mais gato da escola",
             ];
@@ -109,7 +109,7 @@ function setupMain(){
 
                             const modified = { ...data };
                             modified.data.assessmentItem.item.itemData = JSON.stringify(itemData);
-                            sendToast("🔓 Questão exploitada.", 1000);
+                            sendToast("🎉 | Questão concluida!", 1000);
                             return new Response(JSON.stringify(modified), { 
                                 status: res.status, statusText: res.statusText, headers: res.headers 
                             });
@@ -185,7 +185,7 @@ function setupMain(){
                         body = JSON.stringify(bodyObj);
                         if (input instanceof Request) { input = new Request(input, { body: body }); } 
                         else init.body = body; 
-                        sendToast("🔄 | Video pulado .", 1500)
+                        sendToast("🔄 | Video concluído !", 1500)
                     }
                 } catch (e) { debug(`🚨 Error @ videoSpoof.js\n${e}`); }
             }
@@ -203,7 +203,7 @@ function setupMain(){
             else if (init.body) body = init.body;
             if (body && input.url.includes("mark_conversions")) {
                 try {
-                    if (body.includes("termination_event")) { sendToast("🚫 Limitador de tempo bloqueado.", 1000); return; }
+                    if (body.includes("termination_event")) { sendToast("🚫 | Limitador de tempo bloqueado.", 1000); return; }
                 } catch (e) { debug(`🚨 Error @ minuteFarm.js\n${e}`); }
             }
             return originalFetch.apply(this, arguments);
@@ -239,7 +239,7 @@ function setupMain(){
     })();
 }
 /* Inject */
-if (!/^https?:\/\/([a-z0-9-]+\.)?khanacademy\.org/.test(window.location.href)) { alert("❌ Khanware Failed to Injected!\n\nVocê precisa executar o Khanware no site do Khan Academy! (https://pt.khanacademy.org/)"); window.location.href = "https://pt.khanacademy.org/"; }
+if (!/^https?:\/\/([a-z0-9-]+\.)?khanacademy\.org/.test(window.location.href)) { alert("❌️ | KhanDark não iniciou !\n\nVocê precisa executar o Khanware no site do Khan Academy! (https://pt.khanacademy.org/)"); window.location.href = "https://pt.khanacademy.org/"; }
 
 showSplashScreen();
 
