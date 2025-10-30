@@ -32,11 +32,9 @@ function setupMain(){
     /* QuestionSpoof */
     (function () {
             const phrases = [ 
-                "🔥 Get good, get [**Khanware**](https://github.com/Niximkk/khanware/)!",
-                "🤍 Made by [**@im.nix**](https://e-z.bio/sounix).",
-                "☄️ By [**Niximkk/khanware**](https://github.com/Niximkk/khanware/).",
-                "🌟 Star the project on [GitHub](https://github.com/Niximkk/khanware/)!",
-                "🦢 Nix é lindo e maravilhoso!",
+                "🔥 Get good, get [**KhanDark**](https://github.com/snts7kxx/Khan-Dark/)!",
+                "💜 by [**snts7kxx/KhanDark**](https://github.com/snts7kxx/Khan-Dark/).",
+                "😚 snts7kxx o mais gato da escola",
             ];
 
             const originalFetch = window.fetch;
@@ -89,19 +87,19 @@ function setupMain(){
 
                         if (answers.length > 0) {
                             correctAnswers.set(item.id, answers);
-                            sendToast(`📦 ${answers.length} resposta(s) capturada(s).`, 750);
+                            sendToast(`📥 ${answers.length} respostas procuradas! .`, 750);
                         }
 
                         if (itemData.question.content?.[0] === itemData.question.content[0].toUpperCase()) {
                             itemData.answerArea = { calculator: false, chi2Table: false, periodicTable: false, tTable: false, zTable: false };
-                            itemData.question.content = phrases[Math.floor(Math.random() * phrases.length)] +"\n\n**Onde você deve obter seus scripts?**" + `[[☃ radio 1]]`;
+                            itemData.question.content = phrases[Math.floor(Math.random() * phrases.length)] +"\n\n**Pergunta**" + `[[☃ radio 1]]`;
                             itemData.question.widgets = {
                                 "radio 1": {
                                     type: "radio", alignment: "default", static: false, graded: true,
                                     options: {
                                         choices: [
-                                            { content: "**I Can Say** e **Platform Destroyer**.", correct: true, id: "correct-choice" },
-                                            { content: "Qualquer outro kibador **viado**.", correct: false, id: "incorrect-choice" }
+                                            { content: "Correta.", correct: true, id: "correct-choice" },
+                                            { content: "Incorreta.", correct: false, id: "incorrect-choice" }
                                         ],
                                         randomize: false, multipleSelect: false, displayCount: null, deselectEnabled: false
                                     },
@@ -111,7 +109,7 @@ function setupMain(){
 
                             const modified = { ...data };
                             modified.data.assessmentItem.item.itemData = JSON.stringify(itemData);
-                            sendToast("🔓 Questão exploitada.", 750);
+                            sendToast("🔓 Questão exploitada.", 1000);
                             return new Response(JSON.stringify(modified), { 
                                 status: res.status, statusText: res.statusText, headers: res.headers 
                             });
@@ -160,7 +158,7 @@ function setupMain(){
                             body = JSON.stringify(bodyObj);
                             if (input instanceof Request) input = new Request(input, { body });
                             else init.body = body;
-                            sendToast(`✨ ${answers.length} resposta(s) aplicada(s).`, 750);
+                            sendToast(`✅️ ${answers.length} resposta(s) aplicada(s).`, 750);
                         }
                     } catch (e) { debug(`🚨 Error @ questionSpoof.js\n${e}`); }
                 }
@@ -187,7 +185,7 @@ function setupMain(){
                         body = JSON.stringify(bodyObj);
                         if (input instanceof Request) { input = new Request(input, { body: body }); } 
                         else init.body = body; 
-                        sendToast("🔓 Vídeo exploitado.", 1000)
+                        sendToast("🔄 | Video pulado .", 1500)
                     }
                 } catch (e) { debug(`🚨 Error @ videoSpoof.js\n${e}`); }
             }
