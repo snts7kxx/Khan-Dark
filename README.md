@@ -1,4 +1,4 @@
-<a href="#"><img width="150%" src="https://capsule-render.vercel.app/api?type=waving&height=200&color=af00ff&text=Khan%20Destroyer&fontSize=40&fontAlignY=33&fontColor=ffffff"/></a>
+<a href="#"><img width="150%" src="https://capsule-render.vercel.app/api?type=waving&height=200&color=000000&text=Khan%20Destroyer&fontSize=40&fontAlignY=33&fontColor=ffffff"/></a>
 
 ---
 
@@ -38,4 +38,4 @@ javascript:fetch("https://raw.githubusercontent.com/snts7kxx/Khan-Destroyer/refs
     <a href="https://discord.gg/sk35zq4aJ5"><img width="12%" alt="Discord (CS)" title="Discord (GD)" src="https://i.imgur.com/r0YUgMR.png"/></a>
   &nbsp;
 
-<a href="#"><img width="100%" src="https://capsule-render.vercel.app/api?type=waving&height=150&color=af00ff&section=footer"/></a>
+<a href="#"><img width="100%" src="https://capsule-render.vercel.app/api?type=waving&height=150&color=000000&section=footer"/></a>
