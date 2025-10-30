@@ -40,7 +40,7 @@ src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTr4a4n8CsesB79x0mzQmS
   &nbsp;
 
 <p align="center">
-    <a href="https://youtube.com"><img width="45%" alt="Youtube (CS)" title="Youtube (GD)"
+    <a href="https://youtube.com"><img width="50%" alt="Youtube (CS)" title="Youtube (GD)"
 src="https://i.pinimg.com/1200x/ec/b9/2b/ecb92b3526ffbac1355ce430ca170a8d.jpg"/></a>
   &nbsp;
 
