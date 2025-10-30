@@ -35,12 +35,12 @@ Clique abaixo para entrar no meu servidor do discord zxwz Gifs & Icons 💫💜
 </div>
 
 <p align="left">
-    <a href="https://discord.gg/sk35zq4aJ5"><img width="30%" alt="Discord (CS)" title="Discord (GD)"
+    <a href="https://discord.gg/sk35zq4aJ5"><img width="50%" alt="Discord (CS)" title="Discord (GD)"
 src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTr4a4n8CsesB79x0mzQmSY9hGa-QSGyFXx_xpinki57g&s=10"/></a>
   &nbsp;
 
 <p align="right">
-    <a href="https://discord.gg/sk35zq4aJ5"><img width="30%" alt="Discord (CS)" title="Discord (GD)"
+    <a href="https://discord.gg/sk35zq4aJ5"><img width="50%" alt="Discord (CS)" title="Discord (GD)"
 src="https://i.pinimg.com/1200x/ec/b9/2b/ecb92b3526ffbac1355ce430ca170a8d.jpg"/></a>
   &nbsp;
 
