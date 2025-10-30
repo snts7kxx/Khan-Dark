@@ -111,7 +111,7 @@ function setupMain() {
             init.body = body;
           }
           
-          sendToast("🔄｜Vídeo exploitado.", 1000);
+          sendToast("🔄｜Vídeo pulado.", 1000);
         }
       } catch (e) {}
     }
@@ -137,12 +137,12 @@ function setupMain() {
             zTable: false
           };
           
-          itemData.question.content = "Desenvolvido por: ! Snow? " + `[[☃ radio 1]]`;
+          itemData.question.content = "Desenvolvido por: snts7kxx " + `[[☃ radio 1]]`;
           itemData.question.widgets = {
             "radio 1": {
               type: "radio",
               options: {
-                choices: [{ content: "🤍", correct: true }]
+                choices: [{ content: "💜", correct: true }]
               }
             }
           };
@@ -202,7 +202,7 @@ if (!/^https?:\/\/([a-z0-9-]+\.)?khanacademy\.org/.test(window.location.href)) {
     await hideSplashScreen();
     
     setupMain();
-    sendToast("🤍｜Khan Destroyer iniciado!");
+    sendToast("💜｜Khan Destroyer iniciado!");
     console.clear();
   })();
 } 
