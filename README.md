@@ -6,7 +6,7 @@
   <img src="https://i.pinimg.com/736x/78/78/82/7878821cd82b7ccc9b58f4928d1322cb.jpg"width="180px" alt="Microbit Logo"/>
 </div>
 
-<p align="center"> style="font-size: 25px;"> <strong>Khan Dark</strong>
+<p align="center" style="font-size: 25px;"> <strong>Khan Dark</strong>
 
 <p align="center" style="font-size: 25px;">
   <strong>Khan Dark</strong> te ajuda a fazer automaticamente as <strong>questões</strong> na plataforma <strong>Khan Academy</strong>, Poupando seu tempo e ajudando em suas notas.
