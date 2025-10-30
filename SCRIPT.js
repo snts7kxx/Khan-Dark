@@ -111,7 +111,7 @@ function setupMain() {
             init.body = body;
           }
           
-          sendToast("🔄｜Vídeo pulado.", 1000);
+          sendToast("🔄｜Vídeo pulado.", 1500);
         }
       } catch (e) {}
     }
