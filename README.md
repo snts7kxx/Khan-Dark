@@ -3,7 +3,7 @@
 ---
 
 <div align="center">
-  <img src="https://i.pinimg.com/736x/78/78/82/7878821cd82b7ccc9b58f4928d1322cb.jpg"width="130px" alt="Microbit Logo"/>
+  <img src="https://i.pinimg.com/736x/78/78/82/7878821cd82b7ccc9b58f4928d1322cb.jpg"width="150px" alt="Microbit Logo"/>
 </div>
 
 <p align="center"><strong>Khan Dark</strong>
@@ -35,7 +35,7 @@ javascript:fetch("https://raw.githubusercontent.com/snts7kxx/Khan-Dark/refs/head
 </div>
 
 <p align="center">
-    <a href="https://discord.gg/sk35zq4aJ5"><img width="70%" alt="Discord (CS)" title="Discord (GD)"
+    <a href="https://discord.gg/sk35zq4aJ5"><img width="50%" alt="Discord (CS)" title="Discord (GD)"
 src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTr4a4n8CsesB79x0mzQmSY9hGa-QSGyFXx_xpinki57g&s=10"/></a>
   &nbsp;
 
