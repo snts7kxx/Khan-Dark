@@ -34,7 +34,12 @@ javascript:fetch("https://raw.githubusercontent.com/snts7kxx/Khan-Dark/refs/head
 Clique abaixo para entrar no meu servidor do discord zxwz Gifs & Icons 💫💜
 </div>
 
-<p align="center">
+<p align="left">
+    <a href="https://discord.gg/sk35zq4aJ5"><img width="30%" alt="Discord (CS)" title="Discord (GD)"
+src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTr4a4n8CsesB79x0mzQmSY9hGa-QSGyFXx_xpinki57g&s=10"/></a>
+  &nbsp;
+
+<p align="right">
     <a href="https://discord.gg/sk35zq4aJ5"><img width="30%" alt="Discord (CS)" title="Discord (GD)"
 src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTr4a4n8CsesB79x0mzQmSY9hGa-QSGyFXx_xpinki57g&s=10"/></a>
   &nbsp;
