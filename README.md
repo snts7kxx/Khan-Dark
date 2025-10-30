@@ -8,8 +8,8 @@
 
 <p align="center"><strong>Khan Destroyer</strong>
 
-<p align="center" style="font-size: 18px;">
-  O <strong>Khan Destroyer</strong> realiza automaticamente as <strong>questões</strong> na plataforma <strong>Khan Academy</strong>, facilitando no seu tempo e em notas.
+<p align="center" style="font-size: 20px;">
+  <strong>Khan Destroyer</strong> realiza automaticamente as <strong>questões</strong> na plataforma <strong>Khan Academy</strong>, facilitando no seu tempo e em notas.
 </p>
 
 ---
