@@ -40,7 +40,7 @@ src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTr4a4n8CsesB79x0mzQmS
   &nbsp;
 
 <p align="right">
-    <a href="https://discord.gg/sk35zq4aJ5"><img width="10%" alt="Discord (CS)" title="Discord (GD)"
+    <a href="https://discord.gg/sk35zq4aJ5"><img width="30%" alt="Discord (CS)" title="Discord (GD)"
 src="https://i.pinimg.com/1200x/ec/b9/2b/ecb92b3526ffbac1355ce430ca170a8d.jpg"/></a>
   &nbsp;
 
