@@ -39,8 +39,8 @@ Clique abaixo para entrar no meu servidor do discord zxwz Gifs & Icons 💫💜
 src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTr4a4n8CsesB79x0mzQmSY9hGa-QSGyFXx_xpinki57g&s=10"/></a>
   &nbsp;
 
-<a href="#"><img width="100%" src="https://capsule-render.vercel.app/api?type=waving&height=200&color=000000&text=%20&fontSize=40&fontAlignY=33&fontColor=ffffff"/></a>
-
 <p align="left">
 Modificado por: Matheus(snts7kxx)
 Feito por: Snow
+
+<a href="#"><img width="100%" src="https://capsule-render.vercel.app/api?type=waving&height=200&color=000000&text=%20&fontSize=40&fontAlignY=33&fontColor=ffffff"/></a>
