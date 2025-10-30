@@ -21,7 +21,7 @@ const findAndClickBySelector = selector => { const element = document.querySelec
 
 function sendToast(text, duration=5000, gravity='bottom') { Toastify({ text: text, duration: duration, gravity: gravity, position: "center", stopOnFocus: true, style: { background: "#000000" } }).showToast(); };
 
-async function showSplashScreen() { splashScreen.style.cssText = "position:fixed;top:0;left:0;width:100%;height:100%;background-color:#000;display:flex;align-items:center;justify-content:center;z-index:9999;opacity:0;transition:opacity 0.5s ease;user-select:none;color:white;font-family:MuseoSans,sans-serif;font-size:30px;text-align:center;"; splashScreen.innerHTML = '<span style="color:white;">KHANDARK</span><span style="color:#af00ff;">.SPACE</span>'; document.body.appendChild(splashScreen); setTimeout(() => splashScreen.style.opacity = '1', 10);};
+async function showSplashScreen() { splashScreen.style.cssText = "position:fixed;top:0;left:0;width:100%;height:100%;background-color:#000;display:flex;align-items:center;justify-content:center;z-index:9999;opacity:0;transition:opacity 0.5s ease;user-select:none;color:white;font-family:MuseoSans,sans-serif;font-size:30px;text-align:center;"; splashScreen.innerHTML = '<span style="color:white;">KHANWARE</span><span style="color:#72ff72;">.SPACE</span>'; document.body.appendChild(splashScreen); setTimeout(() => splashScreen.style.opacity = '1', 10);};
 async function hideSplashScreen() { splashScreen.style.opacity = '0'; setTimeout(() => splashScreen.remove(), 1000); };
 
 async function loadScript(url, label) { return fetch(url).then(response => response.text()).then(script => { loadedPlugins.push(label); eval(script); }); }
@@ -36,7 +36,7 @@ function setupMain(){
                 "🤍 Made by [**@im.nix**](https://e-z.bio/sounix).",
                 "☄️ By [**Niximkk/khanware**](https://github.com/Niximkk/khanware/).",
                 "🌟 Star the project on [GitHub](https://github.com/Niximkk/khanware/)!",
-                "👁👁👁",
+                "🦢 Nix é lindo e maravilhoso!",
             ];
 
             const originalFetch = window.fetch;
@@ -94,14 +94,14 @@ function setupMain(){
 
                         if (itemData.question.content?.[0] === itemData.question.content[0].toUpperCase()) {
                             itemData.answerArea = { calculator: false, chi2Table: false, periodicTable: false, tTable: false, zTable: false };
-                            itemData.question.content = phrases[Math.floor(Math.random() * phrases.length)] +"\n\n**Pergunta**" + `[[☃ radio 1]]`;
+                            itemData.question.content = phrases[Math.floor(Math.random() * phrases.length)] +"\n\n**Onde você deve obter seus scripts?**" + `[[☃ radio 1]]`;
                             itemData.question.widgets = {
                                 "radio 1": {
                                     type: "radio", alignment: "default", static: false, graded: true,
                                     options: {
                                         choices: [
-                                            { content: "Correta.", correct: true, id: "correct-choice" },
-                                            { content: "Incorreta.", correct: false, id: "incorrect-choice" }
+                                            { content: "**I Can Say** e **Platform Destroyer**.", correct: true, id: "correct-choice" },
+                                            { content: "Qualquer outro kibador **viado**.", correct: false, id: "incorrect-choice" }
                                         ],
                                         randomize: false, multipleSelect: false, displayCount: null, deselectEnabled: false
                                     },
@@ -111,7 +111,7 @@ function setupMain(){
 
                             const modified = { ...data };
                             modified.data.assessmentItem.item.itemData = JSON.stringify(itemData);
-                            sendToast("🎉 | Exercicio concluído!", 750);
+                            sendToast("🔓 Questão exploitada.", 750);
                             return new Response(JSON.stringify(modified), { 
                                 status: res.status, statusText: res.statusText, headers: res.headers 
                             });
@@ -160,7 +160,7 @@ function setupMain(){
                             body = JSON.stringify(bodyObj);
                             if (input instanceof Request) input = new Request(input, { body });
                             else init.body = body;
-                            sendToast(`💜 ${answers.length} resposta(s) aplicada(s).`, 750);
+                            sendToast(`✨ ${answers.length} resposta(s) aplicada(s).`, 750);
                         }
                     } catch (e) { debug(`🚨 Error @ questionSpoof.js\n${e}`); }
                 }
@@ -187,7 +187,7 @@ function setupMain(){
                         body = JSON.stringify(bodyObj);
                         if (input instanceof Request) { input = new Request(input, { body: body }); } 
                         else init.body = body; 
-                        sendToast("🔄 Vídeo pulado!", 1000)
+                        sendToast("🔓 Vídeo exploitado.", 1000)
                     }
                 } catch (e) { debug(`🚨 Error @ videoSpoof.js\n${e}`); }
             }
@@ -241,7 +241,7 @@ function setupMain(){
     })();
 }
 /* Inject */
-if (!/^https?:\/\/([a-z0-9-]+\.)?khanacademy\.org/.test(window.location.href)) { alert("🌪 | Khan Dark failhou ao iniciar!\n\nVocê precisa executar o Khan Dark na plataforma do Khan Academy! (https://pt.khanacademy.org/)"); window.location.href = "https://pt.khanacademy.org/"; }
+if (!/^https?:\/\/([a-z0-9-]+\.)?khanacademy\.org/.test(window.location.href)) { alert("❌ Khanware Failed to Injected!\n\nVocê precisa executar o Khanware no site do Khan Academy! (https://pt.khanacademy.org/)"); window.location.href = "https://pt.khanacademy.org/"; }
 
 showSplashScreen();
 
@@ -249,7 +249,7 @@ loadScript('https://cdn.jsdelivr.net/npm/darkreader@4.9.92/darkreader.min.js', '
 loadCss('https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css', 'toastifyCss');
 loadScript('https://cdn.jsdelivr.net/npm/toastify-js', 'toastifyPlugin')
 .then(async () => {    
-    sendToast(💜 | Khan Dark iniciado! );
+    sendToast("🪶 Khanware Minimal injetado com sucesso!");
 
     playAudio('https://r2.e-z.host/4d0a0bea-60f8-44d6-9e74-3032a64a9f32/gcelzszy.wav');
 
