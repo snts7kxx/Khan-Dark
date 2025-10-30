@@ -9,7 +9,7 @@
 <p align="center"><strong>Khan Dark</strong>
 
 <p align="center" style="font-size: 20px;">
-  <strong>Khan Dark</strong> realiza automaticamente as <strong>questões</strong> na plataforma <strong>Khan Academy</strong>, facilitando no seu tempo e em notas.
+  <strong>Khan Dark</strong> te ajuda a fazer automaticamente as <strong>questões</strong> na plataforma <strong>Khan Academy</strong>, Poupando seu tempo e ajudando em suas notas.
 </p>
 
 ---
