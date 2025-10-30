@@ -37,8 +37,4 @@ javascript:fetch("https://raw.githubusercontent.com/snts7kxx/Khan-Destroyer/refs
     <a href="https://discord.gg/testando"><img width="12%" alt="Discord (CS)" title="Discord (GD)" src="https://i.imgur.com/r0YUgMR.png"/></a>
   &nbsp;
 
-<p align="center">
-  <a href="#"><img src="https://komarev.com/ghpvc/?username=khandestroyer&style=for-the-badge&label=Views:&color=gray"/></a>
-</p>
-
 <a href="#"><img width="100%" src="https://capsule-render.vercel.app/api?type=waving&height=150&color=ffffff&section=footer"/></a>
