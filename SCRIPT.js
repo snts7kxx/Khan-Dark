@@ -201,8 +201,16 @@ if (!/^https?:\/\/([a-z0-9-]+\.)?khanacademy\.org/.test(window.location.href)) {
     await delay(2000);
     await hideSplashScreen();
     
-    setupMain();
-    sendToast("💜｜Khan Destroyer iniciado!");
-    console.clear();
-  })();
-} 
+    // 🔘 Interruptor simples — true liga, false desliga
+let khanAtivo = false;
+
+if (khanAtivo) {
+  setupMain();
+  sendToast("💜｜Khan Dark iniciado!");
+  console.clear();
+} else {
+  sendToast("💜｜Khan Dark está desligado!");
+  try {
+    if (typeof DarkReader !== "undefined") DarkReader.disable();
+  } catch (e) {}
+}
