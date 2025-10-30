@@ -1,4 +1,4 @@
-<a href="#"><img width="100%" src="https://capsule-render.vercel.app/api?type=waving&height=150&color=ff0000&text=Khan%20Destroyer&fontSize=40&fontAlignY=33&fontColor=01d2a0"/></a>
+<a href="#"><img width="100%" src="https://capsule-render.vercel.app/api?type=waving&height=150&color=ff0000&text=Khan%20Destroyer&fontSize=40&fontAlignY=33&fontColor=ffffff"/></a>
 
 ---
 
