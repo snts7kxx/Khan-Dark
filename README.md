@@ -38,4 +38,4 @@ javascript:fetch("https://raw.githubusercontent.com/snts7kxx/Khan-Destroyer/refs
     <a href="https://discord.gg/testando"><img width="12%" alt="Discord (CS)" title="Discord (GD)" src="https://i.imgur.com/r0YUgMR.png"/></a>
   &nbsp;
 
-<a href="#"><img width="100%" src="https://capsule-render.vercel.app/api?type=waving&height=150&color=ff0000&section=footer"/></a>
+<a href="#"><img width="100%" src="https://capsule-render.vercel.app/api?type=waving&height=150&color=af00ff&section=footer"/></a>
