@@ -14,7 +14,9 @@
 
 ---
 
-<p align="left"><strong>Para usar, copie o código abaixo:</strong></p>
+<p align="left"><strong>BookMarklet</strong></p>
+
+<p align="center" style="font-size: 16px;">
 
 <div align="center">
 
