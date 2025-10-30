@@ -35,7 +35,7 @@ javascript:fetch("https://raw.githubusercontent.com/snts7kxx/Khan-Dark/refs/head
 </div>
 
 <p align="center">
-    <a href="https://discord.gg/sk35zq4aJ5"><img width="12%" alt="Discord (CS)" title="Discord (GD)" src="https://i.imgur.com/r0YUgMR.png"/></a>
+    <a href="https://discord.gg/sk35zq4aJ5"><img width="12%" alt="Discord (CS)" title="Discord (GD)" src="[https://i.imgur.com/r0YUgMR.png](https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQhU75yd-fWjxUQLSH6cMvTm1PvqH9BqQMHrw&usqp=CAU)"/></a>
   &nbsp;
 
 <a href="#"><img width="100%" src="https://capsule-render.vercel.app/api?type=waving&height=150&color=000000&section=footer"/></a>
