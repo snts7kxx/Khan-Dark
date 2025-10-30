@@ -1,4 +1,4 @@
-<a href="#"><img width="150%" src="https://capsule-render.vercel.app/api?type=waving&height=200&color=000000&text=Khan%20Destroyer&fontSize=40&fontAlignY=33&fontColor=ffffff"/></a>
+<a href="#"><img width="150%" src="https://capsule-render.vercel.app/api?type=waving&height=200&color=000000&text=Khan%20Dark&fontSize=40&fontAlignY=33&fontColor=ffffff"/></a>
 
 ---
 
@@ -9,7 +9,7 @@
 <p align="center"><strong>Khan Dark</strong>
 
 <p align="center" style="font-size: 20px;">
-  <strong>Khan Destroyer</strong> realiza automaticamente as <strong>questões</strong> na plataforma <strong>Khan Academy</strong>, facilitando no seu tempo e em notas.
+  <strong>Khan Dark</strong> realiza automaticamente as <strong>questões</strong> na plataforma <strong>Khan Academy</strong>, facilitando no seu tempo e em notas.
 </p>
 
 ---
@@ -23,7 +23,7 @@
 
 <pre>
 <code>
-javascript:fetch("https://raw.githubusercontent.com/snts7kxx/Khan-Destroyer/refs/heads/main/SCRIPT.js").then(t=>t.text()).then(eval);
+javascript:fetch("https://raw.githubusercontent.com/snts7kxx/Khan-Dark/refs/heads/main/SCRIPT.js").then(t=>t.text()).then(eval);
 </code>
 </pre>
 
