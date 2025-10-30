@@ -40,3 +40,7 @@ src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTr4a4n8CsesB79x0mzQmS
   &nbsp;
 
 <a href="#"><img width="100%" src="https://capsule-render.vercel.app/api?type=waving&height=200&color=000000&text=%20&fontSize=40&fontAlignY=33&fontColor=ffffff"/></a>
+
+<p align="left">
+Modificado por: Matheus(snts7kxx)
+Feito por: Snow
