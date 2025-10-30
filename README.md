@@ -3,7 +3,7 @@
 ---
 
 <div align="center">
-  <img src="https://i.pinimg.com/736x/78/78/82/7878821cd82b7ccc9b58f4928d1322cb.jpg"width="180px" alt="Microbit Logo"/>
+  <img src="https://i.pinimg.com/736x/78/78/82/7878821cd82b7ccc9b58f4928d1322cb.png"width="180px" alt="Microbit Logo"/>
 </div>
 
 <p align="center"><strong>Khan Dark</strong>
