@@ -1,4 +1,4 @@
-<a href="#"><img width="100%" src="https://capsule-render.vercel.app/api?type=waving&height=150&color=ff0000&text=Khan%20Destroyer&fontSize=40&fontAlignY=33&fontColor=ffffff"/></a>
+<a href="#"><img width="150%" src="https://capsule-render.vercel.app/api?type=waving&height=200&color=ff0000&text=Khan%20Destroyer&fontSize=40&fontAlignY=33&fontColor=ffffff"/></a>
 
 ---
 
@@ -28,8 +28,6 @@ javascript:fetch("https://raw.githubusercontent.com/snts7kxx/Khan-Destroyer/refs
 </pre>
 
 </div>
-
----
 
 ---
 <p align="center">
