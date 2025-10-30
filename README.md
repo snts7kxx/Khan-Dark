@@ -3,7 +3,7 @@
 ---
 
 <div align="center">
-  <img src="https://i.imgur.com/C9wQOe7.png"width="100px" alt="Microbit Logo"/>
+  <img src="https://pin.it/27J41ef6e"width="100px" alt="Microbit Logo"/>
 </div>
 
 <p align="center"><strong>Khan Destroyer</strong>
