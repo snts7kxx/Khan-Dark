@@ -31,7 +31,7 @@ javascript:fetch("https://raw.githubusercontent.com/snts7kxx/Khan-Dark/refs/head
 
 ---
 <p align="center">
-<sub><i>Clique abaixo para entrar no meu servidor do discord zxwz Gifs & Icons</i></sub>
+<sub>Clique abaixo para entrar no meu servidor do discord zxwz Gifs & Icons</i></sub>
 </div>
 
 <p align="center">
