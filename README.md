@@ -7,7 +7,7 @@
 📝 Modificado por **Matheus Henrique**
 ---
 💼 Supervisor: **Gabriel Seles**
-
+---
 # ❓️ Como funciona?
 
 > ✅️ Faz suas lições corretamente.
