@@ -41,7 +41,7 @@ new MutationObserver(mutationsList =>
 const delay = ms => new Promise(resolve => setTimeout(resolve, ms));
 const findAndClickBySelector = selector => document.querySelector(selector)?.click();
 
-function sendToast(text, duration = 5000, gravity = 'bottom') {
+function sendToast(text, duration = 6000, gravity = 'bottom') {
   Toastify({
     text,
     duration,
@@ -53,7 +53,7 @@ function sendToast(text, duration = 5000, gravity = 'bottom') {
 }
 
 async function showSplashScreen() {
-  splashScreen.style.cssText = "position:fixed;top:0;left:0;width:100%;height:100%;background-color:#000;display:flex;align-items:center;justify-content:center;z-index:9999;opacity:0;transition:opacity 0.5s ease;user-select:none;color:white;font-family:MuseoSans,sans-serif;font-size:30px;text-align:center;";
+  splashScreen.style.cssText = "position:fixed;top:0;left:0;width:100%;height:100%;background-color:#000;display:flex;align-items:center;justify-content:center;z-index:9999;opacity:0;transition:opacity 1s ease;user-select:none;color:white;font-family:MuseoSans,sans-serif;font-size:30px;text-align:center;";
   splashScreen.innerHTML = '<span style="color:white;"><strong>KHAN</span><span style="color:#af00ff;"><strong>DARK</span>';
   document.body.appendChild(splashScreen);
   setTimeout(() => splashScreen.style.opacity = '1', 10);
@@ -111,7 +111,7 @@ function setupMain() {
             init.body = body;
           }
           
-          sendToast("🔄｜Vídeo exploitado.", 1000);
+          sendToast("🔄 | Video concluido!", 1000);
         }
       } catch (e) {}
     }
@@ -137,12 +137,12 @@ function setupMain() {
             zTable: false
           };
           
-          itemData.question.content = "Desenvolvido por: ! Snow? " + `[[☃ radio 1]]`;
+          itemData.question.content = "Modificado por snts7kxx" + `[[☃ radio 1]]`;
           itemData.question.widgets = {
             "radio 1": {
               type: "radio",
               options: {
-                choices: [{ content: "🤍", correct: true }]
+                choices: [{ content: "💜", correct: true }]
               }
             }
           };
@@ -179,10 +179,10 @@ function setupMain() {
         
         const element = document.querySelector(`${selector}> div`);
         if (element?.innerText === "Mostrar resumo") {
-          sendToast("🎉｜Exercício concluído!", 3000);
+          sendToast("🎉 | Questão concluída!", 3000);
         }
       }
-      await delay(3000); 
+      await delay(3250); 
     }
   })();
 }
