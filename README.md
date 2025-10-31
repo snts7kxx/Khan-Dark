@@ -8,19 +8,6 @@
 
 💼 Supervisor: **Gabriel**
 
-# 🔥 Como usar?
-
-1-Copie o codigo **BookMarklet**.
-
-2-Crie uma guia,E salve como favoritos.
-
-3-Escolha um nome da aba favoritos.
-
-4-Cole o BookMarklet no URL.
-
-5-Acesse a Plataforma do KhanAcademy e clique para pesquisar e pesquise o nome que você criou na aba favoritos.
-
-
 # ❓️ Como funciona?
 
 > ✅️ Faz suas lições corretamente.
@@ -45,6 +32,18 @@ O uso indevido pode violar os termos de serviço do Khan Academy.
 
 Entre no meu servidor no discord:
 https://discord.gg/sk35zq4aJ5
+
+# 🔥 Como usar?
+
+1-Copie o codigo **BookMarklet**.
+
+2-Crie uma guia,E salve como favoritos.
+
+3-Escolha um nome da aba favoritos.
+
+4-Cole o BookMarklet no URL.
+
+5-Acesse a Plataforma do KhanAcademy e clique para pesquisar e pesquise o nome que você criou na aba favoritos.
 
 # BookMarklet:
 
