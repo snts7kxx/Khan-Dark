@@ -6,9 +6,11 @@
 
 > ✅️ Faz suas lições corretamente.
 
-> 🔎 Usado como BookMarklet
+> 🔎 Usado como BookMarklet.
 
 > 🎬 Assiste videos, Concluindo rapidamente.
+
+> 🌌 Tema escuro.
 
 
 # BookMarklet:
