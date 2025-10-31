@@ -4,7 +4,7 @@
 
 # 🔨 Desenvolvedores:
 
-Modificado por **Matheus Henrique**
+📝 Modificado por **Matheus Henrique**
 
 # 🔥 Como usar?
 
@@ -29,6 +29,15 @@ Modificado por **Matheus Henrique**
 
 > 🌌 Tema escuro.
 
+# 💳 Creditos:
+
+O Script foi criado pelo Snowxyrzk, E eu apenas modifiquei,deixando online permanentemente e para que todos os Alunos podessem acessar a qualquer momento.
+
+# ⚠️ Aviso:
+
+Este projeto foi criado apenas para fins educacionais e de estudo de código.  
+O uso indevido pode violar os termos de serviço do Khan Academy.  
+Use por sua conta e risco.
 
 # BookMarklet:
 
