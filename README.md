@@ -1,19 +1,3 @@
-<a href="#"><img width="100%" src="https://capsule-render.vercel.app/api?type=waving&height=200&color=000000&text=Khan%20Dark&fontSize=55&fontAlignY=33&fontColor=ffffff"/></a>
-
----
-
-<div align="center">
-  <img src="https://i.pinimg.com/736x/78/78/82/7878821cd82b7ccc9b58f4928d1322cb.jpg"width="180px" alt="Microbit Logo"/>
-</div>
-
-<p align="center"><strong>Khan Dark</strong>
-
-<p align="center" style="font-size: 25px;">
-  <strong>Khan Dark</strong> te ajuda a fazer automaticamente as <strong>questões</strong> na plataforma <strong>Khan Academy</strong>, Poupando seu tempo e ajudando em suas notas.
-</p>
-
----
-
 <h2 align="left"><strong>BookMarklet</strong></h2>
 
 <p align="left" style="font-size: 16px;">
