@@ -1,5 +1,5 @@
 # 🎓KhanDark
-
+---
 👾 **KhanDark** é um script na linguagem Java que automatiza as lições, Poupando tempo e ajudando em notas.
 
 # 🔨 Desenvolvedores:
