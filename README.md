@@ -37,7 +37,7 @@ O Script foi criado pelo Snowxyrzk, E eu apenas modifiquei,deixando online perma
 
 Este projeto foi criado apenas para fins educacionais e de estudo de código.  
 O uso indevido pode violar os termos de serviço do Khan Academy.  
-Use por sua conta e risco.
+**Use por sua conta e risco.**
 
 # 🎳 Servidor:
 
