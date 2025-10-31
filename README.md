@@ -42,7 +42,7 @@ https://discord.gg/sk35zq4aJ5
 3-Escolha um nome da aba favoritos.
 
 4-Cole o BookMarklet no URL.
----
+
 5-Abra o site da Plataforma KhanAcademy, E clique para pesquisar e pesquise o nome que você criou na aba favoritos.
 ---
 # BookMarklet:
