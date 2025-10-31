@@ -6,7 +6,7 @@
 
 📝 Modificado por **Matheus Henrique**
 
-💼 Supervisor: **Gabriel**
+💼 Supervisor: **Gabriel Seles**
 
 # ❓️ Como funciona?
 
