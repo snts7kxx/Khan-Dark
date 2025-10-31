@@ -12,11 +12,11 @@
 
 > ✅️ Faz suas lições corretamente.
 
-> 🔎 Usado como BookMarklet.
+> 🔎 Uso fácil.
 
-> 🎬 Assiste videos, Concluindo rapidamente.
+> 🎬 Assiste e conclui vídeos.
 
-> 🌌 Tema escuro.
+> 🌌 Interface e tema escuro inspirados no modo "Dark"
 
 # 💳 Creditos:
 
