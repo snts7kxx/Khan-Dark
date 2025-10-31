@@ -1,13 +1,13 @@
 # 🎓KhanDark
 
-🎃 **KhanDark** é um script desenvolvido para automatizar atividades e vídeos do Khan Academy. Ele executa as lições automaticamente e assiste aos vídeos de forma automática, tornando o processo de estudo mais rápido e simples.
+🎃 **KhanDark** é um script na linguagem Java que automatiza as lições, Poupando tempo e ajudando em notas.
 
-<h2 align="left"><strong>BookMarklet</strong></h2>
+# ❓️ Como funciona?
 
-<p align="left" style="font-size: 16px;">
+> ✅️ Faz suas lições corretamente.
+> 🔎 Usado como BookMarklet
 
-
-<div align="center">
+# BookMarklet:
 
 <pre>
 <code>
