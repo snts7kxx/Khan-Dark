@@ -1,8 +1,4 @@
-<h2 align="left"><strong>KhanDark</strong></h2>
-
-<p align="left" style="font-size: 16px;">
-
-</h2>KhanDark é um script desenvolvido para automatizar atividades e vídeos do Khan Academy. Ele executa as lições automaticamente e assiste aos vídeos de forma automática, tornando o processo de estudo mais rápido e simples.
+# KhanDark
 
 <h2 align="left"><strong>BookMarklet</strong></h2>
 
