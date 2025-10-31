@@ -20,11 +20,11 @@
 
 # 💳 Creditos:
 
-O Script foi criado pelo Snowxyrzk, E eu apenas modifiquei, Deixando online permanentemente e para que todos os Alunos podem acessar a qualquer momento.
+🏷 O Script foi criado pelo Snowxyrzk, E eu apenas modifiquei, Deixando online permanentemente e para que todos os Alunos podem acessar a qualquer momento.
 
 # ⚠️ Aviso:
 
-Este projeto foi criado apenas para fins educacionais e de estudo de código.  
+🚨 Este projeto foi criado apenas para fins educacionais e de estudo de código.  
 O uso indevido pode violar os termos de serviço do Khan Academy.  
 **Use por sua conta e risco.**
 
