@@ -2,7 +2,7 @@
 
 <p align="left" style="font-size: 16px;">
 
-</h2>O Java Script KhanDark é um automatizador de lições da Plataforma Khan Academy,Ele faz suas lições automaticamente com a ajuda de um codigo.
+</h2>KhanDark é um script desenvolvido para automatizar atividades e vídeos do Khan Academy. Ele executa as lições automaticamente e assiste aos vídeos de forma automática, tornando o processo de estudo mais rápido e simples.
 
 <h2 align="left"><strong>BookMarklet</strong></h2>
 
