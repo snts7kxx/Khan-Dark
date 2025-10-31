@@ -20,7 +20,7 @@
 
 # 💳 Creditos:
 
-O Script foi criado pelo Snowxyrzk, E eu apenas modifiquei,deixando online permanentemente e para que todos os Alunos podessem acessar a qualquer momento.
+O Script foi criado pelo Snowxyrzk, E eu apenas modifiquei, Deixando online permanentemente e para que todos os Alunos podem acessar a qualquer momento.
 
 # ⚠️ Aviso:
 
@@ -43,7 +43,7 @@ https://discord.gg/sk35zq4aJ5
 
 4-Cole o BookMarklet no URL.
 
-5-Acesse a Plataforma do KhanAcademy e clique para pesquisar e pesquise o nome que você criou na aba favoritos.
+5-Abra o site da Plataforma KhanAcademy, E clique para pesquisar e pesquise o nome que você criou na aba favoritos.
 
 # BookMarklet:
 
