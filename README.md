@@ -8,6 +8,9 @@
 
 > 🔎 Usado como BookMarklet
 
+> 🎬 Assiste videos, Concluindo rapidamente.
+
+
 # BookMarklet:
 
 <pre>
