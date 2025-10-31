@@ -54,3 +54,7 @@ javascript:fetch("https://raw.githubusercontent.com/snts7kxx/Khan-Dark/refs/head
 </pre>
 
 </div>
+
+---
+
+✨️ KhanDark
