@@ -41,7 +41,7 @@ new MutationObserver(mutationsList =>
 const delay = ms => new Promise(resolve => setTimeout(resolve, ms));
 const findAndClickBySelector = selector => document.querySelector(selector)?.click();
 
-function sendToast(text, duration = 6000, gravity = 'bottom') {
+function sendToast(text, duration = 5000, gravity = 'bottom') {
   Toastify({
     text,
     duration,
@@ -53,8 +53,8 @@ function sendToast(text, duration = 6000, gravity = 'bottom') {
 }
 
 async function showSplashScreen() {
-  splashScreen.style.cssText = "position:fixed;top:0;left:0;width:100%;height:100%;background-color:#000;display:flex;align-items:center;justify-content:center;z-index:9999;opacity:0;transition:opacity 1s ease;user-select:none;color:white;font-family:MuseoSans,sans-serif;font-size:30px;text-align:center;";
-  splashScreen.innerHTML = '<span class="soft-glow"><strong>KHAN</span><span style="color:#af00ff;"><strong>DARK</span>';
+  splashScreen.style.cssText = "position:fixed;top:0;left:0;width:100%;height:100%;background-color:#000;display:flex;align-items:center;justify-content:center;z-index:9999;opacity:0;transition:opacity 0.5s ease;user-select:none;color:white;font-family:MuseoSans,sans-serif;font-size:30px;text-align:center;";
+  splashScreen.innerHTML = '<span style="color:white;">KHAN</span><span style="color:#72ff72;">DESTROYER</span>';
   document.body.appendChild(splashScreen);
   setTimeout(() => splashScreen.style.opacity = '1', 10);
 }
@@ -111,7 +111,7 @@ function setupMain() {
             init.body = body;
           }
           
-          sendToast("🔄 | Video concluido!", 1000);
+          sendToast("🔄｜Vídeo exploitado.", 1000);
         }
       } catch (e) {}
     }
@@ -137,12 +137,12 @@ function setupMain() {
             zTable: false
           };
           
-          itemData.question.content = "Pergunta" + `[[☃ radio 1]]`;
+          itemData.question.content = "Desenvolvido por: ! Snow? " + `[[☃ radio 1]]`;
           itemData.question.widgets = {
             "radio 1": {
               type: "radio",
               options: {
-                choices: [{ content: "Correta", correct: true }]
+                choices: [{ content: "🤍", correct: true }]
               }
             }
           };
@@ -179,10 +179,10 @@ function setupMain() {
         
         const element = document.querySelector(`${selector}> div`);
         if (element?.innerText === "Mostrar resumo") {
-          sendToast("🎉 | Questão concluída!", 3000);
+          sendToast("🎉｜Exercício concluído!", 3000);
         }
       }
-      await delay(3250); 
+      await delay(1500); 
     }
   })();
 }
@@ -197,14 +197,12 @@ if (!/^https?:\/\/([a-z0-9-]+\.)?khanacademy\.org/.test(window.location.href)) {
       loadCss('https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css'),
       loadScript('https://cdn.jsdelivr.net/npm/toastify-js', 'toastifyPlugin')
     ]);
-
-if (https://www.khanacademy.org/(window.location.href)) { alert("❌ Khanware Failed to Injected!\n\nVocê precisa executar o Khanware no site do Khan Academy! (https://pt.khanacademy.org/)"); window.location.href = "https://www.khanacademy.org/"; }
     
     await delay(2000);
     await hideSplashScreen();
     
     setupMain();
-    sendToast("💜 | KhanDark iniciado!");
+    sendToast("🤍｜Khan Destroyer iniciado!");
     console.clear();
   })();
 } 
