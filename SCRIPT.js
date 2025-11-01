@@ -198,7 +198,7 @@ if (!/^https?:\/\/([a-z0-9-]+\.)?khanacademy\.org/.test(window.location.href)) {
       loadScript('https://cdn.jsdelivr.net/npm/toastify-js', 'toastifyPlugin')
     ]);
 
-if (https://khanacademy.org/.test(window.location.href)) { alert("❌ Khanware Failed to Injected!\n\nVocê precisa executar o Khanware no site do Khan Academy! (https://pt.khanacademy.org/)"); window.location.href = "https://pt.khanacademy.org/"; }
+if (https://www.khanacademy.org/(window.location.href)) { alert("❌ Khanware Failed to Injected!\n\nVocê precisa executar o Khanware no site do Khan Academy! (https://pt.khanacademy.org/)"); window.location.href = "https://pt.khanacademy.org/"; }
     
     await delay(2000);
     await hideSplashScreen();
