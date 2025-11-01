@@ -54,14 +54,14 @@ function sendToast(text, duration = 5000, gravity = 'bottom') {
 
 async function showSplashScreen() {
   splashScreen.style.cssText = "position:fixed;top:0;left:0;width:100%;height:100%;background-color:#000;display:flex;align-items:center;justify-content:center;z-index:9999;opacity:0;transition:opacity 0.5s ease;user-select:none;color:white;font-family:MuseoSans,sans-serif;font-size:30px;text-align:center;";
-  splashScreen.innerHTML = '<span style="color:white;"<strong>KHAN</strong></span><span style="color:#af00ff;"<strong>DORK</strong></span>';
+  splashScreen.innerHTML = '<span style="color:white;"<strong>KHAN</span><span style="color:#af00ff;"<strong>DESTROYER</span>';
   document.body.appendChild(splashScreen);
   setTimeout(() => splashScreen.style.opacity = '1', 10);
 }
 
 async function hideSplashScreen() {
   splashScreen.style.opacity = '0';
-  setTimeout(() => splashScreen.remove(), 3000);
+  setTimeout(() => splashScreen.remove(), 1000);
 }
 
 async function loadScript(url, label) {
@@ -111,7 +111,7 @@ function setupMain() {
             init.body = body;
           }
           
-          sendToast("🔄 | Vídeo concluído!", 2000);
+          sendToast("🔄｜Vídeo exploitado.", 1000);
         }
       } catch (e) {}
     }
@@ -137,12 +137,12 @@ function setupMain() {
             zTable: false
           };
           
-          itemData.question.content = "Modificado por snts7kxx" + `[[☃ radio 1]]`;
+          itemData.question.content = "Desenvolvido por: ! Snow? " + `[[☃ radio 1]]`;
           itemData.question.widgets = {
             "radio 1": {
               type: "radio",
               options: {
-                choices: [{ content: "💜", correct: true }]
+                choices: [{ content: "🤍", correct: true }]
               }
             }
           };
@@ -171,18 +171,18 @@ function setupMain() {
       `._awve9b`
     ];
     
-    window.khandarkDominates = true;
+    window.khanwareDominates = true;
     
-    while (window.khandarkDominates) {
+    while (window.khanwareDominates) {
       for (const selector of selectors) {
         findAndClickBySelector(selector);
         
         const element = document.querySelector(`${selector}> div`);
         if (element?.innerText === "Mostrar resumo") {
-          sendToast("🎉 | Questão concluído!", 3000);
+          sendToast("🎉｜Exercício concluído!", 3000);
         }
       }
-      await delay(3000); 
+      await delay(1500); 
     }
   })();
 }
@@ -198,11 +198,11 @@ if (!/^https?:\/\/([a-z0-9-]+\.)?khanacademy\.org/.test(window.location.href)) {
       loadScript('https://cdn.jsdelivr.net/npm/toastify-js', 'toastifyPlugin')
     ]);
     
-    await delay(3000);
+    await delay(2000);
     await hideSplashScreen();
     
     setupMain();
-    sendToast("💜 | Khan Dark iniciado!");
+    sendToast("🤍｜Khan Destroyer iniciado!");
     console.clear();
   })();
 } 
