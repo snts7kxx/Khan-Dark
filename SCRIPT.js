@@ -53,7 +53,7 @@ function sendToast(text, duration = 5000, gravity = 'bottom') {
 }
 
 async function showSplashScreen() {
-  splashScreen.style.cssText = "position:center;top:0;left:0;width:120%;height:120%;background-color:#000;display:flex;align-items:center;justify-content:center;z-index:9999;opacity:0;transition:opacity 1s ease;user-select:none;color:white;font-family:MuseoSans,sans-serif;font-size:30px;text-align:center;";
+  splashScreen.style.cssText = "position:fixed;top:0;left:0;width:100%;height:100%;background-color:#000;display:flex;align-items:center;justify-content:center;z-index:9999;opacity:0;transition:opacity 1s ease;user-select:none;color:white;font-family:MuseoSans,sans-serif;font-size:30px;text-align:center;";
 
 // Tela inicial
   splashScreen.innerHTML = '<span style="color:white;"><strong>KHAN</strong><span style="color:#af00ff;"><strong>DARK</strong>';
@@ -63,7 +63,7 @@ async function showSplashScreen() {
 
 async function hideSplashScreen() {
   splashScreen.style.opacity = '0';
-  setTimeout(() => splashScreen.remove(), 1000);
+  setTimeout(() => splashScreen.remove(), 3000);
 }
 
 async function loadScript(url, label) {
