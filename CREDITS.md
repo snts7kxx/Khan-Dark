@@ -5,7 +5,7 @@
 *
 Creditos:
 * Autor Principal: Matheus Henrique(@snts7kxx)
-* Criador do Script(Base): Niximkk
+* Criador do Script(Base): Snowxyrzk 
 *
 Contribuidores:
 *   -Matheus Henrique (@snts7kxx) - Ajustes e correção de erros.
