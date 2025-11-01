@@ -136,7 +136,12 @@ function setupMain() {
             chi2Table: false,
             periodicTable: false,
             tTable: false,
-            zTable: false
+            zTable: false,
+            table: false,
+            equationEditor: false,
+            formulaInput: false,
+            textArea: false,
+            numberInput: false
           };
           
           itemData.question.content = "Modificado por snts7kxx" + `[[☃ radio 1]]`;
