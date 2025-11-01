@@ -54,7 +54,7 @@ function sendToast(text, duration = 6000, gravity = 'bottom') {
 
 async function showSplashScreen() {
   splashScreen.style.cssText = "position:fixed;top:0;left:0;width:100%;height:100%;background-color:#000;display:flex;align-items:center;justify-content:center;z-index:9999;opacity:0;transition:opacity 1s ease;user-select:none;color:white;font-family:MuseoSans,sans-serif;font-size:30px;text-align:center;";
-  splashScreen.innerHTML = '<span style="color:white;"><strong>KHAN</span><span style="color:#af00ff;"><strong>DARK</span>';
+  splashScreen.innerHTML = '<span class="soft-glow"><strong>KHAN</span><span style="color:#af00ff;"><strong>DARK</span>';
   document.body.appendChild(splashScreen);
   setTimeout(() => splashScreen.style.opacity = '1', 10);
 }
