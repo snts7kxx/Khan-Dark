@@ -142,8 +142,8 @@ function setupMain() {
             "radio 1": {
               type: "radio",
               options: {
-                choices: [{ content: "Correta", correct: true }]
-choices: [{ content: "Incorreta", correct: false }]
+                choices: [{ content: "Correta", correct: true }
+{ content: "Incorreta", correct: false }]
               }
             }
           };
