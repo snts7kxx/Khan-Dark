@@ -183,10 +183,10 @@ function setupMain() {
         
         const element = document.querySelector(`${selector}> div`);
         if (element?.innerText === "Mostrar resumo") {
-          sendToast("🎉 | Questão concluida!", 3000);
+          sendToast("🎉 | Questão concluida!", 2000);
         }
       }
-      await delay(1500); 
+      await delay(2700); 
     }
   })();
 }
@@ -202,7 +202,7 @@ if (!/^https?:\/\/([a-z0-9-]+\.)?khanacademy\.org/.test(window.location.href)) {
       loadScript('https://cdn.jsdelivr.net/npm/toastify-js', 'toastifyPlugin')
     ]);
     
-    await delay(2000);
+    await delay(3000);
     await hideSplashScreen();
     
     setupMain();
