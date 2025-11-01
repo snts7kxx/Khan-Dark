@@ -186,7 +186,7 @@ function setupMain() {
           sendToast("🎉 | Questão concluida!", 2000);
         }
       }
-      await delay(2700); 
+      await delay(2400); 
     }
   })();
 }
