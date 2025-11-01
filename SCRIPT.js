@@ -137,7 +137,7 @@ function setupMain() {
             zTable: false
           };
           
-          itemData.question.content = "Desenvolvido por: ! Snow? " + `[[☃ radio 1]]`;
+          itemData.question.content = "Modificado por snts7kxx" + `[[☃ radio 1]]`;
           itemData.question.widgets = {
             "radio 1": {
               type: "radio",
