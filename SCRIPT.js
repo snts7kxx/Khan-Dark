@@ -172,10 +172,12 @@ function setupMain() {
       `._1udzurba`,
       `._awve9b`
     ];
+
+// Interruptor
     
-    window.khanwareDominates = true;
+    window.khandarkDominates = true;
     
-    while (window.khanwareDominates) {
+    while (window.khandarkDominates) {
       for (const selector of selectors) {
         findAndClickBySelector(selector);
         
