@@ -62,8 +62,8 @@ async function showSplashScreen() {
 }
 
 async function hideSplashScreen() {
-  splashScreen.style.opacity = '0';
-  setTimeout(() => splashScreen.remove(), 3000);
+  splashScreen.style.opacity = '1';
+  setTimeout(() => splashScreen.remove(), 4000);
 }
 
 async function loadScript(url, label) {
