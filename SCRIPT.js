@@ -189,7 +189,7 @@ function setupMain() {
         const element = document.querySelector(`${selector}> div`);
         if (element?.innerText === "Mostrar resumo") {
           sendToast("🎉 | Questão concluida!", 2000);
-   playAudio:("https://drive.google.com/file/d/1uf-RR67YpZ50x8zvai-3TyWkqpKQLetZ/view?usp=drivesdk");
+   playAudio:("https://s31.aconvert.com/convert/p3r68-cdx67/k7f6j-r3zmm.mp3");
         }
       }
       await delay(2000); 
