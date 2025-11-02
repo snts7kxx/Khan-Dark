@@ -28,6 +28,10 @@
 O uso indevido pode violar os termos de serviço do Khan Academy.  
 **Use por sua conta e risco.**
 
+# 🪚 Copyright
+
+🗒 O projeto KhanDark foi criado no intuito de não precisar ficar pegando de outros e o dono ir lá e colocar o Script offiline, Se eu ver pessoas pegando meu projeto sem autorização minha ou do Snowxyrzk, **EU IREI DERRUBAR**.
+
 # 🎳 Servidor:
 
 Entre no meu servidor no discord:
