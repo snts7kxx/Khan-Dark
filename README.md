@@ -21,7 +21,7 @@
 # 🪚 Copyright
 
 🗒 **KhanDark** é um projeto criado pelo Snow e foi modificado por mim para uso pessoal e educacional.  
-Todo o conteúdo e scripts são de propriedade do desenvolvedor e não devem ser COPIADOS ou redistribuídos sem autorização.
+Todo o conteúdo e scripts são de propriedade do desenvolvedor e não devem ser ><strong>COPIADOS ou redistribuídos sem autorização.
 
 # 💳 Creditos
 
