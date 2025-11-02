@@ -18,6 +18,11 @@
 
 > 🌌 Interface e tema escuro inspirados no modo "Dark"
 
+# 🪚 Copyright
+
+🗒 **KhanDark** é um projeto criado pelo Snow e foi modificado por mim para uso pessoal e educacional.  
+Todo o conteúdo e scripts são de propriedade do desenvolvedor e não devem ser COPIADOS ou redistribuídos sem autorização.
+
 # 💳 Creditos
 
 🏷 O Script foi criado pelo Snowxyrzk, E eu apenas modifiquei, Deixando online permanentemente e para que todos os Alunos podem acessar a qualquer momento.
