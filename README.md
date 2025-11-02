@@ -2,7 +2,7 @@
 
 👾 **KhanDark** é um script na linguagem Java que automatiza as lições, Poupando tempo e ajudando em notas.
 
-# 🔨 Desenvolvedores:
+# 🔨 Desenvolvedores
 
 📝 Modificado por **Matheus Henrique**
 
@@ -18,19 +18,15 @@
 
 > 🌌 Interface e tema escuro inspirados no modo "Dark"
 
-# 💳 Creditos:
+# 💳 Creditos
 
 🏷 O Script foi criado pelo Snowxyrzk, E eu apenas modifiquei, Deixando online permanentemente e para que todos os Alunos podem acessar a qualquer momento.
 
-# ⚠️ Aviso:
+# ⚠️ Aviso
 
 🚨 Este projeto foi criado apenas para fins educacionais e de estudo de código.  
 O uso indevido pode violar os termos de serviço do Khan Academy.  
-**Use por sua conta e risco.**
-
-# 🪚 Copyright
-
-🗒 O projeto KhanDark foi criado no intuito de não precisar ficar pegando de outros e o dono ir lá e colocar o Script offiline, Se eu ver pessoas pegando meu projeto sem autorização minha ou do Snowxyrzk, **EU IREI DERRUBAR**.
+**Use por sua conta e risco.** 
 
 # 🎳 Servidor:
 
