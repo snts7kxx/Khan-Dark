@@ -189,7 +189,6 @@ function setupMain() {
         const element = document.querySelector(`${selector}> div`);
         if (element?.innerText === "Mostrar resumo") {
           sendToast("🎉 | Questão concluida!", 2000);
-   playAudio:("https://drive.google.com/file/d/1uf-RR67YpZ50x8zvai-3TyWkqpKQLetZ/view?usp=drivesdk);
         }
       }
       await delay(2000); 
