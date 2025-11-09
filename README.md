@@ -50,6 +50,8 @@ https://discord.gg/sk35zq4aJ5
 
 5-Abra o site da Plataforma KhanAcademy, E clique para pesquisar e pesquise o nome que você criou na aba favoritos.
 
+Caso não entender entre no meu servidor no discord, Lá tem um vídeo ensinando a usar.
+
 # ✏️ BookMarklet:
 
 <pre>
