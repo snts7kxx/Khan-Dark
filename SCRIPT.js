@@ -189,7 +189,6 @@ function setupMain() {
         const element = document.querySelector(`${selector}> div`);
         if (element?.innerText === "Mostrar resumo") {
           sendToast("🎉 | Questão concluida!", 2000);
-          playAudio("
         }
       }
       await delay(2000); 
