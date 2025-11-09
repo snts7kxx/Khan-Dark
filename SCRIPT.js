@@ -212,6 +212,8 @@ if (!/^https?:\/\/([a-z0-9-]+\.)?khanacademy\.org/.test(window.location.href)) {
     
     setupMain();
     sendToast("💜 | Khan Dark iniciado!");
+
+    playAudio('https://files.catbox.moe/dnw13m.wav');
     console.clear();
   })();
 } 
