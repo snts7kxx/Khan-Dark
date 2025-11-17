@@ -171,7 +171,9 @@ function setupMain() {
 
   (async () => {
     const selectors = [
-      `[data-testid="choice-icon__library-choice-icon"]`,
+      `[data-test-id="radio-option"]`,
+      `input[type="radio"]`,
+      `label[role="radio"]`,
       `[data-testid="exercise-check-answer"]`,
       `[data-testid="exercise-next-question"]`,
       `._1udzurba`,
