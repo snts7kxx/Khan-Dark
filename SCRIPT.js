@@ -193,7 +193,7 @@ function setupMain() {
           sendToast("🎉 | Questão concluida!", 2000);
         }
       }
-      await delay(2000); 
+      await delay(3000); 
     }
   })();
 }
