@@ -236,7 +236,7 @@ function setupMain() {
         }
       }
 
-      await delay(clicked ? 800 : 1500);
+      await delay(clicked ? 700 : 1400);
     }
   })();
 }
