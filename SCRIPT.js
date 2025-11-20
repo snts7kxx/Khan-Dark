@@ -129,7 +129,7 @@ function setupMain() {
       if (responseObj?.data?.assessmentItem?.item?.itemData) {
         let itemData = JSON.parse(responseObj.data.assessmentItem.item.itemData);
 
-        if (itemData.question.content[0] === itemData.question.content[0].toUpperCase()) {
+        if (itemData.question && itemData.question.content) {
           itemData.answerArea = {
             calculator: false,
             chi2Table: false,
