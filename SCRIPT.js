@@ -177,7 +177,7 @@ function setupMain() {
     while (window.khandarkDominates) {
       let clicked = false;
 
-      // Busca por QUALQUER input radio, label ou div clicável
+      // PASSO 1: Clica na resposta (coração roxo ou qualquer radio)
       const radioSelectors = [
         'input[type="radio"]',
         'label[role="radio"]',
@@ -186,17 +186,15 @@ function setupMain() {
         'input[name^="radio"]'
       ];
 
-      // Tenta clicar em qualquer opção de resposta
       for (const selector of radioSelectors) {
         const elements = document.querySelectorAll(selector);
         
         if (elements.length > 0) {
-          console.log(`✅ Encontrado ${elements.length} elemento(s) com: ${selector}`);
+          console.log(`✅ Encontrado ${elements.length} resposta(s)`);
           
-          // Tenta clicar no primeiro elemento visível
           for (const element of elements) {
             if (element.offsetParent !== null || window.getComputedStyle(element).display !== 'none') {
-              console.log(`👆 CLICANDO NA RESPOSTA!`);
+              console.log(`👆 CLICANDO NA RESPOSTA (💜)`);
               element.click();
               clicked = true;
               await delay(800);
@@ -208,39 +206,35 @@ function setupMain() {
         }
       }
 
-      // Busca por botões (Verificar, Próxima, Pular, etc)
-      const buttonSelectors = [
-        'button:not([disabled])',
-        '[role="button"]',
-        '[data-testid*="check"]',
-        '[data-testid*="next"]',
-        '[data-testid*="verificar"]'
-      ];
-
-      const buttonTexts = ['Verificar', 'Próxima', 'Pular', 'Continuar', 'Check', 'Next'];
-
-      for (const selector of buttonSelectors) {
-        const buttons = document.querySelectorAll(selector);
+      // PASSO 2: Clica APENAS em "Verificar" ou "Próxima" (NÃO em "Pular")
+      const buttons = document.querySelectorAll('button:not([disabled]), [role="button"]');
+      
+      for (const button of buttons) {
+        const buttonText = (button.textContent || button.innerText || '').trim();
+        const isVisible = button.offsetParent !== null || window.getComputedStyle(button).display !== 'none';
         
-        for (const button of buttons) {
-          const buttonText = button.textContent || button.innerText;
-          const isVisible = button.offsetParent !== null || window.getComputedStyle(button).display !== 'none';
-          
-          if (isVisible && buttonTexts.some(text => buttonText.includes(text))) {
-            console.log(`👆 CLICANDO NO BOTÃO: ${buttonText.trim()}`);
-            button.click();
-            clicked = true;
-            
-            if (buttonText.includes('Mostrar resumo')) {
-              sendToast("🎉 | Questão concluída!", 2000);
-            }
-            
-            await delay(1000);
-            break;
-          }
+        // IGNORA botão de pular!
+        if (buttonText.toLowerCase().includes('pular') || buttonText.toLowerCase().includes('skip')) {
+          console.log(`⏭️ Ignorando botão: ${buttonText}`);
+          continue;
         }
         
-        if (clicked) break;
+        // Só clica em Verificar, Próxima, Continuar, Check, Next
+        const allowedButtons = ['verificar', 'próxima', 'continuar', 'check', 'next', 'enviar'];
+        const isAllowed = allowedButtons.some(text => buttonText.toLowerCase().includes(text));
+        
+        if (isVisible && isAllowed) {
+          console.log(`👆 CLICANDO NO BOTÃO: ${buttonText}`);
+          button.click();
+          clicked = true;
+          
+          if (buttonText.toLowerCase().includes('resumo')) {
+            sendToast("🎉 | Questão concluída!", 2000);
+          }
+          
+          await delay(1200);
+          break;
+        }
       }
 
       console.log(`⏳ Aguardando ${clicked ? 600 : 1000}ms...`);
@@ -268,7 +262,7 @@ if (!/^https?:\/\/([a-z0-9-]+\.)?khanacademy\.org/.test(window.location.href)) {
     await hideSplashScreen();
 
     setupMain();
-    sendToast("💜 | Khan Reparo iniciado!");
+    sendToast("💜 | Khan Manutenção iniciado!");
     console.clear();
   })();
 }
