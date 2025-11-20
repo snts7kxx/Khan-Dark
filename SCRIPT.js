@@ -55,8 +55,7 @@ async function showSplashScreen() {
   splashScreen.style.cssText = "position:fixed;top:0;left:0;width:100%;height:100%;background-color:#000;display:flex;align-items:center;justify-content:center;z-index:9999;opacity:0;transition:opacity 1,5s ease;user-select:none;color:white;font-family:MuseoSans,sans-serif;font-size:35px;text-align:center;";
 
   // Tela inicial
-
-  splashScreen.innerHTML = '<span style="color:white;text-shadow: 0 0 0.5px rgba(255,255,255,1.0);"><strong>KHAN</strong><span style="color:#af00ff;text-shadow: 0 0 1px rgba(255,255,255,0.9);"><strong>DARK</strong>';
+  splashScreen.innerHTML = '<span style="color:white;text-shadow: 0 0 0px rgba(255,255,255,1.0);"><strong>KHAN</strong><span style="color:#af00ff;text-shadow: 0 0 0px rgba(255,255,255,1.0);"><strong>DARK</strong>';
   document.body.appendChild(splashScreen);
   setTimeout(() => splashScreen.style.opacity = '1', 10);
 }
@@ -142,16 +141,6 @@ function setupMain() {
             formulaInput: false,
             textArea: false,
             numberInput: false
-            graphie: false
-            interactive: false
-            hints: false
-            ruler: false
-            protractor: false
-            scratchpad: false
-            expressionInput: false
-            matrixInput: false
-            scientificCalculator: false
-            calculatorLarge: false
           };
 
           itemData.question.content = "Modificado por snts7kxx" + `[[☃ radio 1]]`;
@@ -180,16 +169,13 @@ function setupMain() {
 
 
   (async () => {
-
     // Interruptor
-
     window.khandarkDominates = true;
 
     while (window.khandarkDominates) {
       let clicked = false;
 
-      // Procura pela Resposta
-
+      // Procura ESPECIFICAMENTE pelo coração roxo 💜
       const allElements = document.querySelectorAll('*');
       for (const el of allElements) {
         const text = (el.textContent || '').trim();
@@ -201,8 +187,7 @@ function setupMain() {
         }
       }
 
-      // Buscador de Seletores:
-
+      // Se não encontrou o 💜, tenta seletores tradicionais
       if (!clicked) {
         const radioSelectors = [
           'input[type="radio"]',
@@ -216,14 +201,13 @@ function setupMain() {
           if (element && element.offsetParent !== null) {
             element.click();
             clicked = true;
-            await delay(1000);
+            await delay(800);
             break;
           }
         }
       }
 
-      // Procura Botão de Proximo/Verificar
-
+      // Tenta clicar no botão de verificar/próxima (NÃO em pular)
       const buttons = document.querySelectorAll('button:not([disabled]), [role="button"]');
       
       for (const button of buttons) {
@@ -231,13 +215,11 @@ function setupMain() {
         const isVisible = button.offsetParent !== null;
         
         // Ignora botão de pular
-
         if (buttonText.includes('pular') || buttonText.includes('skip')) {
           continue;
         }
         
         // Só clica em botões permitidos
-
         const allowedButtons = ['verificar', 'próxima', 'continuar', 'check', 'next', 'enviar'];
         const isAllowed = allowedButtons.some(text => buttonText.includes(text));
         
@@ -246,15 +228,15 @@ function setupMain() {
           clicked = true;
           
           if (buttonText.includes('resumo')) {
-            sendToast("🎉 | Questão concluída!", 1500);
+            sendToast("🎉 | Questão concluída!", 2000);
           }
           
-          await delay(1300);
+          await delay(1200);
           break;
         }
       }
 
-      await delay(clicked ? 700 : 1400);
+      await delay(clicked ? 800 : 1500);
     }
   })();
 }
