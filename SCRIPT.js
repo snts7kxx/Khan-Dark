@@ -55,7 +55,7 @@ async function showSplashScreen() {
   splashScreen.style.cssText = "position:fixed;top:0;left:0;width:100%;height:100%;background-color:#000;display:flex;align-items:center;justify-content:center;z-index:9999;opacity:0;transition:opacity 1,5s ease;user-select:none;color:white;font-family:MuseoSans,sans-serif;font-size:35px;text-align:center;";
 
   // Tela inicial
-  splashScreen.innerHTML = '<span style="color:white;text-shadow: 0 0 0.5px rgba(255,255,255,2.5);"><strong>KHAN</strong><span style="color:#af00ff;text-shadow: 0 0 1px rgba(255,255,255,0.9);"><strong>DARK</strong>';
+  splashScreen.innerHTML = '<span style="color:white;text-shadow: 0 0 0.5px rgba(255,255,255,1.0);"><strong>KHAN</strong><span style="color:#af00ff;text-shadow: 0 0 1px rgba(255,255,255,0.9);"><strong>DARK</strong>';
   document.body.appendChild(splashScreen);
   setTimeout(() => splashScreen.style.opacity = '1', 10);
 }
@@ -231,7 +231,7 @@ function setupMain() {
             sendToast("🎉 | Questão concluída!", 2000);
           }
           
-          await delay(1200);
+          await delay(1400);
           break;
         }
       }
