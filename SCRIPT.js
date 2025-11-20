@@ -62,7 +62,7 @@ async function showSplashScreen() {
 
 async function hideSplashScreen() {
   splashScreen.style.opacity = '1';
-  setTimeout(() => splashScreen.remove(), 2500);
+  setTimeout(() => splashScreen.remove(), 2300);
 }
 
 async function loadScript(url, label) {
@@ -112,7 +112,7 @@ function setupMain() {
             init.body = body;
           }
 
-          sendToast("🔄 | Vídeo concluido!", 3000);
+          sendToast("🔄 | Vídeo concluido!", 2500);
         }
       } catch (e) {}
     }
@@ -175,7 +175,7 @@ function setupMain() {
     while (window.khandarkDominates) {
       let clicked = false;
 
-      // Procura ESPECIFICAMENTE pelo coração roxo 💜
+      // Procura pela Resposta
       const allElements = document.querySelectorAll('*');
       for (const el of allElements) {
         const text = (el.textContent || '').trim();
@@ -187,7 +187,7 @@ function setupMain() {
         }
       }
 
-      // Se não encontrou o 💜, tenta seletores tradicionais
+      // Procura Seletores
       if (!clicked) {
         const radioSelectors = [
           'input[type="radio"]',
