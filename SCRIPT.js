@@ -175,7 +175,7 @@ function setupMain() {
     while (window.khandarkDominates) {
       let clicked = false;
 
-      // Procura ESPECIFICAMENTE pelo coração roxo 💜
+      // Procura pela Resposta específica 
       const allElements = document.querySelectorAll('*');
       for (const el of allElements) {
         const text = (el.textContent || '').trim();
