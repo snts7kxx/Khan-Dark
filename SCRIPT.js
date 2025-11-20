@@ -55,7 +55,7 @@ function sendToast(text, duration = 5000, gravity = 'bottom') {
 async function showSplashScreen() {
   splashScreen.style.cssText = "position:fixed;top:0;left:0;width:100%;height:100%;background-color:#000;display:flex;align-items:center;justify-content:center;z-index:9999;opacity:0;transition:opacity 1,5s ease;user-select:none;color:white;font-family:MuseoSans,sans-serif;font-size:35px;text-align:center;";
 
-// Tela inicial
+  // Tela inicial
   splashScreen.innerHTML = '<span style="color:white;text-shadow: 0 0 1px rgba(255,255,255,0.9);"><strong>KHAN</strong><span style="color:#af00ff;text-shadow: 0 0 1px rgba(255,255,255,0.9);"><strong>DARK</strong>';
   document.body.appendChild(splashScreen);
   setTimeout(() => splashScreen.style.opacity = '1', 10);
@@ -87,7 +87,7 @@ async function loadCss(url) {
 function setupMain() {
 
   const originalFetch = window.fetch;
-  
+
   window.fetch = async function(input, init) {
 
     let body;
@@ -106,30 +106,30 @@ function setupMain() {
           bodyObj.variables.input.secondsWatched = durationSeconds;
           bodyObj.variables.input.lastSecondWatched = durationSeconds;
           body = JSON.stringify(bodyObj);
-          
+
           if (input instanceof Request) {
             input = new Request(input, { body });
           } else {
             init.body = body;
           }
-          
+
           sendToast("🔄 | Vídeo concluido!", 3000);
         }
       } catch (e) {}
     }
 
-   
+
     const originalResponse = await originalFetch.apply(this, arguments);
-    
+
 
     try {
       const clonedResponse = originalResponse.clone();
       const responseBody = await clonedResponse.text();
       let responseObj = JSON.parse(responseBody);
-      
+
       if (responseObj?.data?.assessmentItem?.item?.itemData) {
         let itemData = JSON.parse(responseObj.data.assessmentItem.item.itemData);
-        
+
         if (itemData.question.content[0] === itemData.question.content[0].toUpperCase()) {
           itemData.answerArea = {
             calculator: false,
@@ -143,7 +143,7 @@ function setupMain() {
             textArea: false,
             numberInput: false
           };
-          
+
           itemData.question.content = "Modificado por snts7kxx" + `[[☃ radio 1]]`;
           itemData.question.widgets = {
             "radio 1": {
@@ -153,9 +153,9 @@ function setupMain() {
               }
             }
           };
-          
+
           responseObj.data.assessmentItem.item.itemData = JSON.stringify(itemData);
-          
+
           return new Response(JSON.stringify(responseObj), {
             status: originalResponse.status,
             statusText: originalResponse.statusText,
@@ -164,7 +164,7 @@ function setupMain() {
         }
       }
     } catch (e) {}
-    
+
     return originalResponse;
   };
 
@@ -180,57 +180,65 @@ function setupMain() {
       `._awve9b`
     ];
 
-// Interruptor
-    
+    // Interruptor
     window.khandarkDominates = true;
-    
+
     while (window.khandarkDominates) {
       let clicked = false;
-  
-  // Tenta clicar na primeira opção de resposta disponível
-  for (const selector of selectors.slice(0, 3)) {
-    const element = document.querySelector(selector);
-    if (element && element.offsetParent !== null) {
-      element.click();
-      clicked = true;
-      await delay(500);
-      break;
-    }
-  }
 
-// Tenta clicar no botão de verificar/próxima
-  for (const selector of selectors.slice(3)) {
-    const element = document.querySelector(selector);
-    if (element && element.offsetParent !== null) {
-      element.click();
-      clicked = true;
-        
-        const element = document.querySelector(`${selector}> div`);
-        if (element?.innerText === "Mostrar resumo") {
-          sendToast("🎉 | Questão concluida!", 2000);
+      // Tenta clicar na primeira opção de resposta disponível
+      for (const selector of selectors.slice(0, 3)) {
+        const element = document.querySelector(selector);
+        if (element && element.offsetParent !== null) {
+          element.click();
+          clicked = true;
+          await delay(500);
+          break;
         }
       }
-      await delay(3000); 
+
+      // Tenta clicar no botão de verificar/próxima
+      for (const selector of selectors.slice(3)) {
+        const element = document.querySelector(selector);
+        if (element && element.offsetParent !== null) {
+          element.click();
+          clicked = true;
+
+          const checkElement = document.querySelector(`${selector} > div`);
+          if (checkElement?.innerText === "Mostrar resumo") {
+            sendToast("🎉 | Questão concluída!", 2000);
+          }
+
+          await delay(1000);
+          break;
+        }
+      }
+
+      await delay(clicked ? 800 : 1500);
     }
   })();
 }
 
-if (!/^https?:\/\/([a-z0-9-]+\.)?khanacademy\.org/.test(window.location.href)) { window.location.href = "https://pt.khanacademy.org/";
+if (!/^https?:\/\/([a-z0-9-]+\.)?khanacademy\.org/.test(window.location.href)) {
+  window.location.href = "https://pt.khanacademy.org/";
 } else {
   (async function init() {
     await showSplashScreen();
-    
+
     await Promise.all([
-      loadScript('https://cdn.jsdelivr.net/npm/darkreader@4.9.92/darkreader.min.js', 'darkReaderPlugin').then(()=>{ DarkReader.setFetchMethod(window.fetch); DarkReader.enable(); }),
+      loadScript('https://cdn.jsdelivr.net/npm/darkreader@4.9.92/darkreader.min.js', 'darkReaderPlugin').then(() => {
+        DarkReader.setFetchMethod(window.fetch);
+        DarkReader.enable();
+      }),
       loadCss('https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css'),
       loadScript('https://cdn.jsdelivr.net/npm/toastify-js', 'toastifyPlugin')
     ]);
-    
+
     await delay(3000);
     await hideSplashScreen();
-    
+
     setupMain();
     sendToast("💜 | Khan Dark iniciado!");
     console.clear();
   })();
-} 
+}
