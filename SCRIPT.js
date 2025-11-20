@@ -112,7 +112,7 @@ function setupMain() {
             init.body = body;
           }
 
-          sendToast("🔄 | Vídeo concluido!", 3000);
+          sendToast("🔄 | Vídeo concluido!", 2500);
         }
       } catch (e) {}
     }
