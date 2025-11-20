@@ -141,6 +141,16 @@ function setupMain() {
             formulaInput: false,
             textArea: false,
             numberInput: false
+            graphie: false
+            interactive: false
+            hints: false
+            ruler: false
+            protractor: false
+            scratchpad: false
+            expressionInput: false
+            matrixInput: false
+            scientificCalculator: false
+            calculatorLarge: false
           };
 
           itemData.question.content = "Modificado por snts7kxx" + `[[☃ radio 1]]`;
