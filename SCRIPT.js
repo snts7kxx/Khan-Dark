@@ -183,37 +183,54 @@ function setupMain() {
     // Interruptor
     window.khandarkDominates = true;
 
+    console.log("🔍 Khan Dark: Loop iniciado!");
+
     while (window.khandarkDominates) {
       let clicked = false;
 
-      // Tenta clicar na primeira opção de resposta disponível
+      // DEBUG: Tenta clicar na primeira opção de resposta disponível
       for (const selector of selectors.slice(0, 3)) {
         const element = document.querySelector(selector);
-        if (element && element.offsetParent !== null) {
-          element.click();
-          clicked = true;
-          await delay(500);
-          break;
+        console.log(`🔎 Buscando resposta: ${selector}`, element ? "✅ ENCONTRADO" : "❌ NÃO ENCONTRADO");
+        
+        if (element) {
+          console.log(`👁️ Visível?`, element.offsetParent !== null ? "SIM" : "NÃO");
+          
+          if (element.offsetParent !== null) {
+            console.log(`👆 CLICANDO NA RESPOSTA!`);
+            element.click();
+            clicked = true;
+            await delay(500);
+            break;
+          }
         }
       }
 
-      // Tenta clicar no botão de verificar/próxima
+      // DEBUG: Tenta clicar no botão de verificar/próxima
       for (const selector of selectors.slice(3)) {
         const element = document.querySelector(selector);
-        if (element && element.offsetParent !== null) {
-          element.click();
-          clicked = true;
+        console.log(`🔎 Buscando botão: ${selector}`, element ? "✅ ENCONTRADO" : "❌ NÃO ENCONTRADO");
+        
+        if (element) {
+          console.log(`👁️ Visível?`, element.offsetParent !== null ? "SIM" : "NÃO");
+          
+          if (element.offsetParent !== null) {
+            console.log(`👆 CLICANDO NO BOTÃO!`);
+            element.click();
+            clicked = true;
 
-          const checkElement = document.querySelector(`${selector} > div`);
-          if (checkElement?.innerText === "Mostrar resumo") {
-            sendToast("🎉 | Questão concluída!", 2000);
+            const checkElement = document.querySelector(`${selector} > div`);
+            if (checkElement?.innerText === "Mostrar resumo") {
+              sendToast("🎉 | Questão concluída!", 2000);
+            }
+
+            await delay(1000);
+            break;
           }
-
-          await delay(1000);
-          break;
         }
       }
 
+      console.log(`⏳ Aguardando ${clicked ? 800 : 1500}ms...`);
       await delay(clicked ? 800 : 1500);
     }
   })();
