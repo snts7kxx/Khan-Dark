@@ -55,7 +55,7 @@ async function showSplashScreen() {
   splashScreen.style.cssText = "position:fixed;top:0;left:0;width:100%;height:100%;background-color:#000;display:flex;align-items:center;justify-content:center;z-index:9999;opacity:0;transition:opacity 1,5s ease;user-select:none;color:white;font-family:MuseoSans,sans-serif;font-size:35px;text-align:center;";
 
   // Tela inicial
-  splashScreen.innerHTML = '<span style="color:white;text-shadow: 0 0 0px rgba(255,255,255,1.0);"><strong>KHAN</strong><span style="color:#af00ff;text-shadow: 0 0 0px rgba(255,255,255,1.0);"><strong>DARK</strong>';
+  splashScreen.innerHTML = '<span style="color:white;text-shadow: 0 0 1px rgba(255,255,255,0.9);"><strong>KHAN</strong><span style="color:#af00ff;text-shadow: 0 0 1px rgba(255,255,255,0.9);"><strong>DARK</strong>';
   document.body.appendChild(splashScreen);
   setTimeout(() => splashScreen.style.opacity = '1', 10);
 }
@@ -112,7 +112,7 @@ function setupMain() {
             init.body = body;
           }
 
-          sendToast("🔄 | Vídeo concluido!", 2500);
+          sendToast("🔄 | Vídeo concluido!", 3000);
         }
       } catch (e) {}
     }
@@ -141,55 +141,6 @@ function setupMain() {
             formulaInput: false,
             textArea: false,
             numberInput: false
-            graphie: false,
-            interactiveGraph: false,
-            graphBoard: false,
-            expressionInput: false,
-            matrixInput: false,
-            dropdown: false,
-            dropdownInput: false,
-            radioInput: false,
-            multipleSelect: false,
-            imageInput: false,
-            fileUpload: false,
-            ruler: false,
-            protractor: false,
-            compass: false,
-            scratchpad: false,
-            hints: false,
-            stepByStep: false,
-            essayInput: false,
-            shortAnswer: false,
-            scientificCalculator: false,
-            calculatorLarge: false,
-            statsTable: false,
-            chemEquationEditor: false,
-            moleculeEditor: false,
-            unitConverter: false,
-            functionEditor: false,
-            audioInput: false,
-            codeInput: false,
-            mathInput: false,
-            graphInput: false,
-            customInput: false,
-            sortInput: false,
-            matchingInput: false,
-            classificationInput: false,
-            timelineInput: false,
-            coordinatesInput: false,
-            inequalityGraph: false,
-            numberLine: false,
-            rulerMeasure: false,
-            protractorMeasure: false,
-            shadedRegionInput: false,
-            labelPlacement: false,
-            dragAndDrop: false,
-            clickToSelect: false,
-            tokenInput: false,
-            keypad: false,
-            keypadAdvanced: false,
-            keypadFraction: false,
-            keypadGeometry: false
           };
 
           itemData.question.content = "Modificado por snts7kxx" + `[[☃ radio 1]]`;
@@ -285,7 +236,7 @@ function setupMain() {
         }
       }
 
-      await delay(clicked ? 700 : 1500);
+      await delay(clicked ? 800 : 1500);
     }
   })();
 }
