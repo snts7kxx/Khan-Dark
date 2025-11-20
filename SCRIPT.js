@@ -182,7 +182,7 @@ function setupMain() {
         if (text === '💜' && el.offsetParent !== null) {
           el.click();
           clicked = true;
-          await delay(1000);
+          await delay(800);
           break;
         }
       }
@@ -228,10 +228,10 @@ function setupMain() {
           clicked = true;
           
           if (buttonText.includes('resumo')) {
-            sendToast("🎉 | Questão concluída!", 2000);
+            sendToast("🎉 | Questão concluída!", 1500);
           }
           
-          await delay(1400);
+          await delay(1300);
           break;
         }
       }
