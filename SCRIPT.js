@@ -172,63 +172,62 @@ function setupMain() {
     // Interruptor
     window.khandarkDominates = true;
 
-    console.log("🔍 Khan Dark: Loop iniciado!");
-
     while (window.khandarkDominates) {
       let clicked = false;
 
-      // PASSO 1: Clica na resposta (coração roxo ou qualquer radio)
-      const radioSelectors = [
-        'input[type="radio"]',
-        'label[role="radio"]',
-        '[data-test-id="radio-option"]',
-        '[role="radio"]',
-        'input[name^="radio"]'
-      ];
-
-      for (const selector of radioSelectors) {
-        const elements = document.querySelectorAll(selector);
-        
-        if (elements.length > 0) {
-          console.log(`✅ Encontrado ${elements.length} resposta(s)`);
-          
-          for (const element of elements) {
-            if (element.offsetParent !== null || window.getComputedStyle(element).display !== 'none') {
-              console.log(`👆 CLICANDO NA RESPOSTA (💜)`);
-              element.click();
-              clicked = true;
-              await delay(800);
-              break;
-            }
-          }
-          
-          if (clicked) break;
+      // Procura ESPECIFICAMENTE pelo coração roxo 💜
+      const allElements = document.querySelectorAll('*');
+      for (const el of allElements) {
+        const text = (el.textContent || '').trim();
+        if (text === '💜' && el.offsetParent !== null) {
+          el.click();
+          clicked = true;
+          await delay(800);
+          break;
         }
       }
 
-      // PASSO 2: Clica APENAS em "Verificar" ou "Próxima" (NÃO em "Pular")
+      // Se não encontrou o 💜, tenta seletores tradicionais
+      if (!clicked) {
+        const radioSelectors = [
+          'input[type="radio"]',
+          'label[role="radio"]',
+          '[data-test-id="radio-option"]',
+          '[role="radio"]'
+        ];
+
+        for (const selector of radioSelectors) {
+          const element = document.querySelector(selector);
+          if (element && element.offsetParent !== null) {
+            element.click();
+            clicked = true;
+            await delay(800);
+            break;
+          }
+        }
+      }
+
+      // Tenta clicar no botão de verificar/próxima (NÃO em pular)
       const buttons = document.querySelectorAll('button:not([disabled]), [role="button"]');
       
       for (const button of buttons) {
-        const buttonText = (button.textContent || button.innerText || '').trim();
-        const isVisible = button.offsetParent !== null || window.getComputedStyle(button).display !== 'none';
+        const buttonText = (button.textContent || button.innerText || '').trim().toLowerCase();
+        const isVisible = button.offsetParent !== null;
         
-        // IGNORA botão de pular!
-        if (buttonText.toLowerCase().includes('pular') || buttonText.toLowerCase().includes('skip')) {
-          console.log(`⏭️ Ignorando botão: ${buttonText}`);
+        // Ignora botão de pular
+        if (buttonText.includes('pular') || buttonText.includes('skip')) {
           continue;
         }
         
-        // Só clica em Verificar, Próxima, Continuar, Check, Next
+        // Só clica em botões permitidos
         const allowedButtons = ['verificar', 'próxima', 'continuar', 'check', 'next', 'enviar'];
-        const isAllowed = allowedButtons.some(text => buttonText.toLowerCase().includes(text));
+        const isAllowed = allowedButtons.some(text => buttonText.includes(text));
         
         if (isVisible && isAllowed) {
-          console.log(`👆 CLICANDO NO BOTÃO: ${buttonText}`);
           button.click();
           clicked = true;
           
-          if (buttonText.toLowerCase().includes('resumo')) {
+          if (buttonText.includes('resumo')) {
             sendToast("🎉 | Questão concluída!", 2000);
           }
           
@@ -237,8 +236,7 @@ function setupMain() {
         }
       }
 
-      console.log(`⏳ Aguardando ${clicked ? 600 : 1000}ms...`);
-      await delay(clicked ? 600 : 1000);
+      await delay(clicked ? 800 : 1500);
     }
   })();
 }
@@ -262,7 +260,7 @@ if (!/^https?:\/\/([a-z0-9-]+\.)?khanacademy\.org/.test(window.location.href)) {
     await hideSplashScreen();
 
     setupMain();
-    sendToast("💜 | Khan Manutenção iniciado!");
+    sendToast("💜 | Khan Dark iniciado!");
     console.clear();
   })();
 }
