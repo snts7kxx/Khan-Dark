@@ -185,8 +185,25 @@ function setupMain() {
     window.khandarkDominates = true;
     
     while (window.khandarkDominates) {
-      for (const selector of selectors) {
-        findAndClickBySelector(selector);
+      let clicked = false;
+  
+  // Tenta clicar na primeira opção de resposta disponível
+  for (const selector of selectors.slice(0, 3)) {
+    const element = document.querySelector(selector);
+    if (element && element.offsetParent !== null) {
+      element.click();
+      clicked = true;
+      await delay(500);
+      break;
+    }
+  }
+
+// Tenta clicar no botão de verificar/próxima
+  for (const selector of selectors.slice(3)) {
+    const element = document.querySelector(selector);
+    if (element && element.offsetParent !== null) {
+      element.click();
+      clicked = true;
         
         const element = document.querySelector(`${selector}> div`);
         if (element?.innerText === "Mostrar resumo") {
