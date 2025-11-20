@@ -39,7 +39,6 @@ new MutationObserver(mutationsList =>
 
 // Funções helpers
 const delay = ms => new Promise(resolve => setTimeout(resolve, ms));
-const findAndClickBySelector = selector => document.querySelector(selector)?.click();
 
 function sendToast(text, duration = 5000, gravity = 'bottom') {
   Toastify({
@@ -170,16 +169,6 @@ function setupMain() {
 
 
   (async () => {
-    const selectors = [
-      `[data-test-id="radio-option"]`,
-      `input[type="radio"]`,
-      `label[role="radio"]`,
-      `[data-testid="exercise-check-answer"]`,
-      `[data-testid="exercise-next-question"]`,
-      `._1udzurba`,
-      `._awve9b`
-    ];
-
     // Interruptor
     window.khandarkDominates = true;
 
@@ -188,50 +177,74 @@ function setupMain() {
     while (window.khandarkDominates) {
       let clicked = false;
 
-      // DEBUG: Tenta clicar na primeira opção de resposta disponível
-      for (const selector of selectors.slice(0, 3)) {
-        const element = document.querySelector(selector);
-        console.log(`🔎 Buscando resposta: ${selector}`, element ? "✅ ENCONTRADO" : "❌ NÃO ENCONTRADO");
+      // Busca por QUALQUER input radio, label ou div clicável
+      const radioSelectors = [
+        'input[type="radio"]',
+        'label[role="radio"]',
+        '[data-test-id="radio-option"]',
+        '[role="radio"]',
+        'input[name^="radio"]'
+      ];
+
+      // Tenta clicar em qualquer opção de resposta
+      for (const selector of radioSelectors) {
+        const elements = document.querySelectorAll(selector);
         
-        if (element) {
-          console.log(`👁️ Visível?`, element.offsetParent !== null ? "SIM" : "NÃO");
+        if (elements.length > 0) {
+          console.log(`✅ Encontrado ${elements.length} elemento(s) com: ${selector}`);
           
-          if (element.offsetParent !== null) {
-            console.log(`👆 CLICANDO NA RESPOSTA!`);
-            element.click();
-            clicked = true;
-            await delay(500);
-            break;
+          // Tenta clicar no primeiro elemento visível
+          for (const element of elements) {
+            if (element.offsetParent !== null || window.getComputedStyle(element).display !== 'none') {
+              console.log(`👆 CLICANDO NA RESPOSTA!`);
+              element.click();
+              clicked = true;
+              await delay(800);
+              break;
+            }
           }
+          
+          if (clicked) break;
         }
       }
 
-      // DEBUG: Tenta clicar no botão de verificar/próxima
-      for (const selector of selectors.slice(3)) {
-        const element = document.querySelector(selector);
-        console.log(`🔎 Buscando botão: ${selector}`, element ? "✅ ENCONTRADO" : "❌ NÃO ENCONTRADO");
-        
-        if (element) {
-          console.log(`👁️ Visível?`, element.offsetParent !== null ? "SIM" : "NÃO");
-          
-          if (element.offsetParent !== null) {
-            console.log(`👆 CLICANDO NO BOTÃO!`);
-            element.click();
-            clicked = true;
+      // Busca por botões (Verificar, Próxima, Pular, etc)
+      const buttonSelectors = [
+        'button:not([disabled])',
+        '[role="button"]',
+        '[data-testid*="check"]',
+        '[data-testid*="next"]',
+        '[data-testid*="verificar"]'
+      ];
 
-            const checkElement = document.querySelector(`${selector} > div`);
-            if (checkElement?.innerText === "Mostrar resumo") {
+      const buttonTexts = ['Verificar', 'Próxima', 'Pular', 'Continuar', 'Check', 'Next'];
+
+      for (const selector of buttonSelectors) {
+        const buttons = document.querySelectorAll(selector);
+        
+        for (const button of buttons) {
+          const buttonText = button.textContent || button.innerText;
+          const isVisible = button.offsetParent !== null || window.getComputedStyle(button).display !== 'none';
+          
+          if (isVisible && buttonTexts.some(text => buttonText.includes(text))) {
+            console.log(`👆 CLICANDO NO BOTÃO: ${buttonText.trim()}`);
+            button.click();
+            clicked = true;
+            
+            if (buttonText.includes('Mostrar resumo')) {
               sendToast("🎉 | Questão concluída!", 2000);
             }
-
+            
             await delay(1000);
             break;
           }
         }
+        
+        if (clicked) break;
       }
 
-      console.log(`⏳ Aguardando ${clicked ? 800 : 1500}ms...`);
-      await delay(clicked ? 800 : 1500);
+      console.log(`⏳ Aguardando ${clicked ? 600 : 1000}ms...`);
+      await delay(clicked ? 600 : 1000);
     }
   })();
 }
