@@ -8,24 +8,43 @@ const splashScreen = document.createElement('splashScreen');
 
 class EventEmitter {
   constructor() { this.events = {}; }
-  on(t, e) { (Array.isArray(t) ? t : [t]).forEach(x => (this.events[x] = this.events[x] || []).push(e)); }
-  off(t, e) { (Array.isArray(t) ? t : [t]).forEach(x => this.events[x] = (this.events[x] || []).filter(h => h !== e)); }
-  emit(t, ...e) { this.events[t]?.forEach(h => h(...e)); }
-  once(t, e) { const s = (...i) => { e(...i); this.off(t, s); }; this.on(t, s); }
+  on(t, e) {
+    (Array.isArray(t) ? t : [t]).forEach(t => {
+      (this.events[t] = this.events[t] || []).push(e);
+    });
+  }
+  off(t, e) {
+    (Array.isArray(t) ? t : [t]).forEach(t => {
+      this.events[t] && (this.events[t] = this.events[t].filter(h => h !== e));
+    });
+  }
+  emit(t, ...e) {
+    this.events[t]?.forEach(h => h(...e));
+  }
+  once(t, e) {
+    const s = (...i) => {
+      e(...i);
+      this.off(t, s);
+    };
+    this.on(t, s);
+  }
 }
 
 const plppdo = new EventEmitter();
 
-new MutationObserver(m => m.some(x => x.type === 'childList') && plppdo.emit('domChanged'))
-  .observe(document.body, { childList: true, subtree: true });
+// Observer otimizado
+new MutationObserver(mutationsList => 
+  mutationsList.some(m => m.type === 'childList') && plppdo.emit('domChanged')
+).observe(document.body, { childList: true, subtree: true });
 
-const delay = ms => new Promise(r => setTimeout(r, ms));
+// Funções helpers
+const delay = ms => new Promise(resolve => setTimeout(resolve, ms));
 
-function sendToast(text, duration = 5000) {
+function sendToast(text, duration = 5000, gravity = 'bottom') {
   Toastify({
     text,
     duration,
-    gravity: "bottom",
+    gravity,
     position: "center",
     stopOnFocus: true,
     style: { background: "#000000" }
@@ -33,172 +52,183 @@ function sendToast(text, duration = 5000) {
 }
 
 async function showSplashScreen() {
-  splashScreen.style.cssText =
-    "position:fixed;top:0;left:0;width:100%;height:100%;background:#000;display:flex;align-items:center;justify-content:center;z-index:9999;opacity:0;transition:opacity 1.5s;";
-  splashScreen.innerHTML =
-    '<span style="color:white;text-shadow:0 0 0.5px #fff;"><strong>KHAN</strong><span style="color:#af00ff;text-shadow:0 0 0.5px #fff;"><strong>DARK</strong>';
+  splashScreen.style.cssText = "position:fixed;top:0;left:0;width:100%;height:100%;background-color:#000;display:flex;align-items:center;justify-content:center;z-index:9999;opacity:0;transition:opacity 1,5s ease;user-select:none;color:white;font-family:MuseoSans,sans-serif;font-size:35px;text-align:center;";
+
+  // Tela inicial
+  splashScreen.innerHTML = '<span style="color:white;text-shadow: 0 0 0.5px rgba(255,255,255,1);"><strong>KHAN</strong><span style="color:#af00ff;text-shadow: 0 0 0.5px rgba(255,255,255,1);"><strong>DARK</strong>';
   document.body.appendChild(splashScreen);
-  setTimeout(() => splashScreen.style.opacity = "1", 20);
+  setTimeout(() => splashScreen.style.opacity = '1', 10);
 }
 
 async function hideSplashScreen() {
-  splashScreen.style.opacity = "0";
-  setTimeout(() => splashScreen.remove(), 1500);
+  splashScreen.style.opacity = '1';
+  setTimeout(() => splashScreen.remove(), 2300);
 }
 
 async function loadScript(url, label) {
-  const res = await fetch(url);
-  const txt = await res.text();
+  const response = await fetch(url);
+  const script = await response.text();
   loadedPlugins.push(label);
-  eval(txt);
+  eval(script);
 }
 
 async function loadCss(url) {
-  return new Promise(res => {
-    const l = document.createElement("link");
-    l.rel = "stylesheet";
-    l.href = url;
-    l.onload = res;
-    document.head.appendChild(l);
+  return new Promise(resolve => {
+    const link = document.createElement('link');
+    link.rel = 'stylesheet';
+    link.type = 'text/css';
+    link.href = url;
+    link.onload = resolve;
+    document.head.appendChild(link);
   });
 }
 
 function setupMain() {
+
   const originalFetch = window.fetch;
 
-  window.fetch = async function (input, init) {
-    let body;
-    if (input instanceof Request) body = await input.clone().text();
-    else if (init?.body) body = init.body;
+  window.fetch = async function(input, init) {
 
-    // AUTO COMPLETE VIDEO
+    let body;
+    if (input instanceof Request) {
+      body = await input.clone().text();
+    } else if (init?.body) {
+      body = init.body;
+    }
+
+
     if (body?.includes('"operationName":"updateUserVideoProgress"')) {
       try {
-        let b = JSON.parse(body);
-        if (b.variables?.input) {
-          const d = b.variables.input.durationSeconds;
-          b.variables.input.secondsWatched = d;
-          b.variables.input.lastSecondWatched = d;
-          body = JSON.stringify(b);
+        let bodyObj = JSON.parse(body);
+        if (bodyObj.variables?.input) {
+          const durationSeconds = bodyObj.variables.input.durationSeconds;
+          bodyObj.variables.input.secondsWatched = durationSeconds;
+          bodyObj.variables.input.lastSecondWatched = durationSeconds;
+          body = JSON.stringify(bodyObj);
 
-          if (input instanceof Request) input = new Request(input, { body });
-          else init.body = body;
-
-          sendToast("🔄 | Vídeo concluído!", 2500);
-        }
-      } catch {}
-    }
-
-    const response = await originalFetch.apply(this, arguments);
-
-    // MODIFICAR QUESTÕES
-    try {
-      const clone = response.clone();
-      const text = await clone.text();
-      
-      if (!text.trim().startsWith('{')) return response;
-      
-      const responseObj = JSON.parse(text);
-
-      // Busca itemData em múltiplos lugares
-      let itemDataRaw = null;
-      let parentObj = null;
-      let dataKey = null;
-
-      const paths = [
-        { parent: responseObj?.data?.assessmentItem?.item, key: 'itemData' },
-        { parent: responseObj?.data?.assessmentItem?.item?.stack, key: 'itemData' },
-        { parent: responseObj?.data?.assessmentItem?.item, key: 'itemTemplate' }
-      ];
-
-      for (const { parent, key } of paths) {
-        if (parent && parent[key]) {
-          itemDataRaw = parent[key];
-          parentObj = parent;
-          dataKey = key;
-          break;
-        }
-      }
-
-      if (!itemDataRaw) return response;
-
-      // Parse (pode estar stringificado múltiplas vezes)
-      let itemData = itemDataRaw;
-      let parseCount = 0;
-      
-      while (typeof itemData === "string" && parseCount < 3) {
-        try {
-          itemData = JSON.parse(itemData);
-          parseCount++;
-        } catch {
-          return response;
-        }
-      }
-
-      // Se tem pergunta, modifica
-      if (itemData?.question?.content != null) {
-        
-        // Desabilita answerArea
-        itemData.answerArea = {
-          calculator: false,
-          chi2Table: false,
-          periodicTable: false,
-          tTable: false,
-          zTable: false
-        };
-
-        // Modifica conteúdo mantendo imagens originais
-        itemData.question.content = "💜 Modificado [[☃ radio 1]]";
-        
-        itemData.question.widgets = {
-          "radio 1": {
-            type: "radio",
-            options: {
-              choices: [
-                { content: "💜 Resposta Correta", correct: true }
-              ],
-              randomize: false
-            }
+          if (input instanceof Request) {
+            input = new Request(input, { body });
+          } else {
+            init.body = body;
           }
-        };
 
-        // Stringifica de volta (mesmo número de vezes)
-        let finalData = itemData;
-        for (let i = 0; i < parseCount; i++) {
-          finalData = JSON.stringify(finalData);
+          sendToast("🔄 | Vídeo concluido!", 2500);
         }
-        
-        parentObj[dataKey] = finalData;
-
-        console.log("✅ Questão modificada!");
-        sendToast("✅ | Questão modificada!", 1500);
-
-        return new Response(JSON.stringify(responseObj), {
-          status: response.status,
-          statusText: response.statusText,
-          headers: response.headers
-        });
-      }
-
-    } catch (e) {
-      console.error("❌ Erro:", e);
+      } catch (e) {}
     }
 
-    return response;
+
+    const originalResponse = await originalFetch.apply(this, arguments);
+
+
+    try {
+      const clonedResponse = originalResponse.clone();
+      const responseBody = await clonedResponse.text();
+      let responseObj = JSON.parse(responseBody);
+
+      if (responseObj?.data?.assessmentItem?.item?.itemData) {
+        let itemData = JSON.parse(responseObj.data.assessmentItem.item.itemData);
+
+        if (itemData.question && itemData.question.content) {
+          itemData.answerArea = {
+            calculator: false,
+            chi2Table: false,
+            periodicTable: false,
+            tTable: false,
+            zTable: false,
+            table: false,
+            equationEditor: false,
+            formulaInput: false,
+            textArea: false,
+            numberInput: false,
+            graphie: false,
+            interactiveGraph: false,
+            graphBoard: false,
+            expressionInput: false,
+            matrixInput: false,
+            dropdown: false,
+            dropdownInput: false,
+            radioInput: false,
+            multipleSelect: false,
+            imageInput: false,
+            fileUpload: false,
+            ruler: false,
+            protractor: false,
+            compass: false,
+            scratchpad: false,
+            hints: false,
+            stepByStep: false,
+            essayInput: false,
+            shortAnswer: false,
+            scientificCalculator: false,
+            calculatorLarge: false,
+            statsTable: false,
+            chemEquationEditor: false,
+            moleculeEditor: false,
+            unitConverter: false,
+            functionEditor: false,
+            audioInput: false,
+            codeInput: false,
+            mathInput: false,
+            graphInput: false,
+            customInput: false,
+            sortInput: false,
+            matchingInput: false,
+            classificationInput: false,
+            timelineInput: false,
+            coordinatesInput: false,
+            inequalityGraph: false,
+            numberLine: false,
+            rulerMeasure: false,
+            protractorMeasure: false,
+            shadedRegionInput: false,
+            labelPlacement: false,
+            dragAndDrop: false,
+            clickToSelect: false,
+            tokenInput: false,
+            keypad: false,
+            keypadAdvanced: false,
+            keypadFraction: false,
+            keypadGeometry: false
+          };
+
+          itemData.question.content = "Modificado por snts7kxx" + `[[☃ radio 1]]`;
+          itemData.question.widgets = {
+            "radio 1": {
+              type: "radio",
+              options: {
+                choices: [{ content: "💜", correct: true }]
+              }
+            }
+          };
+
+          responseObj.data.assessmentItem.item.itemData = JSON.stringify(itemData);
+
+          return new Response(JSON.stringify(responseObj), {
+            status: originalResponse.status,
+            statusText: originalResponse.statusText,
+            headers: originalResponse.headers
+          });
+        }
+      }
+    } catch (e) {}
+
+    return originalResponse;
   };
 
-  // AUTO CLICK
+
   (async () => {
+    // Interruptor
     window.khandarkDominates = true;
 
     while (window.khandarkDominates) {
       let clicked = false;
 
-      // 1. Procura 💜
-      for (const el of document.querySelectorAll("*")) {
-        const txt = el.textContent?.trim();
-        if (txt && (txt === "💜" || txt.includes("💜 Resposta Correta")) && el.offsetParent) {
-          console.log("💜 Clicando...");
+      // Procura pela Resposta
+      const allElements = document.querySelectorAll('*');
+      for (const el of allElements) {
+        const text = (el.textContent || '').trim();
+        if (text === '💜' && el.offsetParent !== null) {
           el.click();
           clicked = true;
           await delay(800);
@@ -206,14 +236,19 @@ function setupMain() {
         }
       }
 
-      // 2. Radios normais
+      // Procura Seletores
       if (!clicked) {
-        const selectors = ['input[type="radio"]', '[role="radio"]', '[data-test-id="radio-option"]'];
-        for (const s of selectors) {
-          const e = document.querySelector(s);
-          if (e?.offsetParent) {
-            console.log("📻 Radio clicado");
-            e.click();
+        const radioSelectors = [
+          'input[type="radio"]',
+          'label[role="radio"]',
+          '[data-test-id="radio-option"]',
+          '[role="radio"]'
+        ];
+
+        for (const selector of radioSelectors) {
+          const element = document.querySelector(selector);
+          if (element && element.offsetParent !== null) {
+            element.click();
             clicked = true;
             await delay(800);
             break;
@@ -221,22 +256,30 @@ function setupMain() {
         }
       }
 
-      // 3. Botões
-      for (const btn of document.querySelectorAll("button, [role=button]")) {
-        const t = (btn.innerText || "").trim().toLowerCase();
-        
-        if (t.includes("pular") || t.includes("skip")) continue;
+      // Tenta clicar no botão de verificar/próxima (NÃO em pular)
+      const buttons = document.querySelectorAll('button:not([disabled]), [role="button"]');
 
-        const allowed = ["verificar", "próxima", "continuar", "check", "next", "enviar", "conferir"]
-          .some(x => t.includes(x));
+      for (const button of buttons) {
+        const buttonText = (button.textContent || button.innerText || '').trim().toLowerCase();
+        const isVisible = button.offsetParent !== null;
 
-        if (btn.offsetParent && allowed) {
-          console.log("🔘 Botão:", t);
-          btn.click();
+        // Ignora botão de pular
+        if (buttonText.includes('pular') || buttonText.includes('skip')) {
+          continue;
+        }
+
+        // Só clica em botões permitidos
+        const allowedButtons = ['verificar', 'próxima', 'continuar', 'check', 'next', 'enviar'];
+        const isAllowed = allowedButtons.some(text => buttonText.includes(text));
+
+        if (isVisible && isAllowed) {
+          button.click();
           clicked = true;
-          
-          if (t.includes("resumo")) sendToast("🎉 | Concluído!", 2000);
-          
+
+          if (buttonText.includes('resumo')) {
+            sendToast("🎉 | Questão concluída!", 2000);
+          }
+
           await delay(1200);
           break;
         }
@@ -247,29 +290,26 @@ function setupMain() {
   })();
 }
 
-// INIT
-if (!/khanacademy\.org/.test(location.href)) {
-  location.href = "https://pt.khanacademy.org/";
+if (!/^https?:\/\/([a-z0-9-]+\.)?khanacademy\.org/.test(window.location.href)) {
+  window.location.href = "https://pt.khanacademy.org/";
 } else {
-  (async () => {
+  (async function init() {
     await showSplashScreen();
 
     await Promise.all([
-      loadScript("https://cdn.jsdelivr.net/npm/darkreader@4.9.92/darkreader.min.js", "dark"),
-      loadCss("https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css"),
-      loadScript("https://cdn.jsdelivr.net/npm/toastify-js", "toast")
+      loadScript('https://cdn.jsdelivr.net/npm/darkreader@4.9.92/darkreader.min.js', 'darkReaderPlugin').then(() => {
+        DarkReader.setFetchMethod(window.fetch);
+        DarkReader.enable();
+      }),
+      loadCss('https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css'),
+      loadScript('https://cdn.jsdelivr.net/npm/toastify-js', 'toastifyPlugin')
     ]);
 
-    await delay(2000);
+    await delay(3000);
     await hideSplashScreen();
-    
-    // IMPORTANTE: setupMain ANTES do DarkReader
-    setupMain();
-    
-    DarkReader.setFetchMethod(window.fetch);
-    DarkReader.enable();
 
-    sendToast("💜 | Khan Dark Ativado!");
-    console.log("🚀 Pronto! Aguardando questões...");
+    setupMain();
+    sendToast("💜 | Khan Dark iniciado!");
+    console.clear();
   })();
 }
