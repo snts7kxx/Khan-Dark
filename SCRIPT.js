@@ -124,7 +124,7 @@ async function autoClickStartButton() {
       }
     }
     
-    await delay(500);
+    await delay(1500);
     attempts++;
   }
   
