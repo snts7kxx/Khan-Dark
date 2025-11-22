@@ -32,12 +32,10 @@ class EventEmitter {
 
 const plppdo = new EventEmitter();
 
-// Observer otimizado
 new MutationObserver(mutationsList => 
   mutationsList.some(m => m.type === 'childList') && plppdo.emit('domChanged')
 ).observe(document.body, { childList: true, subtree: true });
 
-// Funções helpers
 const delay = ms => new Promise(resolve => setTimeout(resolve, ms));
 
 function sendToast(text, duration = 5000, gravity = 'bottom') {
@@ -52,16 +50,16 @@ function sendToast(text, duration = 5000, gravity = 'bottom') {
 }
 
 async function showSplashScreen() {
-  splashScreen.style.cssText = "position:fixed;top:0;left:0;width:100%;height:100%;background-color:#000;display:flex;align-items:center;justify-content:center;z-index:9999;opacity:0;transition:opacity 1,5s ease;user-select:none;color:white;font-family:MuseoSans,sans-serif;font-size:35px;text-align:center;";
-
-  // Tela inicial
-  splashScreen.innerHTML = '<span style="color:white;text-shadow: 0 0 0.5px rgba(255,255,255,1);"><strong>KHAN</strong><span style="color:#af00ff;text-shadow: 0 0 0.5px rgba(255,255,255,1);"><strong>DARK</strong>';
+  splashScreen.style.cssText =
+    "position:fixed;top:0;left:0;width:100%;height:100%;background-color:#000;display:flex;align-items:center;justify-content:center;z-index:9999;opacity:0;transition:opacity 1.5s ease;user-select:none;color:white;font-family:MuseoSans,sans-serif;font-size:35px;text-align:center;";
+  splashScreen.innerHTML =
+    '<span style="color:white;text-shadow: 0 0 0.5px rgba(255,255,255,1);"><strong>KHAN</strong><span style="color:#af00ff;text-shadow: 0 0 0.5px rgba(255,255,255,1);"><strong>DARK</strong>';
   document.body.appendChild(splashScreen);
-  setTimeout(() => splashScreen.style.opacity = '1', 10);
+  setTimeout(() => (splashScreen.style.opacity = "1"), 10);
 }
 
 async function hideSplashScreen() {
-  splashScreen.style.opacity = '1';
+  splashScreen.style.opacity = "1";
   setTimeout(() => splashScreen.remove(), 2300);
 }
 
@@ -74,9 +72,9 @@ async function loadScript(url, label) {
 
 async function loadCss(url) {
   return new Promise(resolve => {
-    const link = document.createElement('link');
-    link.rel = 'stylesheet';
-    link.type = 'text/css';
+    const link = document.createElement("link");
+    link.rel = "stylesheet";
+    link.type = "text/css";
     link.href = url;
     link.onload = resolve;
     document.head.appendChild(link);
@@ -84,11 +82,9 @@ async function loadCss(url) {
 }
 
 function setupMain() {
-
   const originalFetch = window.fetch;
 
-  window.fetch = async function(input, init) {
-
+  window.fetch = async function (input, init) {
     let body;
     if (input instanceof Request) {
       body = await input.clone().text();
@@ -96,7 +92,7 @@ function setupMain() {
       body = init.body;
     }
 
-
+    // AUTO COMPLETE VIDEO
     if (body?.includes('"operationName":"updateUserVideoProgress"')) {
       try {
         let bodyObj = JSON.parse(body);
@@ -112,74 +108,90 @@ function setupMain() {
             init.body = body;
           }
 
-          sendToast("🔄 | Vídeo concluido!", 2500);
+          sendToast("🔄 | Vídeo concluído!", 2500);
         }
       } catch (e) {}
     }
 
-
     const originalResponse = await originalFetch.apply(this, arguments);
 
-
+    // ====== PATCH COMPLETO DE RESPOSTAS ======
     try {
       const clonedResponse = originalResponse.clone();
       const responseBody = await clonedResponse.text();
       let responseObj = JSON.parse(responseBody);
 
-      if (responseObj?.data?.assessmentItem?.item?.itemData) {
-        let itemData = JSON.parse(responseObj.data.assessmentItem.item.itemData);
+      let itemDataRaw =
+        responseObj?.data?.assessmentItem?.item?.itemData ||
+        responseObj?.data?.assessmentItem?.item?.stack?.itemData ||
+        responseObj?.data?.assessmentItem?.item?.itemTemplate ||
+        null;
 
-        if (itemData.question && itemData.question.content) {
-          itemData.answerArea = {
-            calculator: false,
-            chi2Table: false,
-            periodicTable: false,
-            tTable: false,
-            zTable: false,
-            table: false,
-            equationEditor: false,
-            formulaInput: false,
-            textArea: false,
-            numberInput: false 
-          };
+      if (!itemDataRaw) return originalResponse;
 
-          itemData.question.content = "Modificado por snts7kxx" + `[[☃ radio 1]]`;
-          itemData.question.widgets = {
-            "radio 1": {
-              type: "radio",
-              options: {
-                choices: [{ content: "💜", correct: true }]
-              }
-            }
-          };
-
-          responseObj.data.assessmentItem.item.itemData = JSON.stringify(itemData);
-
-          return new Response(JSON.stringify(responseObj), {
-            status: originalResponse.status,
-            statusText: originalResponse.statusText,
-            headers: originalResponse.headers
-          });
+      let itemData;
+      try {
+        itemData =
+          typeof itemDataRaw === "string" ? JSON.parse(itemDataRaw) : itemDataRaw;
+      } catch (_) {
+        try {
+          itemData = JSON.parse(JSON.parse(itemDataRaw));
+        } catch (e) {
+          return originalResponse;
         }
+      }
+
+      if (itemData?.question?.content) {
+        itemData.answerArea = {
+          calculator: false,
+          chi2Table: false,
+          periodicTable: false,
+          tTable: false,
+          zTable: false,
+          table: false,
+          equationEditor: false,
+          formulaInput: false,
+          textArea: false,
+          numberInput: false,
+        };
+
+        itemData.question.content =
+          "Modificado por snts7kxx [[☃ radio 1]]";
+
+        itemData.question.widgets = {
+          "radio 1": {
+            type: "radio",
+            options: {
+              choices: [{ content: "💜", correct: true }]
+            }
+          }
+        };
+
+        responseObj.data.assessmentItem.item.itemData =
+          JSON.stringify(itemData);
+
+        return new Response(JSON.stringify(responseObj), {
+          status: originalResponse.status,
+          statusText: originalResponse.statusText,
+          headers: originalResponse.headers
+        });
       }
     } catch (e) {}
 
     return originalResponse;
   };
 
-
+  // AUTO CLICKER
   (async () => {
-    // Interruptor
     window.khandarkDominates = true;
 
     while (window.khandarkDominates) {
       let clicked = false;
 
-      // Procura pela Resposta
-      const allElements = document.querySelectorAll('*');
+      const allElements = document.querySelectorAll("*");
       for (const el of allElements) {
-        const text = (el.textContent || '').trim();
-        if (text === '💜' && el.offsetParent !== null) {
+        const text = (el.textContent || "").trim();
+        if (text === "💜" && el.offsetParent !== null) {
           el.click();
           clicked = true;
           await delay(800);
@@ -187,7 +199,6 @@ function setupMain() {
         }
       }
 
-      // Procura Seletores
       if (!clicked) {
         const radioSelectors = [
           'input[type="radio"]',
@@ -207,27 +218,39 @@ function setupMain() {
         }
       }
 
-      // Tenta clicar no botão de verificar/próxima (NÃO em pular)
-      const buttons = document.querySelectorAll('button:not([disabled]), [role="button"]');
+      const buttons = document.querySelectorAll(
+        "button:not([disabled]), [role='button']"
+      );
 
       for (const button of buttons) {
-        const buttonText = (button.textContent || button.innerText || '').trim().toLowerCase();
+        const buttonText =
+          (button.textContent || button.innerText || "")
+            .trim()
+            .toLowerCase();
         const isVisible = button.offsetParent !== null;
 
-        // Ignora botão de pular
-        if (buttonText.includes('pular') || buttonText.includes('skip')) {
+        if (buttonText.includes("pular") || buttonText.includes("skip")) {
           continue;
         }
 
-        // Só clica em botões permitidos
-        const allowedButtons = ['verificar', 'próxima', 'continuar', 'check', 'next', 'enviar'];
-        const isAllowed = allowedButtons.some(text => buttonText.includes(text));
+        const allowedButtons = [
+          "verificar",
+          "próxima",
+          "continuar",
+          "check",
+          "next",
+          "enviar"
+        ];
+
+        const isAllowed = allowedButtons.some(text =>
+          buttonText.includes(text)
+        );
 
         if (isVisible && isAllowed) {
           button.click();
           clicked = true;
 
-          if (buttonText.includes('resumo')) {
+          if (buttonText.includes("resumo")) {
             sendToast("🎉 | Questão concluída!", 2000);
           }
 
@@ -241,6 +264,7 @@ function setupMain() {
   })();
 }
 
+// AUTO REDIRECT
 if (!/^https?:\/\/([a-z0-9-]+\.)?khanacademy\.org/.test(window.location.href)) {
   window.location.href = "https://pt.khanacademy.org/";
 } else {
@@ -248,19 +272,22 @@ if (!/^https?:\/\/([a-z0-9-]+\.)?khanacademy\.org/.test(window.location.href)) {
     await showSplashScreen();
 
     await Promise.all([
-      loadScript('https://cdn.jsdelivr.net/npm/darkreader@4.9.92/darkreader.min.js', 'darkReaderPlugin').then(() => {
+      loadScript(
+        "https://cdn.jsdelivr.net/npm/darkreader@4.9.92/darkreader.min.js",
+        "darkReaderPlugin"
+      ).then(() => {
         DarkReader.setFetchMethod(window.fetch);
         DarkReader.enable();
       }),
-      loadCss('https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css'),
-      loadScript('https://cdn.jsdelivr.net/npm/toastify-js', 'toastifyPlugin')
+      loadCss("https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css"),
+      loadScript("https://cdn.jsdelivr.net/npm/toastify-js", "toastifyPlugin")
     ]);
 
     await delay(3000);
     await hideSplashScreen();
 
     setupMain();
-    sendToast("💜 | Khan Dark iniciado!");
+    sendToast("💜 | Khan Manutenção!");
     console.clear();
   })();
 }
