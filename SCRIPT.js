@@ -129,80 +129,32 @@ function setupMain() {
       if (responseObj?.data?.assessmentItem?.item?.itemData) {
         let itemData = JSON.parse(responseObj.data.assessmentItem.item.itemData);
 
-        if (itemData.question && itemData.question.content) {
-          itemData.answerArea = {
-            calculator: false,
-            chi2Table: false,
-            periodicTable: false,
-            tTable: false,
-            zTable: false,
-            table: false,
-            equationEditor: false,
-            formulaInput: false,
-            textArea: false,
-            numberInput: false,
-            graphie: false,
-            interactiveGraph: false,
-            graphBoard: false,
-            expressionInput: false,
-            matrixInput: false,
-            dropdown: false,
-            dropdownInput: false,
-            radioInput: false,
-            multipleSelect: false,
-            imageInput: false,
-            fileUpload: false,
-            ruler: false,
-            protractor: false,
-            compass: false,
-            scratchpad: false,
-            hints: false,
-            stepByStep: false,
-            essayInput: false,
-            shortAnswer: false,
-            scientificCalculator: false,
-            calculatorLarge: false,
-            statsTable: false,
-            chemEquationEditor: false,
-            moleculeEditor: false,
-            unitConverter: false,
-            functionEditor: false,
-            audioInput: false,
-            codeInput: false,
-            mathInput: false,
-            graphInput: false,
-            customInput: false,
-            sortInput: false,
-            matchingInput: false,
-            classificationInput: false,
-            timelineInput: false,
-            coordinatesInput: false,
-            inequalityGraph: false,
-            numberLine: false,
-            rulerMeasure: false,
-            protractorMeasure: false,
-            shadedRegionInput: false,
-            labelPlacement: false,
-            dragAndDrop: false,
-            clickToSelect: false,
-            tokenInput: false,
-            keypad: false,
-            keypadAdvanced: false,
-            keypadFraction: false,
-            keypadGeometry: false
-          };
+        if (itemData.question.content?.[0] === itemData.question.content[0].toUpperCase()) {
+                        itemData.answerArea = { calculator: false, chi2Table: false, periodicTable: false, tTable: false, zTable: false };
+                        itemData.question.content = phrases[Math.floor(Math.random() * phrases.length)] + "\n\n**Modificado por snts7kxx**" + `[[☃ radio 1]]`+ `\n\n**Script Permanente**` ;
+                        itemData.question.widgets = {
+                            "radio 1": {
+                                type: "radio", alignment: "default", static: false, graded: true,
+                                options: {
+                                    choices: [
+                                        { content: "**💜**.", correct: true, id: "correct-choice" },
+                                    ],
+                                    randomize: false, multipleSelect: false, displayCount: null, deselectEnabled: false
+                                },
+                                version: { major: 1, minor: 0 }
+                            }
+                        };
+                        
+                        const modified = { ...data };
 
-          itemData.question.content = "Modificado por snts7kxx" + `[[☃ radio 1]]`;
-          itemData.question.widgets = {
-            "radio 1": {
-              type: "radio",
-              options: {
-                choices: [{ content: "💜", correct: true }]
-              }
-            }
-          };
-
-          responseObj.data.assessmentItem.item.itemData = JSON.stringify(itemData);
+                        if (modified.data) {
+                            for (const key in modified.data) {
+                                if (modified.data[key]?.item?.itemData) {
+                                    modified.data[key].item.itemData = JSON.stringify(itemData);
+                                    break;
+                                }
+                            }
+                        } responseObj.data.assessmentItem.item.itemData = JSON.stringify(itemData);
 
           return new Response(JSON.stringify(responseObj), {
             status: originalResponse.status,
