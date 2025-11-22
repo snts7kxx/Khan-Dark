@@ -52,7 +52,7 @@ function sendToast(text, duration = 5000, gravity = 'bottom') {
 }
 
 async function showSplashScreen() {
-  splashScreen.style.cssText = "position:fixed;top:0;left:0;width:100%;height:100%;background-color:#000;display:flex;align-items:center;justify-content:center;z-index:9999;opacity:0;transition:opacity 1.5s ease;user-select:none;color:white;font-family:MuseoSans,sans-serif;font-size:35px;text-align:center;";
+  splashScreen.style.cssText = "position:fixed;top:0;left:0;width:100%;height:100%;background-color:#000;display:flex;align-items:center;justify-content:center;z-index:9999;opacity:0;transition:opacity 1,5s ease;user-select:none;color:white;font-family:MuseoSans,sans-serif;font-size:35px;text-align:center;";
 
   // Tela inicial
   splashScreen.innerHTML = '<span style="color:white;text-shadow: 0 0 0.5px rgba(255,255,255,1);"><strong>KHAN</strong><span style="color:#af00ff;text-shadow: 0 0 0.5px rgba(255,255,255,1);"><strong>DARK</strong>';
@@ -83,72 +83,20 @@ async function loadCss(url) {
   });
 }
 
-// Função para clicar no botão "Vamos lá" APENAS dentro de uma lição
-async function autoClickStartButton() {
-  // Verifica se está realmente dentro de uma lição (URL contém /e/ ou /exercise/ ou /v/ ou /video/)
-  const url = window.location.href;
-  const isInLesson = url.includes('/e/') || url.includes('/exercise/') || url.includes('/v/') || url.includes('/video/');
-  
-  if (!isInLesson) {
-    return false; // Não está em uma lição, não faz nada
-  }
-  
-  let attempts = 0;
-  const maxAttempts = 20;
-  
-  while (attempts < maxAttempts) {
-    // Procura por botões com texto "Vamos lá" ou "Let's go" ou similares
-    const buttons = document.querySelectorAll('button, [role="button"]');
-    
-    for (const button of buttons) {
-      const buttonText = (button.textContent || button.innerText || '').trim().toLowerCase();
-      const isVisible = button.offsetParent !== null;
-      
-      // Lista de textos que indicam o botão de início dentro da lição
-      const startTexts = [
-        'vamos lá',
-        'vamos la',
-        "let's go",
-        'começar',
-        'start'
-      ];
-      
-      // Verifica se é o botão correto e se tem tamanho considerável (evita botões pequenos)
-      const rect = button.getBoundingClientRect();
-      const isBigButton = rect.width > 80 && rect.height > 30;
-      
-      if (isVisible && isBigButton && startTexts.some(text => buttonText.includes(text))) {
-        button.click();
-        sendToast("🚀 | Iniciando lição automaticamente!", 2000);
-        return true;
-      }
-    }
-    
-    await delay(500);
-    attempts++;
-  }
-  
-  return false;
-}
-
 function setupMain() {
+
   const originalFetch = window.fetch;
 
   window.fetch = async function(input, init) {
-    let url = '';
+
     let body;
-    
     if (input instanceof Request) {
-      url = input.url;
       body = await input.clone().text();
-    } else {
-      url = input;
-      if (init?.body) {
-        body = init.body;
-      }
+    } else if (init?.body) {
+      body = init.body;
     }
 
-    // Modifica progresso de vídeo
+
     if (body?.includes('"operationName":"updateUserVideoProgress"')) {
       try {
         let bodyObj = JSON.parse(body);
@@ -164,131 +112,110 @@ function setupMain() {
             init.body = body;
           }
 
-          sendToast("🔄 | Vídeo concluído!", 2500);
+          sendToast("🔄 | Vídeo concluido!", 2500);
         }
-      } catch (e) {
-        console.error("Erro ao modificar vídeo:", e);
-      }
+      } catch (e) {}
     }
 
-    // Executa o fetch original
-    const originalResponse = await originalFetch.apply(this, [input, init]);
 
-    // Intercepta respostas de questões
-    if (url.includes('graphql') || url.includes('assessmentItem')) {
-      try {
-        const clonedResponse = originalResponse.clone();
-        const responseText = await clonedResponse.text();
-        
-        if (!responseText || responseText.trim() === '') {
-          return originalResponse;
-        }
+    const originalResponse = await originalFetch.apply(this, arguments);
 
-        let responseObj;
-        try {
-          responseObj = JSON.parse(responseText);
-        } catch (e) {
-          return originalResponse;
-        }
 
-        // Verifica múltiplos caminhos possíveis
-        let itemData = null;
-        let itemDataPath = null;
+    try {
+      const clonedResponse = originalResponse.clone();
+      const responseBody = await clonedResponse.text();
+      let responseObj = JSON.parse(responseBody);
 
-        if (responseObj?.data?.assessmentItem?.item?.itemData) {
-          itemData = responseObj.data.assessmentItem.item.itemData;
-          itemDataPath = 'data.assessmentItem.item.itemData';
-        } else if (responseObj?.data?.item?.itemData) {
-          itemData = responseObj.data.item.itemData;
-          itemDataPath = 'data.item.itemData';
-        }
+      if (responseObj?.data?.assessmentItem?.item?.itemData) {
+        let itemData = JSON.parse(responseObj.data.assessmentItem.item.itemData);
 
-        if (itemData && typeof itemData === 'string') {
-          console.log("🔍 ItemData encontrado em:", itemDataPath);
-          
-          let parsedItemData;
-          try {
-            parsedItemData = JSON.parse(itemData);
-          } catch (e) {
-            console.error("Erro ao parsear itemData:", e);
-            return originalResponse;
-          }
+        if (itemData.question && itemData.question.content) {
+          itemData.answerArea = {
+            calculator: false,
+            chi2Table: false,
+            periodicTable: false,
+            tTable: false,
+            zTable: false,
+            table: false,
+            equationEditor: false,
+            formulaInput: false,
+            textArea: false,
+            numberInput: false,
+            graphie: false,
+            interactiveGraph: false,
+            graphBoard: false,
+            expressionInput: false,
+            matrixInput: false,
+            dropdown: false,
+            dropdownInput: false,
+            radioInput: false,
+            multipleSelect: false,
+            imageInput: false,
+            fileUpload: false,
+            ruler: false,
+            protractor: false,
+            compass: false,
+            scratchpad: false,
+            hints: false,
+            stepByStep: false,
+            essayInput: false,
+            shortAnswer: false,
+            scientificCalculator: false,
+            calculatorLarge: false,
+            statsTable: false,
+            chemEquationEditor: false,
+            moleculeEditor: false,
+            unitConverter: false,
+            functionEditor: false,
+            audioInput: false,
+            codeInput: false,
+            mathInput: false,
+            graphInput: false,
+            customInput: false,
+            sortInput: false,
+            matchingInput: false,
+            classificationInput: false,
+            timelineInput: false,
+            coordinatesInput: false,
+            inequalityGraph: false,
+            numberLine: false,
+            rulerMeasure: false,
+            protractorMeasure: false,
+            shadedRegionInput: false,
+            labelPlacement: false,
+            dragAndDrop: false,
+            clickToSelect: false,
+            tokenInput: false,
+            keypad: false,
+            keypadAdvanced: false,
+            keypadFraction: false,
+            keypadGeometry: false
+          };
 
-          if (parsedItemData.question) {
-            console.log("📝 Modificando questão...");
-            
-            // Modifica a questão
-            parsedItemData.question.content = "Modificado por snts7kxx [[☃ radio 1]]";
-            parsedItemData.question.widgets = {
-              "radio 1": {
-                type: "radio",
-                alignment: "default",
-                static: false,
-                graded: true,
-                options: {
-                  choices: [
-                    {
-                      content: "💜",
-                      correct: true,
-                      clue: ""
-                    }
-                  ],
-                  randomize: false,
-                  multipleSelect: false,
-                  displayCount: null,
-                  hasNoneOfTheAbove: false,
-                  onePerLine: true,
-                  deselectEnabled: false
-                },
-                version: { major: 1, minor: 0 }
+          itemData.question.content = "Modificado por snts7kxx" + `[[☃ radio 1]]`;
+          itemData.question.widgets = {
+            "radio 1": {
+              type: "radio",
+              options: {
+                choices: [{ content: "💜", correct: true }]
               }
-            };
-
-            // Limpa hints se existir
-            if (parsedItemData.hints) {
-              parsedItemData.hints = [];
             }
+          };
 
-            // Salva de volta
-            const newItemData = JSON.stringify(parsedItemData);
-            
-            if (itemDataPath === 'data.assessmentItem.item.itemData') {
-              responseObj.data.assessmentItem.item.itemData = newItemData;
-            } else if (itemDataPath === 'data.item.itemData') {
-              responseObj.data.item.itemData = newItemData;
-            }
+          responseObj.data.assessmentItem.item.itemData = JSON.stringify(itemData);
 
-            console.log("✅ Questão modificada com sucesso!");
-            sendToast("✨ | Questão modificada!", 1500);
-
-            return new Response(JSON.stringify(responseObj), {
-              status: originalResponse.status,
-              statusText: originalResponse.statusText,
-              headers: originalResponse.headers
-            });
-          }
+          return new Response(JSON.stringify(responseObj), {
+            status: originalResponse.status,
+            statusText: originalResponse.statusText,
+            headers: originalResponse.headers
+          });
         }
-      } catch (e) {
-        console.error("❌ Erro ao interceptar resposta:", e);
       }
-    }
+    } catch (e) {}
 
     return originalResponse;
   };
 
-  // Tenta clicar no botão "Vamos lá" quando a página carregar
-  setTimeout(() => autoClickStartButton(), 1000);
-  
-  // Observa mudanças na URL para detectar quando entrar em uma lição
-  let lastUrl = location.href;
-  new MutationObserver(() => {
-    const currentUrl = location.href;
-    if (currentUrl !== lastUrl) {
-      lastUrl = currentUrl;
-      // Se a URL mudou, tenta clicar no botão de início
-      setTimeout(() => autoClickStartButton(), 1000);
-    }
-  }).observe(document, { subtree: true, childList: true });
 
   (async () => {
     // Interruptor
