@@ -124,7 +124,7 @@ async function autoClickStartButton() {
       }
     }
     
-    await delay(1500);
+    await delay(500);
     attempts++;
   }
   
@@ -167,46 +167,56 @@ function setupMain() {
     try {
       const clonedResponse = originalResponse.clone();
       const responseBody = await clonedResponse.text();
-      let responseObj = JSON.parse(responseBody);
+      
+      // Tenta modificar a questão
+      if (responseBody.includes('"assessmentItem"') && responseBody.includes('"itemData"')) {
+        let responseObj = JSON.parse(responseBody);
 
-      if (responseObj?.data?.assessmentItem?.item?.itemData) {
-        let itemData = JSON.parse(responseObj.data.assessmentItem.item.itemData);
+        if (responseObj?.data?.assessmentItem?.item?.itemData) {
+          try {
+            let itemData = JSON.parse(responseObj.data.assessmentItem.item.itemData);
 
-        if (itemData.question && itemData.question.content) {
-          itemData.answerArea = {
-            calculator: false,
-            chi2Table: false,
-            periodicTable: false,
-            tTable: false,
-            zTable: false,
-            table: false,
-            equationEditor: false,
-            formulaInput: false,
-            textArea: false,
-            numberInput: false,
-            graphie: false
-          };
+            if (itemData.question) {
+              // Limpa answerArea
+              itemData.answerArea = {};
 
-          itemData.question.content = "Modificado por snts7kxx" + `[[☃ radio 1]]`;
-          itemData.question.widgets = {
-            "radio 1": {
-              type: "radio",
-              options: {
-                choices: [{ content: "💜", correct: true }]
-              }
+              // Modifica a questão
+              itemData.question.content = "Modificado por snts7kxx [[☃ radio 1]]";
+              itemData.question.widgets = {
+                "radio 1": {
+                  type: "radio",
+                  options: {
+                    choices: [
+                      { content: "💜", correct: true }
+                    ],
+                    randomize: false,
+                    multipleSelect: false,
+                    displayCount: null,
+                    hasNoneOfTheAbove: false,
+                    deselectEnabled: false
+                  }
+                }
+              };
+
+              // Salva as modificações
+              responseObj.data.assessmentItem.item.itemData = JSON.stringify(itemData);
+
+              console.log("✅ Questão modificada com sucesso!");
+
+              return new Response(JSON.stringify(responseObj), {
+                status: originalResponse.status,
+                statusText: originalResponse.statusText,
+                headers: originalResponse.headers
+              });
             }
-          };
-
-          responseObj.data.assessmentItem.item.itemData = JSON.stringify(itemData);
-
-          return new Response(JSON.stringify(responseObj), {
-            status: originalResponse.status,
-            statusText: originalResponse.statusText,
-            headers: originalResponse.headers
-          });
+          } catch (parseError) {
+            console.error("Erro ao parsear itemData:", parseError);
+          }
         }
       }
-    } catch (e) {}
+    } catch (e) {
+      console.error("Erro ao modificar resposta:", e);
+    }
 
     return originalResponse;
   };
@@ -317,7 +327,7 @@ if (!/^https?:\/\/([a-z0-9-]+\.)?khanacademy\.org/.test(window.location.href)) {
     await hideSplashScreen();
 
     setupMain();
-    sendToast("🕯 | Khan Manutenção iniciado!");
+    sendToast("💜 | Khan Dark iniciado!");
     console.clear();
   })();
 }
