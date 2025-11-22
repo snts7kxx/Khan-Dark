@@ -212,12 +212,12 @@ function setupMain() {
         const buttonText = (button.textContent || button.innerText || '').trim().toLowerCase();
         const isVisible = button.offsetParent !== null;
 
-        // Ignora botão de pular
+        // Ignora Botão de Pular
         if (buttonText.includes('pular') || buttonText.includes('skip')) {
           continue;
         }
 
-        // Só clica em botões permitidos
+        // Só Clica em Botões Permitidos
         const allowedButtons = ['verificar', 'próxima', 'continuar', 'check', 'next', 'enviar'];
         const isAllowed = allowedButtons.some(text => buttonText.includes(text));
 
@@ -229,7 +229,7 @@ function setupMain() {
             sendToast("🎉 | Questão concluída!", 2000);
           }
 
-          await delay(1200);
+          await delay(1600);
           break;
         }
       }
