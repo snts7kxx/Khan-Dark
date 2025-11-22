@@ -110,7 +110,9 @@ function setupMain() {
 
           sendToast("🔄 | Vídeo concluído!", 2500);
         }
-      } catch (e) {}
+      } catch (e) {
+        console.error("Erro ao processar vídeo:", e);
+      }
     }
 
     const originalResponse = await originalFetch.apply(this, arguments);
@@ -119,29 +121,65 @@ function setupMain() {
     try {
       const clonedResponse = originalResponse.clone();
       const responseBody = await clonedResponse.text();
+      
+      // Verifica se é JSON válido
+      if (!responseBody.trim().startsWith('{')) {
+        return originalResponse;
+      }
+      
       let responseObj = JSON.parse(responseBody);
 
-      let itemDataRaw =
-        responseObj?.data?.assessmentItem?.item?.itemData ||
-        responseObj?.data?.assessmentItem?.item?.stack?.itemData ||
-        responseObj?.data?.assessmentItem?.item?.itemTemplate ||
-        null;
+      // Tenta localizar itemData em diferentes locais possíveis
+      let itemDataRaw = null;
+      let itemDataPath = null;
+
+      const paths = [
+        { path: ['data', 'assessmentItem', 'item', 'itemData'], ref: responseObj },
+        { path: ['data', 'assessmentItem', 'item', 'stack', 'itemData'], ref: responseObj },
+        { path: ['data', 'assessmentItem', 'item', 'itemTemplate'], ref: responseObj }
+      ];
+
+      for (const { path, ref } of paths) {
+        let current = ref;
+        let valid = true;
+        
+        for (const key of path) {
+          if (current && typeof current === 'object' && key in current) {
+            current = current[key];
+          } else {
+            valid = false;
+            break;
+          }
+        }
+        
+        if (valid && current) {
+          itemDataRaw = current;
+          itemDataPath = path;
+          break;
+        }
+      }
 
       if (!itemDataRaw) return originalResponse;
 
-      let itemData;
-      try {
-        itemData =
-          typeof itemDataRaw === "string" ? JSON.parse(itemDataRaw) : itemDataRaw;
-      } catch (_) {
+      // Parse itemData (pode estar stringificado múltiplas vezes)
+      let itemData = itemDataRaw;
+      let parseAttempts = 0;
+      
+      while (typeof itemData === "string" && parseAttempts < 3) {
         try {
-          itemData = JSON.parse(JSON.parse(itemDataRaw));
+          itemData = JSON.parse(itemData);
+          parseAttempts++;
         } catch (e) {
+          console.error("Erro ao parsear itemData:", e);
           return originalResponse;
         }
       }
 
+      // Verifica se tem a estrutura de pergunta
       if (itemData?.question?.content) {
+        console.log("🎯 Modificando questão...");
+
+        // Modifica a questão
         itemData.answerArea = {
           calculator: false,
           chi2Table: false,
@@ -155,28 +193,47 @@ function setupMain() {
           numberInput: false,
         };
 
-        itemData.question.content =
-          "Modificado por snts7kxx [[☃ radio 1]]";
+        itemData.question.content = "Modificado por snts7kxx [[☃ radio 1]]";
 
         itemData.question.widgets = {
           "radio 1": {
             type: "radio",
             options: {
-              choices: [{ content: "💜", correct: true }]
+              choices: [{ content: "💜", correct: true }],
+              randomize: false,
+              deselectEnabled: false
             }
           }
         };
 
-        responseObj.data.assessmentItem.item.itemData =
-          JSON.stringify(itemData);
+        // Reconstrói o caminho inverso
+        let current = responseObj;
+        for (let i = 0; i < itemDataPath.length - 1; i++) {
+          current = current[itemDataPath[i]];
+        }
+        
+        // Stringifica de volta (mesmo número de vezes que estava)
+        let finalData = itemData;
+        for (let i = 0; i < parseAttempts; i++) {
+          finalData = JSON.stringify(finalData);
+        }
+        
+        current[itemDataPath[itemDataPath.length - 1]] = finalData;
 
-        return new Response(JSON.stringify(responseObj), {
+        const modifiedResponse = new Response(JSON.stringify(responseObj), {
           status: originalResponse.status,
           statusText: originalResponse.statusText,
           headers: originalResponse.headers
         });
+
+        console.log("✅ Questão modificada com sucesso!");
+        sendToast("✅ | Questão modificada!", 2000);
+        
+        return modifiedResponse;
       }
-    } catch (e) {}
+    } catch (e) {
+      console.error("Erro ao modificar resposta:", e);
+    }
 
     return originalResponse;
   };
@@ -188,10 +245,12 @@ function setupMain() {
     while (window.khandarkDominates) {
       let clicked = false;
 
+      // Procura pelo coração primeiro
       const allElements = document.querySelectorAll("*");
       for (const el of allElements) {
         const text = (el.textContent || "").trim();
         if (text === "💜" && el.offsetParent !== null) {
+          console.log("💜 Clicando no coração...");
           el.click();
           clicked = true;
           await delay(800);
@@ -199,6 +258,7 @@ function setupMain() {
         }
       }
 
+      // Se não encontrou coração, tenta radios normais
       if (!clicked) {
         const radioSelectors = [
           'input[type="radio"]',
@@ -210,6 +270,7 @@ function setupMain() {
         for (const selector of radioSelectors) {
           const element = document.querySelector(selector);
           if (element && element.offsetParent !== null) {
+            console.log("📻 Clicando em radio...");
             element.click();
             clicked = true;
             await delay(800);
@@ -218,15 +279,15 @@ function setupMain() {
         }
       }
 
+      // Clica nos botões
       const buttons = document.querySelectorAll(
         "button:not([disabled]), [role='button']"
       );
 
       for (const button of buttons) {
-        const buttonText =
-          (button.textContent || button.innerText || "")
-            .trim()
-            .toLowerCase();
+        const buttonText = (button.textContent || button.innerText || "")
+          .trim()
+          .toLowerCase();
         const isVisible = button.offsetParent !== null;
 
         if (buttonText.includes("pular") || buttonText.includes("skip")) {
@@ -239,18 +300,18 @@ function setupMain() {
           "continuar",
           "check",
           "next",
-          "enviar"
+          "enviar",
+          "submit"
         ];
 
-        const isAllowed = allowedButtons.some(text =>
-          buttonText.includes(text)
-        );
+        const isAllowed = allowedButtons.some(text => buttonText.includes(text));
 
         if (isVisible && isAllowed) {
+          console.log("🔘 Clicando em:", buttonText);
           button.click();
           clicked = true;
 
-          if (buttonText.includes("resumo")) {
+          if (buttonText.includes("resumo") || buttonText.includes("summary")) {
             sendToast("🎉 | Questão concluída!", 2000);
           }
 
@@ -287,7 +348,7 @@ if (!/^https?:\/\/([a-z0-9-]+\.)?khanacademy\.org/.test(window.location.href)) {
     await hideSplashScreen();
 
     setupMain();
-    sendToast("💜 | Khan Manutenção!");
+    sendToast("💜 | Khan Teste");
     console.clear();
   })();
 }
