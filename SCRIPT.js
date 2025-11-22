@@ -357,7 +357,7 @@ if (!/^https?:\/\/([a-z0-9-]+\.)?khanacademy\.org/.test(window.location.href)) {
     await hideSplashScreen();
 
     setupMain();
-    sendToast("💜 | Khan Dark iniciado!");
+    sendToast("🔧 | Khan Manutenção iniciado!");
     console.clear();
   })();
 }
