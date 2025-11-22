@@ -8,43 +8,24 @@ const splashScreen = document.createElement('splashScreen');
 
 class EventEmitter {
   constructor() { this.events = {}; }
-  on(t, e) {
-    (Array.isArray(t) ? t : [t]).forEach(t => {
-      (this.events[t] = this.events[t] || []).push(e);
-    });
-  }
-  off(t, e) {
-    (Array.isArray(t) ? t : [t]).forEach(t => {
-      this.events[t] && (this.events[t] = this.events[t].filter(h => h !== e));
-    });
-  }
-  emit(t, ...e) {
-    this.events[t]?.forEach(h => h(...e));
-  }
-  once(t, e) {
-    const s = (...i) => {
-      e(...i);
-      this.off(t, s);
-    };
-    this.on(t, s);
-  }
+  on(t, e) { (Array.isArray(t) ? t : [t]).forEach(x => (this.events[x] = this.events[x] || []).push(e)); }
+  off(t, e) { (Array.isArray(t) ? t : [t]).forEach(x => this.events[x] = (this.events[x] || []).filter(h => h !== e)); }
+  emit(t, ...e) { this.events[t]?.forEach(h => h(...e)); }
+  once(t, e) { const s = (...i) => { e(...i); this.off(t, s); }; this.on(t, s); }
 }
 
 const plppdo = new EventEmitter();
 
-// Observer otimizado
-new MutationObserver(mutationsList => 
-  mutationsList.some(m => m.type === 'childList') && plppdo.emit('domChanged')
-).observe(document.body, { childList: true, subtree: true });
+new MutationObserver(m => m.some(x => x.type === 'childList') && plppdo.emit('domChanged'))
+  .observe(document.body, { childList: true, subtree: true });
 
-// Funções helpers
-const delay = ms => new Promise(resolve => setTimeout(resolve, ms));
+const delay = ms => new Promise(r => setTimeout(r, ms));
 
-function sendToast(text, duration = 5000, gravity = 'bottom') {
+function sendToast(text, duration = 5000) {
   Toastify({
     text,
     duration,
-    gravity,
+    gravity: "bottom",
     position: "center",
     stopOnFocus: true,
     style: { background: "#000000" }
@@ -52,34 +33,33 @@ function sendToast(text, duration = 5000, gravity = 'bottom') {
 }
 
 async function showSplashScreen() {
-  splashScreen.style.cssText = "position:fixed;top:0;left:0;width:100%;height:100%;background-color:#000;display:flex;align-items:center;justify-content:center;z-index:9999;opacity:0;transition:opacity 1,5s ease;user-select:none;color:white;font-family:MuseoSans,sans-serif;font-size:35px;text-align:center;";
-
-  // Tela inicial
-  splashScreen.innerHTML = '<span style="color:white;text-shadow: 0 0 0.5px rgba(255,255,255,1);"><strong>KHAN</strong><span style="color:#af00ff;text-shadow: 0 0 0.5px rgba(255,255,255,1);"><strong>DARK</strong>';
+  splashScreen.style.cssText =
+    "position:fixed;top:0;left:0;width:100%;height:100%;background:#000;display:flex;align-items:center;justify-content:center;z-index:9999;opacity:0;transition:opacity 1.5s;";
+  splashScreen.innerHTML =
+    '<span style="color:white;text-shadow:0 0 0.5px #fff;"><strong>KHAN</strong><span style="color:#af00ff;text-shadow:0 0 0.5px #fff;"><strong>DARK</strong>';
   document.body.appendChild(splashScreen);
-  setTimeout(() => splashScreen.style.opacity = '1', 10);
+  setTimeout(() => splashScreen.style.opacity = "1", 20);
 }
 
 async function hideSplashScreen() {
-  splashScreen.style.opacity = '1';
-  setTimeout(() => splashScreen.remove(), 2300);
+  splashScreen.style.opacity = "0";
+  setTimeout(() => splashScreen.remove(), 1500);
 }
 
 async function loadScript(url, label) {
-  const response = await fetch(url);
-  const script = await response.text();
+  const res = await fetch(url);
+  const txt = await res.text();
   loadedPlugins.push(label);
-  eval(script);
+  eval(txt);
 }
 
 async function loadCss(url) {
-  return new Promise(resolve => {
-    const link = document.createElement('link');
-    link.rel = 'stylesheet';
-    link.type = 'text/css';
-    link.href = url;
-    link.onload = resolve;
-    document.head.appendChild(link);
+  return new Promise(res => {
+    const l = document.createElement("link");
+    l.rel = "stylesheet";
+    l.href = url;
+    l.onload = res;
+    document.head.appendChild(l);
   });
 }
 
@@ -87,97 +67,88 @@ function setupMain() {
 
   const originalFetch = window.fetch;
 
-  window.fetch = async function(input, init) {
+  window.fetch = async function (input, init) {
 
     let body;
-    if (input instanceof Request) {
-      body = await input.clone().text();
-    } else if (init?.body) {
-      body = init.body;
-    }
+    if (input instanceof Request) body = await input.clone().text();
+    else if (init?.body) body = init.body;
 
-
+    // AUTO COMPLETE VIDEO
     if (body?.includes('"operationName":"updateUserVideoProgress"')) {
       try {
-        let bodyObj = JSON.parse(body);
-        if (bodyObj.variables?.input) {
-          const durationSeconds = bodyObj.variables.input.durationSeconds;
-          bodyObj.variables.input.secondsWatched = durationSeconds;
-          bodyObj.variables.input.lastSecondWatched = durationSeconds;
-          body = JSON.stringify(bodyObj);
+        let b = JSON.parse(body);
+        if (b.variables?.input) {
+          const d = b.variables.input.durationSeconds;
+          b.variables.input.secondsWatched = d;
+          b.variables.input.lastSecondWatched = d;
+          body = JSON.stringify(b);
 
-          if (input instanceof Request) {
-            input = new Request(input, { body });
-          } else {
-            init.body = body;
-          }
+          if (input instanceof Request) input = new Request(input, { body });
+          else init.body = body;
 
-          sendToast("🔄 | Vídeo concluido!", 2500);
+          sendToast("🔄 | Vídeo concluído!", 2500);
         }
-      } catch (e) {}
+      } catch {}
     }
 
-
-    const originalResponse = await originalFetch.apply(this, arguments);
-
+    const response = await originalFetch.apply(this, arguments);
 
     try {
-      const clonedResponse = originalResponse.clone();
-      const responseBody = await clonedResponse.text();
-      let responseObj = JSON.parse(responseBody);
+      const clone = response.clone();
+      const text = await clone.text();
+      const responseObj = JSON.parse(text);
 
       if (responseObj?.data?.assessmentItem?.item?.itemData) {
+
         let itemData = JSON.parse(responseObj.data.assessmentItem.item.itemData);
 
-        if (itemData.question && itemData.question.content) {
+        if (itemData?.question?.content != null) {
 
-        // Remove o Respostas de Lição
-        delete itemData.answerArea;
-  
-       // Remove Imagens, Widgets e os Conteudos Originais
-       itemData.question.images = {};
-       itemData.question.widgets = {};
-       itemData.question.content = "";
-          
-          // Conteúdo que eu quero.
-          itemData.question.content = "Modificado por snts7kxx" + `[[☃ radio 1]]`;
+          // REMOVE answerArea
+          delete itemData.answerArea;
+
+          // LIMPA widgets/imagens e coloca conteúdo novo
+          itemData.question.images = {};
+          itemData.question.widgets = {};
+          itemData.question.content = "Modificado por snts7kxx [[☃ radio 1]]";
+
           itemData.question.widgets = {
             "radio 1": {
               type: "radio",
               options: {
-                choices: [{ content: "💜", correct: true }]
+                choices: [
+                  { content: "💜", correct: true }
+                ]
               }
             }
           };
-       }
-    }
-        responseObj.data.assessmentItem.item.itemData = JSON.stringify(itemData);
 
-          return new Response(JSON.stringify(responseObj), {
-            status: originalResponse.status,
-            statusText: originalResponse.statusText,
-            headers: originalResponse.headers
-          });
+          responseObj.data.assessmentItem.item.itemData = JSON.stringify(itemData);
         }
       }
-    } catch (e) {}
 
-    return originalResponse;
+      return new Response(JSON.stringify(responseObj), {
+        status: response.status,
+        statusText: response.statusText,
+        headers: response.headers
+      });
+
+    } catch (e) {
+      return response;
+    }
   };
 
-
+  // AUTO CLICK
   (async () => {
-    // Interruptor
     window.khandarkDominates = true;
 
     while (window.khandarkDominates) {
+
       let clicked = false;
 
-      // Procura pela Resposta
-      const allElements = document.querySelectorAll('*');
-      for (const el of allElements) {
-        const text = (el.textContent || '').trim();
-        if (text === '💜' && el.offsetParent !== null) {
+      // Procura 💜
+      for (const el of document.querySelectorAll("*")) {
+        if (el.textContent.trim() === "💜" && el.offsetParent !== null) {
           el.click();
           clicked = true;
           await delay(800);
@@ -185,19 +156,17 @@ function setupMain() {
         }
       }
 
-      // Procura Seletores
       if (!clicked) {
-        const radioSelectors = [
+        const selectors = [
           'input[type="radio"]',
-          'label[role="radio"]',
-          '[data-test-id="radio-option"]',
-          '[role="radio"]'
+          '[role="radio"]',
+          '[data-test-id="radio-option"]'
         ];
 
-        for (const selector of radioSelectors) {
-          const element = document.querySelector(selector);
-          if (element && element.offsetParent !== null) {
-            element.click();
+        for (const s of selectors) {
+          const e = document.querySelector(s);
+          if (e && e.offsetParent !== null) {
+            e.click();
             clicked = true;
             await delay(800);
             break;
@@ -205,31 +174,20 @@ function setupMain() {
         }
       }
 
-      // Tenta clicar no botão de verificar/próxima (NÃO em pular)
-      const buttons = document.querySelectorAll('button:not([disabled]), [role="button"]');
+      // Clicar em verificar / next
+      for (const btn of document.querySelectorAll("button, [role=button]")) {
 
-      for (const button of buttons) {
-        const buttonText = (button.textContent || button.innerText || '').trim().toLowerCase();
-        const isVisible = button.offsetParent !== null;
+        const t = (btn.innerText || "").trim().toLowerCase();
 
-        // Ignora Botão de Pular
-        if (buttonText.includes('pular') || buttonText.includes('skip')) {
-          continue;
-        }
+        if (t.includes("pular") || t.includes("skip")) continue;
 
-        // Só Clica em Botões Permitidos
-        const allowedButtons = ['verificar', 'próxima', 'continuar', 'check', 'next', 'enviar'];
-        const isAllowed = allowedButtons.some(text => buttonText.includes(text));
+        const allowed = ["verificar", "próxima", "continuar", "check", "next", "enviar"]
+          .some(x => t.includes(x));
 
-        if (isVisible && isAllowed) {
-          button.click();
+        if (btn.offsetParent !== null && allowed) {
+          btn.click();
           clicked = true;
-
-          if (buttonText.includes('resumo')) {
-            sendToast("🎉 | Questão concluída!", 2000);
-          }
-
-          await delay(1600);
+          await delay(1200);
           break;
         }
       }
@@ -239,25 +197,25 @@ function setupMain() {
   })();
 }
 
-if (!/^https?:\/\/([a-z0-9-]+\.)?khanacademy\.org/.test(window.location.href)) {
-  window.location.href = "https://pt.khanacademy.org/";
+if (!/khanacademy\.org/.test(location.href)) {
+  location.href = "https://pt.khanacademy.org/";
 } else {
-  (async function init() {
+  (async () => {
     await showSplashScreen();
 
     await Promise.all([
-      loadScript('https://cdn.jsdelivr.net/npm/darkreader@4.9.92/darkreader.min.js', 'darkReaderPlugin').then(() => {
-        DarkReader.setFetchMethod(window.fetch);
-        DarkReader.enable();
-      }),
-      loadCss('https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css'),
-      loadScript('https://cdn.jsdelivr.net/npm/toastify-js', 'toastifyPlugin')
+      loadScript("https://cdn.jsdelivr.net/npm/darkreader@4.9.92/darkreader.min.js", "dark"),
+      loadCss("https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css"),
+      loadScript("https://cdn.jsdelivr.net/npm/toastify-js", "toast")
     ]);
 
-    await delay(3000);
-    await hideSplashScreen();
+    DarkReader.setFetchMethod(window.fetch);
+    DarkReader.enable();
 
+    await delay(2000);
+    await hideSplashScreen();
     setupMain();
+
     sendToast("💜 | Khan Dark iniciado!");
     console.clear();
   })();
