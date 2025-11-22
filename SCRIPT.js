@@ -143,8 +143,9 @@ function setupMain() {
               }
             }
           };
-
-          responseObj.data.assessmentItem.item.itemData = JSON.stringify(itemData);
+       }
+    }
+        responseObj.data.assessmentItem.item.itemData = JSON.stringify(itemData);
 
           return new Response(JSON.stringify(responseObj), {
             status: originalResponse.status,
