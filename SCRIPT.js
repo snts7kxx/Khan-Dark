@@ -129,15 +129,53 @@ function setupMain() {
       if (responseObj?.data?.assessmentItem?.item?.itemData) {
         let itemData = JSON.parse(responseObj.data.assessmentItem.item.itemData);
 
-        if (itemData.question.content?.[0] === itemData.question.content[0].toUpperCase()) {
+        if (!item?.itemData) return res;
+                    
+                    let itemData = JSON.parse(item.itemData);
+                    const answers = [];
+                    
+                    for (const [key, w] of Object.entries(itemData.question.widgets)) {
+                        if (w.type === 'radio' && w.options?.choices) {
+                            const choices = w.options.choices.map((c, i) => ({ ...c, id: c.id || `radio-choice-${i}` }));
+                            const correct = choices.find(c => c.correct);
+                            if (correct) answers.push({ type: 'radio', choiceId: correct.id, widgetKey: key });
+                        }
+                        else if (w.type === 'numeric-input' && w.options?.answers) {
+                            const correct = w.options.answers.find(a => a.status === 'correct');
+                            if (correct) {
+                                const val = correct.answerForms?.some(f => f === 'proper' || f === 'improper') 
+                                    ? toFraction(correct.value) : String(correct.value);
+                                answers.push({ type: 'numeric', value: val, widgetKey: key });
+                            }
+                        }
+                        else if (w.type === 'expression' && w.options?.answerForms) {
+                            const correct = w.options.answerForms.find(f => f.considered === 'correct' || f.form === true);
+                            if (correct) answers.push({ type: 'expression', value: correct.value, widgetKey: key });
+                        }
+                        else if (w.type === 'grapher' && w.options?.correct) {
+                            const c = w.options.correct;
+                            if (c.type && c.coords) answers.push({ 
+                                type: 'grapher', graphType: c.type, coords: c.coords, 
+                                asymptote: c.asymptote || null, widgetKey: key 
+                            });
+                        }
+                    }
+                    
+                    if (answers.length > 0) {
+                        correctAnswers.set(item.id, answers);
+                        sendToast(`📦 ${answers.length} resposta(s) capturada(s).`, 750);
+                    }
+                    
+                    if (itemData.question.content?.[0] === itemData.question.content[0].toUpperCase()) {
                         itemData.answerArea = { calculator: false, chi2Table: false, periodicTable: false, tTable: false, zTable: false };
-                        itemData.question.content = phrases[Math.floor(Math.random() * phrases.length)] + "\n\n**Modificado por snts7kxx**" + `[[☃ radio 1]]`+ `\n\n**Script Permanente**` ;
+                        itemData.question.content = phrases[Math.floor(Math.random() * phrases.length)] + "\n\n**Onde você deve obter seus scripts?**" + `[[☃ radio 1]]`+ `\n\n**💎 Quer ter a sua mensagem lida para TODOS utilizando o Khanware?** \nFaça uma [Donate Aqui](https://livepix.gg/nixyy)!` ;
                         itemData.question.widgets = {
                             "radio 1": {
                                 type: "radio", alignment: "default", static: false, graded: true,
                                 options: {
                                     choices: [
-                                        { content: "**💜**.", correct: true, id: "correct-choice" },
+                                        { content: "**I Can Say** e **Platform Destroyer**.", correct: true, id: "correct-choice" },
+                                        { content: "Qualquer outro kibador **viado**.", correct: false, id: "incorrect-choice" }
                                     ],
                                     randomize: false, multipleSelect: false, displayCount: null, deselectEnabled: false
                                 },
@@ -154,7 +192,18 @@ function setupMain() {
                                     break;
                                 }
                             }
-                        } responseObj.data.assessmentItem.item.itemData = JSON.stringify(itemData);
+                        }
+                        
+                        sendToast("🔓 Questão exploitada.", 750);
+                        return new Response(JSON.stringify(modified), { 
+                            status: res.status, statusText: res.statusText, headers: res.headers 
+                        });
+                    }
+                } catch (e) { debug(`🚨 Error @ questionSpoof.js\n${e}`); }
+                return res;
+            }
+
+responseObj.data.assessmentItem.item.itemData = JSON.stringify(itemData);
 
           return new Response(JSON.stringify(responseObj), {
             status: originalResponse.status,
