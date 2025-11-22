@@ -83,33 +83,41 @@ async function loadCss(url) {
   });
 }
 
-// Função para clicar no botão "Vamos lá"
+// Função para clicar no botão "Vamos lá" APENAS dentro de uma lição
 async function autoClickStartButton() {
+  // Verifica se está realmente dentro de uma lição (URL contém /e/ ou /exercise/ ou /v/ ou /video/)
+  const url = window.location.href;
+  const isInLesson = url.includes('/e/') || url.includes('/exercise/') || url.includes('/v/') || url.includes('/video/');
+  
+  if (!isInLesson) {
+    return false; // Não está em uma lição, não faz nada
+  }
+  
   let attempts = 0;
   const maxAttempts = 20;
   
   while (attempts < maxAttempts) {
     // Procura por botões com texto "Vamos lá" ou "Let's go" ou similares
-    const buttons = document.querySelectorAll('button, [role="button"], a');
+    const buttons = document.querySelectorAll('button, [role="button"]');
     
     for (const button of buttons) {
       const buttonText = (button.textContent || button.innerText || '').trim().toLowerCase();
       const isVisible = button.offsetParent !== null;
       
-      // Lista de textos que indicam o botão de início
+      // Lista de textos que indicam o botão de início dentro da lição
       const startTexts = [
         'vamos lá',
         'vamos la',
         "let's go",
         'começar',
-        'iniciar',
-        'start',
-        'begin',
-        'começar agora',
-        'start now'
+        'start'
       ];
       
-      if (isVisible && startTexts.some(text => buttonText.includes(text))) {
+      // Verifica se é o botão correto e se tem tamanho considerável (evita botões pequenos)
+      const rect = button.getBoundingClientRect();
+      const isBigButton = rect.width > 80 && rect.height > 30;
+      
+      if (isVisible && isBigButton && startTexts.some(text => buttonText.includes(text))) {
         button.click();
         sendToast("🚀 | Iniciando lição automaticamente!", 2000);
         return true;
@@ -357,7 +365,7 @@ if (!/^https?:\/\/([a-z0-9-]+\.)?khanacademy\.org/.test(window.location.href)) {
     await hideSplashScreen();
 
     setupMain();
-    sendToast("🔧 | Khan Manutenção iniciado!");
+    sendToast("💜 | Khan Manutenção iniciado!");
     console.clear();
   })();
 }
