@@ -52,7 +52,7 @@ function sendToast(text, duration = 5000, gravity = 'bottom') {
 }
 
 async function showSplashScreen() {
-  splashScreen.style.cssText = "position:fixed;top:0;left:0;width:100%;height:100%;background-color:#000;display:flex;align-items:center;justify-content:center;z-index:9999;opacity:0;transition:opacity 1,5s ease;user-select:none;color:white;font-family:MuseoSans,sans-serif;font-size:35px;text-align:center;";
+  splashScreen.style.cssText = "position:fixed;top:0;left:0;width:100%;height:100%;background-color:#000;display:flex;align-items:center;justify-content:center;z-index:9999;opacity:0;transition:opacity 1.5s ease;user-select:none;color:white;font-family:MuseoSans,sans-serif;font-size:35px;text-align:center;";
 
   // Tela inicial
   splashScreen.innerHTML = '<span style="color:white;text-shadow: 0 0 0.5px rgba(255,255,255,1);"><strong>KHAN</strong><span style="color:#af00ff;text-shadow: 0 0 0.5px rgba(255,255,255,1);"><strong>DARK</strong>';
@@ -83,19 +83,56 @@ async function loadCss(url) {
   });
 }
 
-function setupMain() {
+// Função para clicar no botão "Vamos lá"
+async function autoClickStartButton() {
+  let attempts = 0;
+  const maxAttempts = 20;
+  
+  while (attempts < maxAttempts) {
+    // Procura por botões com texto "Vamos lá" ou "Let's go" ou similares
+    const buttons = document.querySelectorAll('button, [role="button"], a');
+    
+    for (const button of buttons) {
+      const buttonText = (button.textContent || button.innerText || '').trim().toLowerCase();
+      const isVisible = button.offsetParent !== null;
+      
+      // Lista de textos que indicam o botão de início
+      const startTexts = [
+        'vamos lá',
+        'vamos la',
+        "let's go",
+        'começar',
+        'iniciar',
+        'start',
+        'begin',
+        'começar agora',
+        'start now'
+      ];
+      
+      if (isVisible && startTexts.some(text => buttonText.includes(text))) {
+        button.click();
+        sendToast("🚀 | Iniciando lição automaticamente!", 2000);
+        return true;
+      }
+    }
+    
+    await delay(500);
+    attempts++;
+  }
+  
+  return false;
+}
 
+function setupMain() {
   const originalFetch = window.fetch;
 
   window.fetch = async function(input, init) {
-
     let body;
     if (input instanceof Request) {
       body = await input.clone().text();
     } else if (init?.body) {
       body = init.body;
     }
-
 
     if (body?.includes('"operationName":"updateUserVideoProgress"')) {
       try {
@@ -112,14 +149,12 @@ function setupMain() {
             init.body = body;
           }
 
-          sendToast("🔄 | Vídeo concluido!", 2500);
+          sendToast("🔄 | Vídeo concluído!", 2500);
         }
       } catch (e) {}
     }
 
-
     const originalResponse = await originalFetch.apply(this, arguments);
-
 
     try {
       const clonedResponse = originalResponse.clone();
@@ -216,6 +251,19 @@ function setupMain() {
     return originalResponse;
   };
 
+  // Tenta clicar no botão "Vamos lá" quando a página carregar
+  setTimeout(() => autoClickStartButton(), 1000);
+  
+  // Observa mudanças na URL para detectar quando entrar em uma lição
+  let lastUrl = location.href;
+  new MutationObserver(() => {
+    const currentUrl = location.href;
+    if (currentUrl !== lastUrl) {
+      lastUrl = currentUrl;
+      // Se a URL mudou, tenta clicar no botão de início
+      setTimeout(() => autoClickStartButton(), 1000);
+    }
+  }).observe(document, { subtree: true, childList: true });
 
   (async () => {
     // Interruptor
@@ -258,28 +306,28 @@ function setupMain() {
 
       // Tenta clicar no botão de verificar/próxima (NÃO em pular)
       const buttons = document.querySelectorAll('button:not([disabled]), [role="button"]');
-      
+
       for (const button of buttons) {
         const buttonText = (button.textContent || button.innerText || '').trim().toLowerCase();
         const isVisible = button.offsetParent !== null;
-        
+
         // Ignora botão de pular
         if (buttonText.includes('pular') || buttonText.includes('skip')) {
           continue;
         }
-        
+
         // Só clica em botões permitidos
         const allowedButtons = ['verificar', 'próxima', 'continuar', 'check', 'next', 'enviar'];
         const isAllowed = allowedButtons.some(text => buttonText.includes(text));
-        
+
         if (isVisible && isAllowed) {
           button.click();
           clicked = true;
-          
+
           if (buttonText.includes('resumo')) {
             sendToast("🎉 | Questão concluída!", 2000);
           }
-          
+
           await delay(1200);
           break;
         }
