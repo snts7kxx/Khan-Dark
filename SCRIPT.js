@@ -216,7 +216,7 @@ if (!/khanacademy\.org/.test(location.href)) {
     await hideSplashScreen();
     setupMain();
 
-    sendToast("💜 | Khan Dark iniciado!");
+    sendToast("💜 | Khan Teste iniciado!");
     console.clear();
   })();
 }
