@@ -131,9 +131,15 @@ function setupMain() {
 
         if (itemData.question && itemData.question.content) {
 
-        // Remove o Campo de Lição
+        // Remove o Respostas de Lição
         delete itemData.answerArea;
-
+  
+       // Remove Imagens, Widgets e os Conteudos Originais
+       itemData.question.images = {};
+       itemData.question.widgets = {};
+       itemData.question.content = "";
+          
+          // Conteúdo que eu quero.
           itemData.question.content = "Modificado por snts7kxx" + `[[☃ radio 1]]`;
           itemData.question.widgets = {
             "radio 1": {
