@@ -135,13 +135,20 @@ function setupMain() {
   const originalFetch = window.fetch;
 
   window.fetch = async function(input, init) {
+    let url = '';
     let body;
+    
     if (input instanceof Request) {
+      url = input.url;
       body = await input.clone().text();
-    } else if (init?.body) {
-      body = init.body;
+    } else {
+      url = input;
+      if (init?.body) {
+        body = init.body;
+      }
     }
 
+    // Modifica progresso de vídeo
     if (body?.includes('"operationName":"updateUserVideoProgress"')) {
       try {
         let bodyObj = JSON.parse(body);
@@ -159,63 +166,111 @@ function setupMain() {
 
           sendToast("🔄 | Vídeo concluído!", 2500);
         }
-      } catch (e) {}
+      } catch (e) {
+        console.error("Erro ao modificar vídeo:", e);
+      }
     }
 
-    const originalResponse = await originalFetch.apply(this, arguments);
+    // Executa o fetch original
+    const originalResponse = await originalFetch.apply(this, [input, init]);
 
-    try {
-      const clonedResponse = originalResponse.clone();
-      const responseBody = await clonedResponse.text();
-      
-      // Tenta modificar a questão
-      if (responseBody.includes('"assessmentItem"') && responseBody.includes('"itemData"')) {
-        let responseObj = JSON.parse(responseBody);
+    // Intercepta respostas de questões
+    if (url.includes('graphql') || url.includes('assessmentItem')) {
+      try {
+        const clonedResponse = originalResponse.clone();
+        const responseText = await clonedResponse.text();
+        
+        if (!responseText || responseText.trim() === '') {
+          return originalResponse;
+        }
+
+        let responseObj;
+        try {
+          responseObj = JSON.parse(responseText);
+        } catch (e) {
+          return originalResponse;
+        }
+
+        // Verifica múltiplos caminhos possíveis
+        let itemData = null;
+        let itemDataPath = null;
 
         if (responseObj?.data?.assessmentItem?.item?.itemData) {
+          itemData = responseObj.data.assessmentItem.item.itemData;
+          itemDataPath = 'data.assessmentItem.item.itemData';
+        } else if (responseObj?.data?.item?.itemData) {
+          itemData = responseObj.data.item.itemData;
+          itemDataPath = 'data.item.itemData';
+        }
+
+        if (itemData && typeof itemData === 'string') {
+          console.log("🔍 ItemData encontrado em:", itemDataPath);
+          
+          let parsedItemData;
           try {
-            let itemData = JSON.parse(responseObj.data.assessmentItem.item.itemData);
+            parsedItemData = JSON.parse(itemData);
+          } catch (e) {
+            console.error("Erro ao parsear itemData:", e);
+            return originalResponse;
+          }
 
-            if (itemData.question) {
-              // Limpa answerArea
-              itemData.answerArea = {};
+          if (parsedItemData.question) {
+            console.log("📝 Modificando questão...");
+            
+            // Modifica a questão
+            parsedItemData.question.content = "Modificado por snts7kxx [[☃ radio 1]]";
+            parsedItemData.question.widgets = {
+              "radio 1": {
+                type: "radio",
+                alignment: "default",
+                static: false,
+                graded: true,
+                options: {
+                  choices: [
+                    {
+                      content: "💜",
+                      correct: true,
+                      clue: ""
+                    }
+                  ],
+                  randomize: false,
+                  multipleSelect: false,
+                  displayCount: null,
+                  hasNoneOfTheAbove: false,
+                  onePerLine: true,
+                  deselectEnabled: false
+                },
+                version: { major: 1, minor: 0 }
+              }
+            };
 
-              // Modifica a questão
-              itemData.question.content = "Modificado por snts7kxx [[☃ radio 1]]";
-              itemData.question.widgets = {
-                "radio 1": {
-                  type: "radio",
-                  options: {
-                    choices: [
-                      { content: "💜", correct: true }
-                    ],
-                    randomize: false,
-                    multipleSelect: false,
-                    displayCount: null,
-                    hasNoneOfTheAbove: false,
-                    deselectEnabled: false
-                  }
-                }
-              };
-
-              // Salva as modificações
-              responseObj.data.assessmentItem.item.itemData = JSON.stringify(itemData);
-
-              console.log("✅ Questão modificada com sucesso!");
-
-              return new Response(JSON.stringify(responseObj), {
-                status: originalResponse.status,
-                statusText: originalResponse.statusText,
-                headers: originalResponse.headers
-              });
+            // Limpa hints se existir
+            if (parsedItemData.hints) {
+              parsedItemData.hints = [];
             }
-          } catch (parseError) {
-            console.error("Erro ao parsear itemData:", parseError);
+
+            // Salva de volta
+            const newItemData = JSON.stringify(parsedItemData);
+            
+            if (itemDataPath === 'data.assessmentItem.item.itemData') {
+              responseObj.data.assessmentItem.item.itemData = newItemData;
+            } else if (itemDataPath === 'data.item.itemData') {
+              responseObj.data.item.itemData = newItemData;
+            }
+
+            console.log("✅ Questão modificada com sucesso!");
+            sendToast("✨ | Questão modificada!", 1500);
+
+            return new Response(JSON.stringify(responseObj), {
+              status: originalResponse.status,
+              statusText: originalResponse.statusText,
+              headers: originalResponse.headers
+            });
           }
         }
+      } catch (e) {
+        console.error("❌ Erro ao interceptar resposta:", e);
       }
-    } catch (e) {
-      console.error("Erro ao modificar resposta:", e);
     }
 
     return originalResponse;
