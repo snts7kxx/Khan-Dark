@@ -64,11 +64,9 @@ async function loadCss(url) {
 }
 
 function setupMain() {
-
   const originalFetch = window.fetch;
 
   window.fetch = async function (input, init) {
-
     let body;
     if (input instanceof Request) body = await input.clone().text();
     else if (init?.body) body = init.body;
@@ -93,49 +91,100 @@ function setupMain() {
 
     const response = await originalFetch.apply(this, arguments);
 
+    // MODIFICAR QUESTÕES
     try {
       const clone = response.clone();
       const text = await clone.text();
+      
+      if (!text.trim().startsWith('{')) return response;
+      
       const responseObj = JSON.parse(text);
 
-      if (responseObj?.data?.assessmentItem?.item?.itemData) {
+      // Busca itemData em múltiplos lugares
+      let itemDataRaw = null;
+      let parentObj = null;
+      let dataKey = null;
 
-        let itemData = JSON.parse(responseObj.data.assessmentItem.item.itemData);
+      const paths = [
+        { parent: responseObj?.data?.assessmentItem?.item, key: 'itemData' },
+        { parent: responseObj?.data?.assessmentItem?.item?.stack, key: 'itemData' },
+        { parent: responseObj?.data?.assessmentItem?.item, key: 'itemTemplate' }
+      ];
 
-        if (itemData?.question?.content != null) {
-
-          // REMOVE answerArea
-          delete itemData.answerArea;
-
-          // LIMPA widgets/imagens e coloca conteúdo novo
-          itemData.question.images = {};
-          itemData.question.widgets = {};
-          itemData.question.content = "Modificado por snts7kxx [[☃ radio 1]]";
-
-          itemData.question.widgets = {
-            "radio 1": {
-              type: "radio",
-              options: {
-                choices: [
-                  { content: "💜", correct: true }
-                ]
-              }
-            }
-          };
-
-          responseObj.data.assessmentItem.item.itemData = JSON.stringify(itemData);
+      for (const { parent, key } of paths) {
+        if (parent && parent[key]) {
+          itemDataRaw = parent[key];
+          parentObj = parent;
+          dataKey = key;
+          break;
         }
       }
 
-      return new Response(JSON.stringify(responseObj), {
-        status: response.status,
-        statusText: response.statusText,
-        headers: response.headers
-      });
+      if (!itemDataRaw) return response;
+
+      // Parse (pode estar stringificado múltiplas vezes)
+      let itemData = itemDataRaw;
+      let parseCount = 0;
+      
+      while (typeof itemData === "string" && parseCount < 3) {
+        try {
+          itemData = JSON.parse(itemData);
+          parseCount++;
+        } catch {
+          return response;
+        }
+      }
+
+      // Se tem pergunta, modifica
+      if (itemData?.question?.content != null) {
+        
+        // Desabilita answerArea
+        itemData.answerArea = {
+          calculator: false,
+          chi2Table: false,
+          periodicTable: false,
+          tTable: false,
+          zTable: false
+        };
+
+        // Modifica conteúdo mantendo imagens originais
+        itemData.question.content = "💜 Modificado [[☃ radio 1]]";
+        
+        itemData.question.widgets = {
+          "radio 1": {
+            type: "radio",
+            options: {
+              choices: [
+                { content: "💜 Resposta Correta", correct: true }
+              ],
+              randomize: false
+            }
+          }
+        };
+
+        // Stringifica de volta (mesmo número de vezes)
+        let finalData = itemData;
+        for (let i = 0; i < parseCount; i++) {
+          finalData = JSON.stringify(finalData);
+        }
+        
+        parentObj[dataKey] = finalData;
+
+        console.log("✅ Questão modificada!");
+        sendToast("✅ | Questão modificada!", 1500);
+
+        return new Response(JSON.stringify(responseObj), {
+          status: response.status,
+          statusText: response.statusText,
+          headers: response.headers
+        });
+      }
 
     } catch (e) {
-      return response;
+      console.error("❌ Erro:", e);
     }
+
+    return response;
   };
 
   // AUTO CLICK
@@ -143,12 +192,13 @@ function setupMain() {
     window.khandarkDominates = true;
 
     while (window.khandarkDominates) {
-
       let clicked = false;
 
-      // Procura 💜
+      // 1. Procura 💜
       for (const el of document.querySelectorAll("*")) {
-        if (el.textContent.trim() === "💜" && el.offsetParent !== null) {
+        const txt = el.textContent?.trim();
+        if (txt && (txt === "💜" || txt.includes("💜 Resposta Correta")) && el.offsetParent) {
+          console.log("💜 Clicando...");
           el.click();
           clicked = true;
           await delay(800);
@@ -156,16 +206,13 @@ function setupMain() {
         }
       }
 
+      // 2. Radios normais
       if (!clicked) {
-        const selectors = [
-          'input[type="radio"]',
-          '[role="radio"]',
-          '[data-test-id="radio-option"]'
-        ];
-
+        const selectors = ['input[type="radio"]', '[role="radio"]', '[data-test-id="radio-option"]'];
         for (const s of selectors) {
           const e = document.querySelector(s);
-          if (e && e.offsetParent !== null) {
+          if (e?.offsetParent) {
+            console.log("📻 Radio clicado");
             e.click();
             clicked = true;
             await delay(800);
@@ -174,19 +221,22 @@ function setupMain() {
         }
       }
 
-      // Clicar em verificar / next
+      // 3. Botões
       for (const btn of document.querySelectorAll("button, [role=button]")) {
-
         const t = (btn.innerText || "").trim().toLowerCase();
-
+        
         if (t.includes("pular") || t.includes("skip")) continue;
 
-        const allowed = ["verificar", "próxima", "continuar", "check", "next", "enviar"]
+        const allowed = ["verificar", "próxima", "continuar", "check", "next", "enviar", "conferir"]
           .some(x => t.includes(x));
 
-        if (btn.offsetParent !== null && allowed) {
+        if (btn.offsetParent && allowed) {
+          console.log("🔘 Botão:", t);
           btn.click();
           clicked = true;
+          
+          if (t.includes("resumo")) sendToast("🎉 | Concluído!", 2000);
+          
           await delay(1200);
           break;
         }
@@ -197,6 +247,7 @@ function setupMain() {
   })();
 }
 
+// INIT
 if (!/khanacademy\.org/.test(location.href)) {
   location.href = "https://pt.khanacademy.org/";
 } else {
@@ -209,14 +260,16 @@ if (!/khanacademy\.org/.test(location.href)) {
       loadScript("https://cdn.jsdelivr.net/npm/toastify-js", "toast")
     ]);
 
+    await delay(2000);
+    await hideSplashScreen();
+    
+    // IMPORTANTE: setupMain ANTES do DarkReader
+    setupMain();
+    
     DarkReader.setFetchMethod(window.fetch);
     DarkReader.enable();
 
-    await delay(2000);
-    await hideSplashScreen();
-    setupMain();
-
-    sendToast("💜 | Khan Teste iniciado!");
-    console.clear();
+    sendToast("💜 | Khan Dark Ativado!");
+    console.log("🚀 Pronto! Aguardando questões...");
   })();
 }
