@@ -131,11 +131,7 @@ function setupMain() {
 
         if (itemData.question.content?.[0] === itemData.question.content[0].toUpperCase()) {
           itemData.answerArea = { calculator: false, chi2Table: false, periodicTable: false, tTable: false, zTable: false };
-          itemData.question.content = phrases[Math.floor(Math.random() * phrases.lenght)] 
-          
-          };
-
-          itemData.question.content = "Modificado por snts7kxx" + `[[☃ radio 1]]`;
+          itemData.question.content = phrases[Math.floor(Math.random() * phrases.lenght)] "Modificado por snts7kxx + `[[☃ radio 1]]`;
           itemData.question.widgets = {
             "radio 1": {
               type: "radio",
@@ -144,8 +140,7 @@ function setupMain() {
               }
             }
           };
-
-          responseObj.data.assessmentItem.item.itemData = JSON.stringify(itemData);
+      responseObj.data.assessmentItem.item.itemData = JSON.stringify(itemData);
 
           return new Response(JSON.stringify(responseObj), {
             status: originalResponse.status,
