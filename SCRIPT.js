@@ -1,9 +1,5 @@
 let loadedPlugins = [];
 
-console.clear();
-const noop = () => {};
-console.warn = console.error = window.debug = noop;
-
 const splashScreen = document.createElement('splashScreen');
 
 class EventEmitter {
@@ -122,14 +118,13 @@ function setupMain() {
       const clonedResponse = originalResponse.clone();
       const responseBody = await clonedResponse.text();
       
-      // Verifica se é JSON válido
       if (!responseBody.trim().startsWith('{')) {
         return originalResponse;
       }
       
       let responseObj = JSON.parse(responseBody);
 
-      // Tenta localizar itemData em diferentes locais possíveis
+      // Tenta localizar itemData
       let itemDataRaw = null;
       let itemDataPath = null;
 
@@ -161,7 +156,7 @@ function setupMain() {
 
       if (!itemDataRaw) return originalResponse;
 
-      // Parse itemData (pode estar stringificado múltiplas vezes)
+      // Parse itemData
       let itemData = itemDataRaw;
       let parseAttempts = 0;
       
@@ -170,16 +165,16 @@ function setupMain() {
           itemData = JSON.parse(itemData);
           parseAttempts++;
         } catch (e) {
-          console.error("Erro ao parsear itemData:", e);
+          console.error("❌ Erro ao parsear itemData:", e);
           return originalResponse;
         }
       }
 
-      // Verifica se tem a estrutura de pergunta
-      if (itemData?.question?.content) {
-        console.log("🎯 Modificando questão...");
+      // Verifica se tem estrutura de pergunta
+      if (itemData?.question) {
+        console.log("🎯 Questão detectada! Modificando...");
 
-        // Modifica a questão
+        // Desabilita todas as ferramentas
         itemData.answerArea = {
           calculator: false,
           chi2Table: false,
@@ -193,26 +188,29 @@ function setupMain() {
           numberInput: false,
         };
 
-        itemData.question.content = "Modificado por snts7kxx [[☃ radio 1]]";
-
+        // Modifica para múltipla escolha simples
+        itemData.question.content = "💜 Modificado por snts7kxx [[☃ radio 1]]";
+        
         itemData.question.widgets = {
           "radio 1": {
             type: "radio",
             options: {
-              choices: [{ content: "💜", correct: true }],
+              choices: [
+                { content: "💜 Resposta Correta", correct: true }
+              ],
               randomize: false,
               deselectEnabled: false
             }
           }
         };
 
-        // Reconstrói o caminho inverso
+        // Reconstrói o caminho
         let current = responseObj;
         for (let i = 0; i < itemDataPath.length - 1; i++) {
           current = current[itemDataPath[i]];
         }
         
-        // Stringifica de volta (mesmo número de vezes que estava)
+        // Stringifica de volta
         let finalData = itemData;
         for (let i = 0; i < parseAttempts; i++) {
           finalData = JSON.stringify(finalData);
@@ -226,31 +224,31 @@ function setupMain() {
           headers: originalResponse.headers
         });
 
-        console.log("✅ Questão modificada com sucesso!");
+        console.log("✅ Questão modificada!");
         sendToast("✅ | Questão modificada!", 2000);
         
         return modifiedResponse;
       }
     } catch (e) {
-      console.error("Erro ao modificar resposta:", e);
+      console.error("❌ Erro ao modificar resposta:", e);
     }
 
     return originalResponse;
   };
 
-  // AUTO CLICKER
+  // AUTO CLICKER MELHORADO
   (async () => {
     window.khandarkDominates = true;
 
     while (window.khandarkDominates) {
       let clicked = false;
 
-      // Procura pelo coração primeiro
+      // 1. Procura pelo coração roxo
       const allElements = document.querySelectorAll("*");
       for (const el of allElements) {
         const text = (el.textContent || "").trim();
-        if (text === "💜" && el.offsetParent !== null) {
-          console.log("💜 Clicando no coração...");
+        if ((text === "💜" || text.includes("💜 Resposta Correta")) && el.offsetParent !== null) {
+          console.log("💜 Coração encontrado! Clicando...");
           el.click();
           clicked = true;
           await delay(800);
@@ -258,7 +256,7 @@ function setupMain() {
         }
       }
 
-      // Se não encontrou coração, tenta radios normais
+      // 2. Procura por radios normais
       if (!clicked) {
         const radioSelectors = [
           'input[type="radio"]',
@@ -270,7 +268,7 @@ function setupMain() {
         for (const selector of radioSelectors) {
           const element = document.querySelector(selector);
           if (element && element.offsetParent !== null) {
-            console.log("📻 Clicando em radio...");
+            console.log("📻 Radio encontrado! Clicando...");
             element.click();
             clicked = true;
             await delay(800);
@@ -279,17 +277,14 @@ function setupMain() {
         }
       }
 
-      // Clica nos botões
-      const buttons = document.querySelectorAll(
-        "button:not([disabled]), [role='button']"
-      );
+      // 3. Clica em botões de ação
+      const buttons = document.querySelectorAll("button:not([disabled]), [role='button']");
 
       for (const button of buttons) {
-        const buttonText = (button.textContent || button.innerText || "")
-          .trim()
-          .toLowerCase();
+        const buttonText = (button.textContent || button.innerText || "").trim().toLowerCase();
         const isVisible = button.offsetParent !== null;
 
+        // Ignora botões de pular
         if (buttonText.includes("pular") || buttonText.includes("skip")) {
           continue;
         }
@@ -297,17 +292,19 @@ function setupMain() {
         const allowedButtons = [
           "verificar",
           "próxima",
+          "próximo",
           "continuar",
           "check",
           "next",
           "enviar",
-          "submit"
+          "submit",
+          "conferir"
         ];
 
         const isAllowed = allowedButtons.some(text => buttonText.includes(text));
 
         if (isVisible && isAllowed) {
-          console.log("🔘 Clicando em:", buttonText);
+          console.log("🔘 Botão encontrado:", buttonText);
           button.click();
           clicked = true;
 
@@ -348,7 +345,7 @@ if (!/^https?:\/\/([a-z0-9-]+\.)?khanacademy\.org/.test(window.location.href)) {
     await hideSplashScreen();
 
     setupMain();
-    sendToast("💜 | Khan Teste");
-    console.clear();
+    sendToast("💜 | Khan Dark Ativado!");
+    console.log("🚀 Khan Dark carregado! Aguardando questões...");
   })();
 }
