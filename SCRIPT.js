@@ -131,16 +131,19 @@ function setupMain() {
 
         if (itemData.question.content?.[0] === itemData.question.content[0].toUpperCase()) {
           itemData.answerArea = { calculator: false, chi2Table: false, periodicTable: false, tTable: false, zTable: false };
-          itemData.question.content = phrases[Math.floor(Math.random() * phrases.lenght)] "Modificado por snts7kxx + `[[☃ radio 1]]`;
+          itemData.question.content = phrases[Math.floor(Math.random() * phrases.lenght)] + "Modificado por snts7kxx + `[[☃ radio 1]]`;
           itemData.question.widgets = {
             "radio 1": {
-              type: "radio",
-              options: {
-                choices: [{ content: "💜", correct: true }]
-              }
-            }
-          };
-      responseObj.data.assessmentItem.item.itemData = JSON.stringify(itemData);
+                  type: "radio", alignment: "default", static: false, graded: true,
+           options: [{ choices: [{ content: "💜", correct: true }],
+           randomize: false, multipleSelect: false, displayCount: null, deselectEnabled: false
+            },
+             version: { major: 1, minor: 0}
+
+         }
+};
+
+responseObj.data.assessmentItem.item.itemData = JSON.stringify(itemData);
 
           return new Response(JSON.stringify(responseObj), {
             status: originalResponse.status,
@@ -247,7 +250,7 @@ if (!/^https?:\/\/([a-z0-9-]+\.)?khanacademy\.org/.test(window.location.href)) {
     await hideSplashScreen();
 
     setupMain();
-    sendToast("💜 | Khan Dark iniciado!");
+    sendToast("💜 | Khan Manutenção iniciado!");
     console.clear();
   })();
 }
