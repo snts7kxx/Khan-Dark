@@ -307,7 +307,7 @@ function setupMain(){
                         body = JSON.stringify(bodyObj);
                         if (input instanceof Request) { input = new Request(input, { body: body }); } 
                         else init.body = body; 
-                        sendToast("🔄 | Vídeo concluído!", 1000)
+                        sendToast("🔄 | Vídeo concluído!", 1400)
                     }
                 } catch (e) { console.error(`🚨 Error @ videoSpoof.js\n${e}`); }
             }
