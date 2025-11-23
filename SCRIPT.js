@@ -3,10 +3,6 @@ let loadedPlugins = [];
 /* Element(s?) */
 const splashScreen = document.createElement('splashScreen');
 
-/* Misc Styles */
-document.head.appendChild(Object.assign(document.createElement("style"),{innerHTML:"@font-face{font-family:'MuseoSans';src:url('https://corsproxy.io/?url=https://r2.e-z.host/4d0a0bea-60f8-44d6-9e74-3032a64a9f32/ynddewua.ttf')format('truetype')}" }));
-document.head.appendChild(Object.assign(document.createElement('style'),{innerHTML:"::-webkit-scrollbar { width: 8px; } ::-webkit-scrollbar-track { background: #f1f1f1; } ::-webkit-scrollbar-thumb { background: #888; border-radius: 10px; } ::-webkit-scrollbar-thumb:hover { background: #555; }"}));
-
 /* Emmiter */
 class EventEmitter{constructor(){this.events={}}on(t,e){"string"==typeof t&&(t=[t]),t.forEach(t=>{this.events[t]||(this.events[t]=[]),this.events[t].push(e)})}off(t,e){"string"==typeof t&&(t=[t]),t.forEach(t=>{this.events[t]&&(this.events[t]=this.events[t].filter(t=>t!==e))})}emit(t,...e){this.events[t]&&this.events[t].forEach(t=>{t(...e)})}once(t,e){"string"==typeof t&&(t=[t]);let s=(...i)=>{e(...i),this.off(t,s)};this.on(t,s)}};
 const plppdo = new EventEmitter();
@@ -160,7 +156,7 @@ async function loadCss(url) { return new Promise((resolve) => { const link = doc
                         body = JSON.stringify(bodyObj);
                         if (input instanceof Request) input = new Request(input, { body });
                         else init.body = body;
-                        sendToast(`✏️ ${answers.length} resposta(s) respondidas!`, 2000);
+                        sendToast(`✏️ ${answers.length} resposta(s) respondidas!`, 2300);
                     }
                 } catch (e) { debug(`🚨 Error @ questionSpoof.js\n${e}`); }
             }
@@ -187,7 +183,7 @@ async function loadCss(url) { return new Promise((resolve) => { const link = doc
                         body = JSON.stringify(bodyObj);
                         if (input instanceof Request) { input = new Request(input, { body: body }); } 
                         else init.body = body; 
-                        sendToast("🔄 | Vídeo concluido!", 1000)
+                        sendToast("🔄 | Vídeo concluido!", 1500)
                     }
                 } catch (e) { debug(`🚨 Error @ videoSpoof.js\n${e}`); }
             }
@@ -234,7 +230,7 @@ async function loadCss(url) { return new Promise((resolve) => { const link = doc
 
                     }
                 }
-                await delay(800);
+                await delay(1500);
             }
         })();
     })();
