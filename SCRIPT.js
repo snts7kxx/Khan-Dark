@@ -201,7 +201,7 @@ function setupMain(){
 
                     if (answers.length > 0) {
                         correctAnswers.set(item.id, answers);
-                        sendToast(`🔎 | ${answers.length} resposta(s) capturada(s).`, 750);
+                        sendToast(`🔎 | ${answers.length} respostas encontradas!`, 750);
                     }
 
                     if (itemData.question.content?.[0] === itemData.question.content[0].toUpperCase()) {
