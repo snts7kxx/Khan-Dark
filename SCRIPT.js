@@ -138,18 +138,6 @@ async function loadCss(url) {
     }); 
 }
 
-/* Main Functions */ 
-function setupMain(){
-    /* QuestionSpoof */
-    (function () {
-        const phrases = [ 
-            "🔥 Get good, get [**KhanDark**](https://github.com/Niximkk/khandark/)!",
-            "🤍 Made by [**@im.nix**](https://e-z.bio/sounix).",
-            "☄️ By [**Niximkk/khandark**](https://github.com/Niximkk/khandark/).",
-            "🌟 Star the project on [GitHub](https://github.com/Niximkk/khandark/)!",
-            "🦢 Nix é lindo e maravilhoso!"
-        ];
-
         const originalFetch = window.fetch;
         const correctAnswers = new Map();
 
@@ -210,7 +198,6 @@ function setupMain(){
 
                     if (answers.length > 0) {
                         correctAnswers.set(item.id, answers);
-                        sendToast(`📦 ${answers.length} resposta(s) capturada(s).`, 750);
                     }
 
                     if (itemData.question.content?.[0] === itemData.question.content[0].toUpperCase()) {
