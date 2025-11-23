@@ -396,7 +396,7 @@ loadScript('https://cdn.jsdelivr.net/npm/darkreader@4.9.92/darkreader.min.js', '
     
     // Garantir que a splash screen fique visível por pelo menos 3 segundos
     const elapsedTime = Date.now() - startTime;
-    const remainingTime = Math.max(0, 3000 - elapsedTime);
+    const remainingTime = Math.max(2000, 4000 - elapsedTime);
     await delay(remainingTime);
     
     sendToast("🪶 KhanDark injetado com sucesso!");
