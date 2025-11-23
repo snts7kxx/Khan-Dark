@@ -4,9 +4,11 @@
 
 # 🔔 Novidades:
 
-1️⃣ Corrigido o erro de não fazer as lições automaticamente.
+1️⃣ Tela de Carregamento.
 
-2️⃣ Tempo otimizado e fazendo lições mais rapidas.
+2️⃣ Tempo Otimizado e sem Erros.
+
+3️⃣ Clique automático no botão de "Vamos-Lá"
 
 # 🔨 Desenvolvedores
 
