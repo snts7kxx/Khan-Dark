@@ -386,7 +386,7 @@ loadScript('https://cdn.jsdelivr.net/npm/darkreader@4.9.92/darkreader.min.js', '
     const remainingTime = Math.max(2000, 4000 - elapsedTime);
     await delay(remainingTime);
     
-    sendToast("💜 | KhanDark iniciou!");
+    sendToast("💜 | KhanTesge iniciou!");
     sendToast("Obrigado pela preferência. ");
     sendToast("Entre em Nosso Discord.");
 
