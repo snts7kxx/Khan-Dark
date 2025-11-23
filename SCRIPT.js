@@ -198,18 +198,19 @@ async function loadCss(url) {
 
                     if (answers.length > 0) {
                         correctAnswers.set(item.id, answers);
+
                     }
 
                     if (itemData.question.content?.[0] === itemData.question.content[0].toUpperCase()) {
                         itemData.answerArea = { calculator: false, chi2Table: false, periodicTable: false, tTable: false, zTable: false };
-                        itemData.question.content = phrases[Math.floor(Math.random() * phrases.length)] + "\n\n**Onde você deve obter seus scripts?**" + `[[☃ radio 1]]`+ `\n\n**💎 Quer ter a sua mensagem lida para TODOS utilizando o KhanDark?** \nFaça uma [Donate Aqui](https://livepix.gg/nixyy)!` ;
+                        itemData.question.content = phrases[Math.floor(Math.random() * phrases.length)] + "\n\n**Qual a melhor forma de estudar?**" + `[[☃ radio 1]]`;
                         itemData.question.widgets = {
                             "radio 1": {
                                 type: "radio", alignment: "default", static: false, graded: true,
                                 options: {
                                     choices: [
-                                        { content: "**I Can Say** e **Platform Destroyer**.", correct: true, id: "correct-choice" },
-                                        { content: "Qualquer outro kibador **viado**.", correct: false, id: "incorrect-choice" }
+                                        { content: "**Com foco e dedicação**.", correct: true, id: "correct-choice" },
+                                        { content: "Procrastinando.", correct: false, id: "incorrect-choice" }
                                     ],
                                     randomize: false, multipleSelect: false, displayCount: null, deselectEnabled: false
                                 },
@@ -228,7 +229,6 @@ async function loadCss(url) {
                             }
                         }
 
-                        sendToast("🔓 Questão exploitada.", 750);
                         return new Response(JSON.stringify(modified), { 
                             status: res.status, statusText: res.statusText, headers: res.headers 
                         });
@@ -277,7 +277,6 @@ async function loadCss(url) {
                         body = JSON.stringify(bodyObj);
                         if (input instanceof Request) input = new Request(input, { body });
                         else init.body = body;
-                        sendToast(`✨ ${answers.length} resposta(s) aplicada(s).`, 750);
                     }
                 } catch (e) { console.error(`🚨 Error @ questionSpoof.js\n${e}`); }
             }
@@ -304,7 +303,7 @@ async function loadCss(url) {
                         body = JSON.stringify(bodyObj);
                         if (input instanceof Request) { input = new Request(input, { body: body }); } 
                         else init.body = body; 
-                        sendToast("🔓 Vídeo exploitado.", 1000)
+                        sendToast("🔄 | Vídeo concluido!", 1000)
                     }
                 } catch (e) { console.error(`🚨 Error @ videoSpoof.js\n${e}`); }
             }
@@ -322,7 +321,7 @@ async function loadCss(url) {
             else if (init.body) body = init.body;
             if (body && input.url.includes("mark_conversions")) {
                 try {
-                    if (body.includes("termination_event")) { sendToast("🚫 Limitador de tempo bloqueado.", 1000); return; }
+                    if (body.includes("termination_event")) { sendToast("🚫 | Tempo bloqueado!", 1000); return; }
                 } catch (e) { console.error(`🚨 Error @ minuteFarm.js\n${e}`); }
             }
             return originalFetch.apply(this, arguments);
@@ -347,7 +346,7 @@ async function loadCss(url) {
                 for (const q of selectorsToCheck) {
                     findAndClickBySelector(q);
                     if (document.querySelector(q+"> div") && document.querySelector(q+"> div").innerText === "Mostrar resumo") {
-                        sendToast("🎉 Exercício concluído!", 3000);
+                        sendToast("🎉 | Questão concluida!", 3000);
                     }
                 }
                 await delay(800);
@@ -358,7 +357,7 @@ async function loadCss(url) {
 
 /* Inject */
 if (!/^https?:\/\/([a-z0-9-]+\.)?khanacademy\.org/.test(window.location.href)) { 
-    alert("❌ KhanDark Failed to Injected!\n\nVocê precisa executar o KhanDark no site do Khan Academy! (https://pt.khanacademy.org/)"); 
+    alert("❌ | KhanDark não iniciou!\n\nVocê precisa executar o Script na plataforma Khan Academy. (https://pt.khanacademy.org/)"); 
     window.location.href = "https://pt.khanacademy.org/"; 
 }
 
@@ -382,13 +381,14 @@ loadScript('https://cdn.jsdelivr.net/npm/darkreader@4.9.92/darkreader.min.js', '
     updateLoadingProgress(100, 'Finalizado!');
     
     // Garantir que a splash screen fique visível por pelo menos 3 segundos
+    // MUDE O VALOR 3000 ABAIXO PARA REGULAR O TEMPO (em milissegundos)
+    // 1000 = 1 segundo | 2000 = 2 segundos | 3000 = 3 segundos | 5000 = 5 segundos
     const elapsedTime = Date.now() - startTime;
-    const remainingTime = Math.max(2000, 4000 - elapsedTime);
+    const remainingTime = Math.max(0, 3000 - elapsedTime); // ← MUDE AQUI
     await delay(remainingTime);
     
-    sendToast("💜 | KhanTesge iniciou!");
-    sendToast("Obrigado pela preferência. ");
-    sendToast("Entre em Nosso Discord.");
+    sendToast("💜 | KhanDark iniciou!");
+    sendToast("Boa sorte nos estudos!");
 
     await delay(500);
 
