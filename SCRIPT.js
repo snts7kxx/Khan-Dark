@@ -220,7 +220,7 @@ function setupMain(){
                                 type: "radio", alignment: "default", static: false, graded: true,
                                 options: {
                                     choices: [
-                                        { content: "**💜**.", correct: true, id: "correct-choice" }
+                                        { content: "**💜**", correct: true, id: "correct-choice" }
                                     ],
                                     randomize: false, multipleSelect: false, displayCount: null, deselectEnabled: false
                                 },
@@ -361,7 +361,7 @@ function setupMain(){
                         sendToast("🎉 | Questão concluida!", 3000);
                     }
                 }
-                await delay(800);
+                await delay(1000);
             }
         })();
     })();
@@ -396,7 +396,7 @@ loadScript('https://cdn.jsdelivr.net/npm/darkreader@4.9.92/darkreader.min.js', '
     // MUDE O VALOR 3000 ABAIXO PARA REGULAR O TEMPO (em milissegundos)
     // 1000 = 1 segundo | 2000 = 2 segundos | 3000 = 3 segundos | 5000 = 5 segundos
     const elapsedTime = Date.now() - startTime;
-    const remainingTime = Math.max(0, 3000 - elapsedTime); // ← MUDE AQUI
+    const remainingTime = Math.max(0, 2500 - elapsedTime); // ← MUDE AQUI
     await delay(remainingTime);
     
     sendToast("💜 | KhanDark iniciou!");
