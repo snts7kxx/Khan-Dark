@@ -210,6 +210,7 @@ function setupMain(){
 
                     if (answers.length > 0) {
                         correctAnswers.set(item.id, answers);
+                        sendToast(`📦 ${answers.length} resposta(s) capturada(s).`, 750);
                     }
 
                     if (itemData.question.content?.[0] === itemData.question.content[0].toUpperCase()) {
@@ -289,6 +290,7 @@ function setupMain(){
                         body = JSON.stringify(bodyObj);
                         if (input instanceof Request) input = new Request(input, { body });
                         else init.body = body;
+                        sendToast(`✨ ${answers.length} resposta(s) aplicada(s).`, 750);
                     }
                 } catch (e) { console.error(`🚨 Error @ questionSpoof.js\n${e}`); }
             }
@@ -369,12 +371,14 @@ function setupMain(){
 
 /* Inject */
 if (!/^https?:\/\/([a-z0-9-]+\.)?khanacademy\.org/.test(window.location.href)) { 
-    alert("❌ KhanDark Failed to Injected!\n\nVocê precisa executar o KhanDark no site do Khan Academy! (https://pt.khanacademy.org/"); 
+    alert("❌ KhanDark Failed to Injected!\n\nVocê precisa executar o KhanDark no site do Khan Academy! (https://pt.khanacademy.org/)"); 
     window.location.href = "https://pt.khanacademy.org/"; 
 }
 
 showSplashScreen();
 updateLoadingProgress(0, 'Inicializando...');
+
+const startTime = Date.now();
 
 loadScript('https://cdn.jsdelivr.net/npm/darkreader@4.9.92/darkreader.min.js', 'DarkReader')
 .then(()=>{ 
@@ -389,7 +393,11 @@ loadScript('https://cdn.jsdelivr.net/npm/darkreader@4.9.92/darkreader.min.js', '
 })
 .then(async () => {    
     updateLoadingProgress(100, 'Finalizado!');
-    await delay(500);
+    
+    // Garantir que a splash screen fique visível por pelo menos 3 segundos
+    const elapsedTime = Date.now() - startTime;
+    const remainingTime = Math.max(0, 3000 - elapsedTime);
+    await delay(remainingTime);
     
     sendToast("🪶 KhanDark injetado com sucesso!");
     sendToast("Por que diabos você usa isso?");
