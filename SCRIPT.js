@@ -6,7 +6,6 @@ const splashScreen = document.createElement('splashScreen');
 /* Misc Styles */
 document.head.appendChild(Object.assign(document.createElement("style"),{innerHTML:"@font-face{font-family:'MuseoSans';src:url('https://corsproxy.io/?url=https://r2.e-z.host/4d0a0bea-60f8-44d6-9e74-3032a64a9f32/ynddewua.ttf')format('truetype')}" }));
 document.head.appendChild(Object.assign(document.createElement('style'),{innerHTML:"::-webkit-scrollbar { width: 8px; } ::-webkit-scrollbar-track { background: #f1f1f1; } ::-webkit-scrollbar-thumb { background: #888; border-radius: 10px; } ::-webkit-scrollbar-thumb:hover { background: #555; }"}));
-document.querySelector("link[rel~='icon']").href = 'https://r2.e-z.host/4d0a0bea-60f8-44d6-9e74-3032a64a9f32/ukh0rq22.png';
 
 /* Emmiter */
 class EventEmitter{constructor(){this.events={}}on(t,e){"string"==typeof t&&(t=[t]),t.forEach(t=>{this.events[t]||(this.events[t]=[]),this.events[t].push(e)})}off(t,e){"string"==typeof t&&(t=[t]),t.forEach(t=>{this.events[t]&&(this.events[t]=this.events[t].filter(t=>t!==e))})}emit(t,...e){this.events[t]&&this.events[t].forEach(t=>{t(...e)})}once(t,e){"string"==typeof t&&(t=[t]);let s=(...i)=>{e(...i),this.off(t,s)};this.on(t,s)}};
@@ -21,18 +20,6 @@ async function hideSplashScreen() { splashScreen.style.opacity = '0'; setTimeout
 
 async function loadScript(url, label) { return fetch(url).then(response => response.text()).then(script => { loadedPlugins.push(label); eval(script); }); }
 async function loadCss(url) { return new Promise((resolve) => { const link = document.createElement('link'); link.rel = 'stylesheet'; link.type = 'text/css'; link.href = url; link.onload = () => resolve(); document.head.appendChild(link); }); }
-
-/* Main Functions */ 
-function setupMain(){
-    /* QuestionSpoof */
-    (function () {
-        const phrases = [ 
-            "🔥 Get good, get [**Khanware**](https://github.com/Niximkk/khanware/)!",
-            "🤍 Made by [**@im.nix**](https://e-z.bio/sounix).",
-            "☄️ By [**Niximkk/khanware**](https://github.com/Niximkk/khanware/).",
-            "🌟 Star the project on [GitHub](https://github.com/Niximkk/khanware/)!",
-            "🦢 Nix é lindo e maravilhoso!"
-        ];
 
         const originalFetch = window.fetch;
         const correctAnswers = new Map();
@@ -173,7 +160,7 @@ function setupMain(){
                         body = JSON.stringify(bodyObj);
                         if (input instanceof Request) input = new Request(input, { body });
                         else init.body = body;
-                        sendToast(`✏️ ${answers.length} resposta(s) respondidas!`, 750);
+                        sendToast(`✏️ ${answers.length} resposta(s) respondidas!`, 2000);
                     }
                 } catch (e) { debug(`🚨 Error @ questionSpoof.js\n${e}`); }
             }
@@ -218,7 +205,7 @@ function setupMain(){
             else if (init.body) body = init.body;
             if (body && input.url.includes("mark_conversions")) {
                 try {
-                    if (body.includes("termination_event")) { sendToast("🚫 | Tempo bloqueado", 1000); return; }
+                    if (body.includes("termination_event")) { sendToast("🚫 | Tempo bloqueado", 1500); return; }
                 } catch (e) { debug(`🚨 Error @ minuteFarm.js\n${e}`); }
             }
             return originalFetch.apply(this, arguments);
@@ -263,7 +250,7 @@ loadScript('https://cdn.jsdelivr.net/npm/toastify-js', 'toastifyPlugin')
 .then(async () => {    
     sendToast("💜 | KhanDark iniciado!");
 
-    await delay(1000);
+    await delay(3000);
 
     hideSplashScreen();
     setupMain();
