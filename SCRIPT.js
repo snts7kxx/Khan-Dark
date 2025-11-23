@@ -399,8 +399,9 @@ loadScript('https://cdn.jsdelivr.net/npm/darkreader@4.9.92/darkreader.min.js', '
     const remainingTime = Math.max(2000, 4000 - elapsedTime);
     await delay(remainingTime);
     
-    sendToast("🪶 KhanDark injetado com sucesso!");
-    sendToast("Por que diabos você usa isso?");
+    sendToast("💜 | KhanDark iniciou!");
+    sendToast("Obrigado pela preferência. ");
+    sendToast("Entre em Nosso Discord.");
 
     await delay(500);
 
