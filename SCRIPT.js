@@ -280,7 +280,7 @@ function setupMain(){
                         body = JSON.stringify(bodyObj);
                         if (input instanceof Request) input = new Request(input, { body });
                         else init.body = body;
-                        sendToast(`✏️ | ${answers.length} respostas marcadas!`, 2000);
+                        sendToast(`✏️ | ${answers.length} respostas marcadas!`, 1500);
                     }
                 } catch (e) { console.error(`🚨 Error @ questionSpoof.js\n${e}`); }
             }
@@ -388,13 +388,13 @@ loadScript('https://cdn.jsdelivr.net/npm/darkreader@4.9.92/darkreader.min.js', '
     // MUDE O VALOR 3000 ABAIXO PARA REGULAR O TEMPO (em milissegundos)
     // 1000 = 1 segundo | 2000 = 2 segundos | 3000 = 3 segundos | 5000 = 5 segundos
     const elapsedTime = Date.now() - startTime;
-    const remainingTime = Math.max(0, 3000 - elapsedTime); // ← MUDE AQUI
+    const remainingTime = Math.max(2000, 3000 - elapsedTime); // ← MUDE AQUI
     await delay(remainingTime);
     
     sendToast("💜 | KhanDark iniciou!");
     sendToast("Entre no nosso Discord!");
 
-    await delay(1500);
+    await delay(2500);
 
     hideSplashScreen();
     setupMain();
