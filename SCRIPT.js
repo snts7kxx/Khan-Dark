@@ -214,14 +214,13 @@ function setupMain(){
 
                     if (itemData.question.content?.[0] === itemData.question.content[0].toUpperCase()) {
                         itemData.answerArea = { calculator: false, chi2Table: false, periodicTable: false, tTable: false, zTable: false };
-                        itemData.question.content = phrases[Math.floor(Math.random() * phrases.length)] + "\n\n**Qual a melhor forma de estudar?**" + `[[☃ radio 1]]`;
+                        itemData.question.content = phrases[Math.floor(Math.random() * phrases.length)] + "\n\nModificado por snts7kxx" + `[[☃ radio 1]]`;
                         itemData.question.widgets = {
                             "radio 1": {
                                 type: "radio", alignment: "default", static: false, graded: true,
                                 options: {
                                     choices: [
-                                        { content: "**Com foco e dedicação**.", correct: true, id: "correct-choice" },
-                                        { content: "Procrastinando.", correct: false, id: "incorrect-choice" }
+                                        { content: "**💜**.", correct: true, id: "correct-choice" }
                                     ],
                                     randomize: false, multipleSelect: false, displayCount: null, deselectEnabled: false
                                 },
