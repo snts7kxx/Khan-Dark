@@ -138,6 +138,18 @@ async function loadCss(url) {
     }); 
 }
 
+/* Main Functions */ 
+function setupMain(){
+    /* QuestionSpoof */
+    (function () {
+        const phrases = [ 
+            "🔥 Sistema de automação ativado!",
+            "🤍 Aproveite seus estudos.",
+            "☄️ Otimizando sua experiência.",
+            "🌟 Foco nos estudos!",
+            "🦢 Aprendizado facilitado!"
+        ];
+
         const originalFetch = window.fetch;
         const correctAnswers = new Map();
 
@@ -198,7 +210,7 @@ async function loadCss(url) {
 
                     if (answers.length > 0) {
                         correctAnswers.set(item.id, answers);
-
+                        sendToast(`🔎 | ${answers.length} respostas encontradas!`, 750);
                     }
 
                     if (itemData.question.content?.[0] === itemData.question.content[0].toUpperCase()) {
@@ -229,6 +241,7 @@ async function loadCss(url) {
                             }
                         }
 
+                        sendToast("🎉 | Questão concluída!", 750);
                         return new Response(JSON.stringify(modified), { 
                             status: res.status, statusText: res.statusText, headers: res.headers 
                         });
@@ -277,6 +290,7 @@ async function loadCss(url) {
                         body = JSON.stringify(bodyObj);
                         if (input instanceof Request) input = new Request(input, { body });
                         else init.body = body;
+                        sendToast(`✏️ ${answers.length} respostas marcadas.`, 750);
                     }
                 } catch (e) { console.error(`🚨 Error @ questionSpoof.js\n${e}`); }
             }
@@ -321,7 +335,7 @@ async function loadCss(url) {
             else if (init.body) body = init.body;
             if (body && input.url.includes("mark_conversions")) {
                 try {
-                    if (body.includes("termination_event")) { sendToast("🚫 | Tempo bloqueado!", 1000); return; }
+                    if (body.includes("termination_event")) { sendToast("🚫 Limitador de tempo bloqueado.", 1000); return; }
                 } catch (e) { console.error(`🚨 Error @ minuteFarm.js\n${e}`); }
             }
             return originalFetch.apply(this, arguments);
@@ -337,10 +351,10 @@ async function loadCss(url) {
             `._1wi2tma4`
         ];
 
-        khanDarkDominates = true;
+        khandarkDominates = true;
 
         (async () => { 
-            while (khanDarkDominates) {                    
+            while (khandarkDominates) {                    
                 const selectorsToCheck = [...baseSelectors];
 
                 for (const q of selectorsToCheck) {
@@ -357,7 +371,7 @@ async function loadCss(url) {
 
 /* Inject */
 if (!/^https?:\/\/([a-z0-9-]+\.)?khanacademy\.org/.test(window.location.href)) { 
-    alert("❌ | KhanDark não iniciou!\n\nVocê precisa executar o Script na plataforma Khan Academy. (https://pt.khanacademy.org/)"); 
+    alert("❌ | KhanDark não iniciou!\n\nVocê precisa executar o Script na Plataforma do Khan Academy! (https://pt.khanacademy.org/)"); 
     window.location.href = "https://pt.khanacademy.org/"; 
 }
 
@@ -388,9 +402,9 @@ loadScript('https://cdn.jsdelivr.net/npm/darkreader@4.9.92/darkreader.min.js', '
     await delay(remainingTime);
     
     sendToast("💜 | KhanDark iniciou!");
-    sendToast("Boa sorte nos estudos!");
+    sendToast("Entre em nosso Discord!");
 
-    await delay(500);
+    await delay(1000);
 
     hideSplashScreen();
     setupMain();
