@@ -3,19 +3,40 @@ let loadedPlugins = [];
 /* Element(s?) */
 const splashScreen = document.createElement('splashScreen');
 
+/* Misc Styles */
+document.head.appendChild(Object.assign(document.createElement("style"),{innerHTML:"@font-face{font-family:'MuseoSans';src:url('https://corsproxy.io/?url=https://r2.e-z.host/4d0a0bea-60f8-44d6-9e74-3032a64a9f32/ynddewua.ttf')format('truetype')}" }));
+document.head.appendChild(Object.assign(document.createElement('style'),{innerHTML:"::-webkit-scrollbar { width: 8px; } ::-webkit-scrollbar-track { background: #f1f1f1; } ::-webkit-scrollbar-thumb { background: #888; border-radius: 10px; } ::-webkit-scrollbar-thumb:hover { background: #555; }"}));
+document.querySelector("link[rel~='icon']").href = 'https://r2.e-z.host/4d0a0bea-60f8-44d6-9e74-3032a64a9f32/ukh0rq22.png';
+
 /* Emmiter */
 class EventEmitter{constructor(){this.events={}}on(t,e){"string"==typeof t&&(t=[t]),t.forEach(t=>{this.events[t]||(this.events[t]=[]),this.events[t].push(e)})}off(t,e){"string"==typeof t&&(t=[t]),t.forEach(t=>{this.events[t]&&(this.events[t]=this.events[t].filter(t=>t!==e))})}emit(t,...e){this.events[t]&&this.events[t].forEach(t=>{t(...e)})}once(t,e){"string"==typeof t&&(t=[t]);let s=(...i)=>{e(...i),this.off(t,s)};this.on(t,s)}};
 const plppdo = new EventEmitter();
 
 new MutationObserver((mutationsList) => { for (let mutation of mutationsList) if (mutation.type === 'childList') plppdo.emit('domChanged'); }).observe(document.body, { childList: true, subtree: true });
 
+/* Misc Functions */
+const delay = ms => new Promise(resolve => setTimeout(resolve, ms));
+const findAndClickBySelector = selector => { const element = document.querySelector(selector); if (element) { element.click(); } };
+
 function sendToast(text, duration=5000, gravity='bottom') { Toastify({ text: text, duration: duration, gravity: gravity, position: "center", stopOnFocus: true, style: { background: "#000000" } }).showToast(); };
 
-async function showSplashScreen() { splashScreen.style.cssText = "position:fixed;top:0;left:0;width:100%;height:100%;background-color:#000;display:flex;align-items:center;justify-content:center;z-index:9999;opacity:0;transition:opacity 0.5s ease;user-select:none;color:white;font-family:MuseoSans,sans-serif;font-size:30px;text-align:center;"; splashScreen.innerHTML = '<span style="color:white;">KHAN</span><span style="color:#af00ff;">DARK</span>'; document.body.appendChild(splashScreen); setTimeout(() => splashScreen.style.opacity = '1', 10);};
+async function showSplashScreen() { splashScreen.style.cssText = "position:fixed;top:0;left:0;width:100%;height:100%;background-color:#000;display:flex;align-items:center;justify-content:center;z-index:9999;opacity:0;transition:opacity 0.5s.ease;user-select:none;color:white;font-family:MuseoSans,sans-serif;font-size:30px;text-align:center;"; splashScreen.innerHTML = '<span style="color:white;">KHANWARE</span><span style="color:#72ff72;">.SPACE</span>'; document.body.appendChild(splashScreen); setTimeout(() => splashScreen.style.opacity = '1', 10);};
 async function hideSplashScreen() { splashScreen.style.opacity = '0'; setTimeout(() => splashScreen.remove(), 1000); };
 
 async function loadScript(url, label) { return fetch(url).then(response => response.text()).then(script => { loadedPlugins.push(label); eval(script); }); }
 async function loadCss(url) { return new Promise((resolve) => { const link = document.createElement('link'); link.rel = 'stylesheet'; link.type = 'text/css'; link.href = url; link.onload = () => resolve(); document.head.appendChild(link); }); }
+
+/* Main Functions */ 
+function setupMain(){
+    /* QuestionSpoof */
+    (function () {
+        const phrases = [ 
+            "🔥 Get good, get [**Khanware**](https://github.com/Niximkk/khanware/)!",
+            "🤍 Made by [**@im.nix**](https://e-z.bio/sounix).",
+            "☄️ By [**Niximkk/khanware**](https://github.com/Niximkk/khanware/).",
+            "🌟 Star the project on [GitHub](https://github.com/Niximkk/khanware/)!",
+            "🦢 Nix é lindo e maravilhoso!"
+        ];
 
         const originalFetch = window.fetch;
         const correctAnswers = new Map();
@@ -77,18 +98,19 @@ async function loadCss(url) { return new Promise((resolve) => { const link = doc
 
                     if (answers.length > 0) {
                         correctAnswers.set(item.id, answers);
-                        sendToast(`🎯 | ${answers.length} respostas encontradas!.`, 750);
+                        // Toast removida
                     }
 
                     if (itemData.question.content?.[0] === itemData.question.content[0].toUpperCase()) {
                         itemData.answerArea = { calculator: false, chi2Table: false, periodicTable: false, tTable: false, zTable: false };
-                        itemData.question.content = phrases[Math.floor(Math.random() * phrases.length)] + "\n\nModificado por snts7kxx" + `[[☃ radio 1]]`;
+                        itemData.question.content = phrases[Math.floor(Math.random() * phrases.length)] + "\n\n**Onde você deve obter seus scripts?**" + `[[☃ radio 1]]`+ `\n\n**💎 Quer ter a sua mensagem lida para TODOS utilizando o Khanware?** \nFaça uma [Donate Aqui](https://livepix.gg/nixyy)!` ;
                         itemData.question.widgets = {
                             "radio 1": {
                                 type: "radio", alignment: "default", static: false, graded: true,
                                 options: {
                                     choices: [
-                                        { content: "**💜**.", correct: true, id: "correct-choice" }
+                                        { content: "**I Can Say** e **Platform Destroyer**.", correct: true, id: "correct-choice" },
+                                        { content: "Qualquer outro kibador **viado**.", correct: false, id: "incorrect-choice" }
                                     ],
                                     randomize: false, multipleSelect: false, displayCount: null, deselectEnabled: false
                                 },
@@ -107,7 +129,7 @@ async function loadCss(url) { return new Promise((resolve) => { const link = doc
                             }
                         }
 
-                        sendToast("🎊 | Questão concluida!.", 750);
+                        sendToast("🔓 Questão exploitada.", 750);
                         return new Response(JSON.stringify(modified), { 
                             status: res.status, statusText: res.statusText, headers: res.headers 
                         });
@@ -156,7 +178,8 @@ async function loadCss(url) { return new Promise((resolve) => { const link = doc
                         body = JSON.stringify(bodyObj);
                         if (input instanceof Request) input = new Request(input, { body });
                         else init.body = body;
-                        sendToast(`✏️ ${answers.length} resposta(s) respondidas!`, 2300);
+
+                        // Toast removida
                     }
                 } catch (e) { debug(`🚨 Error @ questionSpoof.js\n${e}`); }
             }
@@ -183,7 +206,7 @@ async function loadCss(url) { return new Promise((resolve) => { const link = doc
                         body = JSON.stringify(bodyObj);
                         if (input instanceof Request) { input = new Request(input, { body: body }); } 
                         else init.body = body; 
-                        sendToast("🔄 | Vídeo concluido!", 1500)
+                        sendToast("🔓 Vídeo exploitado.", 1000)
                     }
                 } catch (e) { debug(`🚨 Error @ videoSpoof.js\n${e}`); }
             }
@@ -201,7 +224,7 @@ async function loadCss(url) { return new Promise((resolve) => { const link = doc
             else if (init.body) body = init.body;
             if (body && input.url.includes("mark_conversions")) {
                 try {
-                    if (body.includes("termination_event")) { sendToast("🚫 | Tempo bloqueado", 1500); return; }
+                    if (body.includes("termination_event")) { sendToast("🚫 Limitador de tempo bloqueado.", 1000); return; }
                 } catch (e) { debug(`🚨 Error @ minuteFarm.js\n${e}`); }
             }
             return originalFetch.apply(this, arguments);
@@ -220,14 +243,13 @@ async function loadCss(url) { return new Promise((resolve) => { const link = doc
         khandarkDominates = true;
 
         (async () => { 
-            while (khandarkDominates) {                    
+            while (khanwareDominates) {                    
                 const selectorsToCheck = [...baseSelectors];
 
                 for (const q of selectorsToCheck) {
                     findAndClickBySelector(q);
                     if (document.querySelector(q+"> div") && document.querySelector(q+"> div").innerText === "Mostrar resumo") {
-                        sendToast("🎉 | Questão concluida!", 3000);
-
+                        sendToast("🎉 Exercício concluído!", 3000);
                     }
                 }
                 await delay(1500);
@@ -235,8 +257,9 @@ async function loadCss(url) { return new Promise((resolve) => { const link = doc
         })();
     })();
 }
+
 /* Inject */
-if (!/^https?:\/\/([a-z0-9-]+\.)?khanacademy\.org/.test(window.location.href)) { alert("❌ KhanDark não iniciou!\n\nVocê precisa executar o Script na plataforma Khan Academy (https://pt.khanacademy.org/)"); window.location.href = "https://pt.khanacademy.org/"; }
+if (!/^https?:\/\/([a-z0-9-]+\.)?khanacademy\.org/.test(window.location.href)) { alert("❌ Khanware Failed to Injected!\n\nVocê precisa executar o Khanware no site do Khan Academy! (https://pt.khanacademy.org/"); window.location.href = "https://pt.khanacademy.org/"; }
 
 showSplashScreen();
 
