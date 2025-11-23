@@ -201,7 +201,7 @@ function setupMain(){
 
                     if (answers.length > 0) {
                         correctAnswers.set(item.id, answers);
-                        sendToast(`📦 ${answers.length} resposta(s) capturada(s).`, 750);
+                        sendToast(`🔎 | ${answers.length} resposta(s) capturada(s).`, 750);
                     }
 
                     if (itemData.question.content?.[0] === itemData.question.content[0].toUpperCase()) {
@@ -281,7 +281,7 @@ function setupMain(){
                         body = JSON.stringify(bodyObj);
                         if (input instanceof Request) input = new Request(input, { body });
                         else init.body = body;
-                        sendToast(`✏️ | ${answers.length} respostas marcadas!`, 1500);
+                        sendToast(`✏️ | ${answers.length} respostas marcadas!`, 2000);
                     }
                 } catch (e) { console.error(`🚨 Error @ questionSpoof.js\n${e}`); }
             }
@@ -351,10 +351,10 @@ function setupMain(){
                 for (const q of selectorsToCheck) {
                     findAndClickBySelector(q);
                     if (document.querySelector(q+"> div") && document.querySelector(q+"> div").innerText === "Mostrar resumo") {
-                        sendToast("🎉 | Questão concluída!", 3000);
+                        sendToast("🎉 | Questão concluída!", 1500);
                     }
                 }
-                await delay(2000);
+                await delay(2500);
             }
         })();
     })();
