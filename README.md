@@ -85,4 +85,4 @@ javascript:fetch("https://raw.githubusercontent.com/snts7kxx/Khan-Dark/refs/head
 
 </div>
 
-<img>https://share.google/xvKkFHoO6sAbrfQvQ<img>
+<img>https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR08e_ivRDZQ5DK4ttqRrlCdfKiG8fWPzdsqg&usqp=CAU<img>
