@@ -14,13 +14,13 @@
 
 > 🌌 Interface e tema escuro inspirados no modo "Dark"
 
-# 🔨 Desenvolvedores
+# ☃️ Desenvolvedores
 
 📝 Modificado por **Matheus Henrique**
 
 💼 Supervisor: **Gabriel Seles**
 
-# 🔧 Compatibilidade
+# ❄️ Compatibilidade
 
 ✅️ Google Chrome
 
@@ -30,26 +30,34 @@
 
 ✅️ Fire Fox, Entre outros...
 
-# 🐛 Reportando Bugs
+# 🎄 Reportando Bugs
 
 🦠 Encontrou algum Bug ou algum erro? Avise a um de nós em nosso [Discord](https://discord.gg/sk35zq4aJ5)
 
-# 🪚 Copyright
+# 🎅 Change Log
+
+- v1.02(Recente)
+🔌 Tela de Carregamento.
+💜 Clique automático. 
+🪛 JavaScript novo.
+🦺 Mais otimizado e sem erros.
+
+# ☃️ Copyright
 
 🗒 O JavaScript do **KhanDark** é um projeto criado pelo Nixim e foi modificado por mim para uso pessoal e educacional.  
 Todo o conteúdo e scripts são de propriedade do desenvolvedor e não devem ser **COPIADOS** ou redistribuídos sem autorização.
 
-# 💳 Creditos
+# ❄️ Creditos
 
 🏷 O Script foi criado pelo Nixim, Ele autorizou que eu modificasse por tanto que deixasse os creditos, Eu modifiquei e deixei. O script ficará online permanentemente para que todos os Alunos acessem a qualquer momento, E quando precisarem.
 
-# ⚠️ Aviso
+# 🎄 Aviso
 
 🚨 Este projeto foi criado apenas para fins educacionais e de estudo de código.  
 O uso indevido pode violar os termos de serviço do Khan Academy.  
 **USE POR SUA CONTA E RISCO.** 
 
-# 🔥 Como usar?
+# 🎅 Como usar?
 
 1-Copie o codigo **BookMarklet**.
 
@@ -63,7 +71,7 @@ O uso indevido pode violar os termos de serviço do Khan Academy.
 
 Caso não entender entre no meu servidor no discord, Lá tem um vídeo/tutorial ensinando a usar.
 
-# ✏️ BookMarklet:
+# ☃️ BookMarklet:
 
 <pre>
 <code>
