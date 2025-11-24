@@ -71,7 +71,7 @@ O uso indevido pode violar os termos de serviço do Khan Academy.
 
 Caso não entender entre no meu servidor no discord, Lá tem um vídeo/tutorial ensinando a usar.
 
-# 🎄 FELIZ NATAL!! 
+# ❄️ FELIZ NATAL!! 
 
 Um ótimo Feliz Natal à todos, E um ótimo Ano Novo, Que 2026 venha repleto de coisas boas pra vocês !!
 
