@@ -85,4 +85,4 @@ javascript:fetch("https://raw.githubusercontent.com/snts7kxx/Khan-Dark/refs/head
 
 </div>
 
-<img>https://share.google/xvKkFHoO6sAbrfQvQ
+<img>https://share.google/xvKkFHoO6sAbrfQvQ<img>
