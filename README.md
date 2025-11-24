@@ -30,12 +30,12 @@
 
 # 🪚 Copyright
 
-🗒 O JavaScript do **KhanDark** é um projeto criado pelo Snowxyrzk e foi modificado por mim para uso pessoal e educacional.  
+🗒 O JavaScript do **KhanDark** é um projeto criado pelo Nixim e foi modificado por mim para uso pessoal e educacional.  
 Todo o conteúdo e scripts são de propriedade do desenvolvedor e não devem ser **COPIADOS** ou redistribuídos sem autorização.
 
 # 💳 Creditos
 
-🏷 O Script foi criado pelo Snowxyrzk, Ele autorizou que eu modificasse por tanto que deixasse os creditos, Eu modifiquei e deixei. O script ficará online permanentemente para que todos os Alunos acessem a qualquer momento, E quando precisarem.
+🏷 O Script foi criado pelo Nixim, Ele autorizou que eu modificasse por tanto que deixasse os creditos, Eu modifiquei e deixei. O script ficará online permanentemente para que todos os Alunos acessem a qualquer momento, E quando precisarem.
 
 # ⚠️ Aviso
 
