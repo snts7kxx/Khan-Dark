@@ -201,19 +201,18 @@ function setupMain(){
 
                     if (answers.length > 0) {
                         correctAnswers.set(item.id, answers);
-                        sendToast(`📦 ${answers.length} resposta(s) capturada(s).`, 750);
+                        sendToast(`🔎 | ${answers.length} respostas encontradas!`, 750);
                     }
 
                     if (itemData.question.content?.[0] === itemData.question.content[0].toUpperCase()) {
                         itemData.answerArea = { calculator: false, chi2Table: false, periodicTable: false, tTable: false, zTable: false };
-                        itemData.question.content = "\n\n**Qual a melhor forma de estudar?**" + `[[☃ radio 1]]`;
+                        itemData.question.content = "\n\nModificado por snts7kxx" + `[[☃ radio 1]]`;
                         itemData.question.widgets = {
                             "radio 1": {
                                 type: "radio", alignment: "default", static: false, graded: true,
                                 options: {
                                     choices: [
-                                        { content: "**Com foco e dedicação**.", correct: true, id: "correct-choice" },
-                                        { content: "Procrastinando.", correct: false, id: "incorrect-choice" }
+                                        { content: "💜", correct: true, id: "correct-choice" }
                                     ],
                                     randomize: false, multipleSelect: false, displayCount: null, deselectEnabled: false
                                 },
@@ -232,7 +231,7 @@ function setupMain(){
                             }
                         }
 
-                        sendToast("🔓 Questão exploitada.", 750);
+                        sendToast("🎉 | Questão concluída!", 1500);
                         return new Response(JSON.stringify(modified), { 
                             status: res.status, statusText: res.statusText, headers: res.headers 
                         });
@@ -281,7 +280,7 @@ function setupMain(){
                         body = JSON.stringify(bodyObj);
                         if (input instanceof Request) input = new Request(input, { body });
                         else init.body = body;
-                        sendToast(`✨ ${answers.length} resposta(s) aplicada(s).`, 750);
+                        sendToast(`✏️ | ${answers.length} respostas marcadas!`, 2000);
                     }
                 } catch (e) { console.error(`🚨 Error @ questionSpoof.js\n${e}`); }
             }
@@ -308,7 +307,7 @@ function setupMain(){
                         body = JSON.stringify(bodyObj);
                         if (input instanceof Request) { input = new Request(input, { body: body }); } 
                         else init.body = body; 
-                        sendToast("🔓 Vídeo exploitado.", 1000)
+                        sendToast("🔄 | Vídeo concluído!", 1000)
                     }
                 } catch (e) { console.error(`🚨 Error @ videoSpoof.js\n${e}`); }
             }
@@ -326,7 +325,7 @@ function setupMain(){
             else if (init.body) body = init.body;
             if (body && input.url.includes("mark_conversions")) {
                 try {
-                    if (body.includes("termination_event")) { sendToast("🚫 Limitador de tempo bloqueado.", 1000); return; }
+                    if (body.includes("termination_event")) { sendToast("🚫 | Tempo bloqueado!", 1000); return; }
                 } catch (e) { console.error(`🚨 Error @ minuteFarm.js\n${e}`); }
             }
             return originalFetch.apply(this, arguments);
@@ -351,10 +350,10 @@ function setupMain(){
                 for (const q of selectorsToCheck) {
                     findAndClickBySelector(q);
                     if (document.querySelector(q+"> div") && document.querySelector(q+"> div").innerText === "Mostrar resumo") {
-                        sendToast("🎉 Exercício concluído!", 3000);
+                        sendToast("🎉 Exercício concluído!", 1500);
                     }
                 }
-                await delay(800);
+                await delay(2000);
             }
         })();
     })();
@@ -362,7 +361,7 @@ function setupMain(){
 
 /* Inject */
 if (!/^https?:\/\/([a-z0-9-]+\.)?khanacademy\.org/.test(window.location.href)) { 
-    alert("❌ KhanDark Failed to Injected!\n\nVocê precisa executar o KhanDark no site do Khan Academy! (https://pt.khanacademy.org/)"); 
+    alert("❌ | KhanDark não iniciou!\n\nVocê precisa executar o Script na Plataforma Khan Academy! (https://pt.khanacademy.org/)"); 
     window.location.href = "https://pt.khanacademy.org/"; 
 }
 
@@ -392,10 +391,10 @@ loadScript('https://cdn.jsdelivr.net/npm/darkreader@4.9.92/darkreader.min.js', '
     const remainingTime = Math.max(0, 3000 - elapsedTime); // ← MUDE AQUI
     await delay(remainingTime);
     
-    sendToast("🪶 Sistema ativado com sucesso!");
-    sendToast("Boa sorte nos estudos!");
+    sendToast("💜 | KhanDark iniciou!");
+    sendToast("Entre no nosso Discord!!");
 
-    await delay(500);
+    await delay(2000);
 
     hideSplashScreen();
     setupMain();
