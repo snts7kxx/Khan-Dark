@@ -1,22 +1,8 @@
-# 🎓KhanDark
+# 🎅 KhanDark
 
 👾 **KhanDark** é um script na linguagem Java que automatiza as lições, Poupando tempo e ajudando em notas.
 
-# 🔔 Novidades:
-
-1️⃣ Tela de Carregamento.
-
-2️⃣ Tempo Otimizado e sem Erros.
-
-3️⃣ Clique automático no botão de "Vamos-Lá"
-
-# 🔨 Desenvolvedores
-
-📝 Modificado por **Matheus Henrique**
-
-💼 Supervisor: **Gabriel Seles**
-
-# ❓️ Como funciona?
+# 🎄 Características
 
 > ✅️ Faz suas lições corretamente.
 
@@ -27,6 +13,26 @@
 > 🎬 Assiste e conclui vídeos.
 
 > 🌌 Interface e tema escuro inspirados no modo "Dark"
+
+# 🔨 Desenvolvedores
+
+📝 Modificado por **Matheus Henrique**
+
+💼 Supervisor: **Gabriel Seles**
+
+# 🔧 Compatibilidade
+
+✅️ Google Chrome
+
+✅️ Safari
+
+✅️ Opera
+
+✅️ Fire Fox, Entre outros...
+
+# 🐛 Reportando Bugs
+
+🦠 Encontrou algum Bug ou algum erro? Avise a um de nós em nosso [Discord](https://discord.gg/sk35zq4aJ5)
 
 # 🪚 Copyright
 
@@ -42,11 +48,6 @@ Todo o conteúdo e scripts são de propriedade do desenvolvedor e não devem ser
 🚨 Este projeto foi criado apenas para fins educacionais e de estudo de código.  
 O uso indevido pode violar os termos de serviço do Khan Academy.  
 **USE POR SUA CONTA E RISCO.** 
-
-# 🎳 Servidor:
-
-Entre no meu servidor no discord:
-https://discord.gg/sk35zq4aJ5
 
 # 🔥 Como usar?
 
