@@ -84,5 +84,3 @@ javascript:fetch("https://raw.githubusercontent.com/snts7kxx/Khan-Dark/refs/head
 </pre>
 
 </div>
-
-https://img.freepik.com/vetores-gratis/banner-de-natal-vermelho-com-enfeites-e-decoracao-de-floco-de-neve_1017-28677.jpg?semt=ais_hybrid&w=740&q=80
