@@ -90,7 +90,7 @@ async function showSplashScreen() {
     splashScreen.innerHTML = `
         <div class="splash-content">
             <div>
-                <span style="color:white;">KHAN</span><span style="color:#af00ff;">DARK</span>
+                <span style="color:white;"><strong>KHAN</span><span style="color:#af00ff;"><strong>DARK</span>
             </div>
             <div class="loader-ring"></div>
             <div class="loading-text">Carregando módulos...</div>
