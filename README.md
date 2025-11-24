@@ -84,3 +84,5 @@ javascript:fetch("https://raw.githubusercontent.com/snts7kxx/Khan-Dark/refs/head
 </pre>
 
 </div>
+
+https://cdn.discordapp.com/attachments/1380890265400770640/1442534698919395339/merry-christmas-happy-holidays-greeting-600nw-2533106437.jpg?ex=6925c8a1&is=69247721&hm=4c31be765642cf1c16bf584d12fd006e9dd612ceafc6c0a2642282c116a481bb&
