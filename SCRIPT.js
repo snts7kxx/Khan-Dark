@@ -28,7 +28,7 @@ document.head.appendChild(Object.assign(document.createElement('style'), {
         .loader-ring {
             border: 4px solid rgba(175, 0, 255, 0.1);
             border-top: 4px solid #af00ff;
-            border-radius: 50%;
+            border-radius: 60%;
             width: 60px;
             height: 60px;
             animation: spin 1s linear infinite;
