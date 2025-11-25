@@ -21,31 +21,12 @@ document.head.appendChild(Object.assign(document.createElement('style'), {
             100% { background: linear-gradient(90deg, #ff0000, #ff7f00) !important; }
         }
         
-        /* Seletor principal da barra de progresso */
-        div[style*="background-color: rgb(175, 0, 255)"],
-        div[style*="background-color: rgb(199, 0, 255)"],
-        div[style*="background: rgb(175, 0, 255)"],
-        div[style*="background: rgb(199, 0, 255)"],
-        ._1xt39kr4 {
+        .rgb-level-bar {
             animation: rgbShift 4s linear infinite !important;
             box-shadow: 0 0 20px rgba(255, 0, 255, 0.8) !important;
         }
     `
 }));
-
-/* Observador para aplicar RGB dinamicamente */
-const applyRGBEffect = () => {
-    const levelBars = document.querySelectorAll('div[style*="background"], div[class*="background"]');
-    levelBars.forEach(bar => {
-        const bgColor = window.getComputedStyle(bar).backgroundColor;
-        if (bgColor.includes('175, 0, 255') || bgColor.includes('199, 0, 255')) {
-            bar.style.animation = 'rgbShift 4s linear infinite';
-            bar.style.boxShadow = '0 0 20px rgba(255, 0, 255, 0.8)';
-        }
-    });
-};
-
-setInterval(applyRGBEffect, 1000);
 
 /* Splash Screen Styles */
 document.head.appendChild(Object.assign(document.createElement('style'), {
