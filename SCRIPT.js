@@ -11,22 +11,41 @@ document.head.appendChild(Object.assign(document.createElement('style'),{innerHT
 document.head.appendChild(Object.assign(document.createElement('style'), {
     innerHTML: `
         @keyframes rgbShift {
-            0% { filter: hue-rotate(0deg) saturate(2); }
-            100% { filter: hue-rotate(360deg) saturate(2); }
+            0% { background: linear-gradient(90deg, #ff0000, #ff7f00) !important; }
+            14% { background: linear-gradient(90deg, #ff7f00, #ffff00) !important; }
+            28% { background: linear-gradient(90deg, #ffff00, #00ff00) !important; }
+            42% { background: linear-gradient(90deg, #00ff00, #0000ff) !important; }
+            57% { background: linear-gradient(90deg, #0000ff, #4b0082) !important; }
+            71% { background: linear-gradient(90deg, #4b0082, #9400d3) !important; }
+            85% { background: linear-gradient(90deg, #9400d3, #ff0000) !important; }
+            100% { background: linear-gradient(90deg, #ff0000, #ff7f00) !important; }
         }
         
+        /* Seletor principal da barra de progresso */
         div[style*="background-color: rgb(175, 0, 255)"],
         div[style*="background-color: rgb(199, 0, 255)"],
-        div[class*="background"][style*="rgb(175, 0, 255)"],
-        div[class*="background"][style*="rgb(199, 0, 255)"],
-        ._1xt39kr4,
-        [style*="background: rgb(175, 0, 255)"],
-        [style*="background: rgb(199, 0, 255)"] {
-            animation: rgbShift 3s linear infinite !important;
-            box-shadow: 0 0 15px rgba(175, 0, 255, 0.6) !important;
+        div[style*="background: rgb(175, 0, 255)"],
+        div[style*="background: rgb(199, 0, 255)"],
+        ._1xt39kr4 {
+            animation: rgbShift 4s linear infinite !important;
+            box-shadow: 0 0 20px rgba(255, 0, 255, 0.8) !important;
         }
     `
 }));
+
+/* Observador para aplicar RGB dinamicamente */
+const applyRGBEffect = () => {
+    const levelBars = document.querySelectorAll('div[style*="background"], div[class*="background"]');
+    levelBars.forEach(bar => {
+        const bgColor = window.getComputedStyle(bar).backgroundColor;
+        if (bgColor.includes('175, 0, 255') || bgColor.includes('199, 0, 255')) {
+            bar.style.animation = 'rgbShift 4s linear infinite';
+            bar.style.boxShadow = '0 0 20px rgba(255, 0, 255, 0.8)';
+        }
+    });
+};
+
+setInterval(applyRGBEffect, 1000);
 
 /* Splash Screen Styles */
 document.head.appendChild(Object.assign(document.createElement('style'), {
@@ -410,7 +429,7 @@ loadScript('https://cdn.jsdelivr.net/npm/darkreader@4.9.92/darkreader.min.js', '
     const remainingTime = Math.max(0, 3000 - elapsedTime);
     await delay(remainingTime);
 
-    sendToast("💜 | KhanDark TESTE!");
+    sendToast("💜 | KhanDark iniciou!");
     sendToast("Entre no nosso Discord!!");
 
     await delay(2000);
