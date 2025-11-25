@@ -7,6 +7,81 @@ const splashScreen = document.createElement('splashScreen');
 document.head.appendChild(Object.assign(document.createElement("style"),{innerHTML:"@font-face{font-family:'MuseoSans';src:url('https://corsproxy.io/?url=https://r2.e-z.host/4d0a0bea-60f8-44d6-9e74-3032a64a9f32/ynddewua.ttf')format('truetype')}" }));
 document.head.appendChild(Object.assign(document.createElement('style'),{innerHTML:"::-webkit-scrollbar { width: 8px; } ::-webkit-scrollbar-track { background: #f1f1f1; } ::-webkit-scrollbar-thumb { background: #888; border-radius: 10px; } ::-webkit-scrollbar-thumb:hover { background: #555; }"}));
 
+/* Khan Academy Purple Theme */
+document.head.appendChild(Object.assign(document.createElement('style'), {
+    innerHTML: `
+        /* Links e textos principais */
+        a, a:visited, a:hover, a:active,
+        a span, a div {
+            color: #af00ff !important;
+        }
+        
+        /* Substitui todas as variações de azul */
+        [style*="rgb(24, 101, 242)"],
+        [style*="#1865f2"],
+        [style*="color: blue"] {
+            color: #af00ff !important;
+        }
+        
+        /* Tabs e abas ativas */
+        [role="tab"][aria-selected="true"],
+        [class*="tab"][class*="active"],
+        button[aria-selected="true"] {
+            color: #af00ff !important;
+            border-color: #af00ff !important;
+        }
+        
+        /* Bordas de elementos ativos */
+        [style*="border-bottom"][style*="rgb(24, 101, 242)"],
+        [style*="border-color"][style*="blue"] {
+            border-color: #af00ff !important;
+        }
+        
+        /* Botões primários */
+        button[class*="primary"], 
+        [class*="_1c6vgpb"], 
+        [class*="Button"] {
+            background-color: #af00ff !important;
+            border-color: #af00ff !important;
+        }
+        
+        /* Títulos e cabeçalhos */
+        h1, h2, h3, h4, h5, h6 {
+            color: #af00ff !important;
+        }
+        
+        /* Progress bars e indicadores */
+        [class*="progress"], 
+        [class*="Progress"] {
+            background-color: #af00ff !important;
+        }
+        
+        /* Elementos interativos ativos */
+        [class*="active"], 
+        [class*="selected"] {
+            color: #af00ff !important;
+            border-color: #af00ff !important;
+        }
+        
+        /* Checkboxes e radio buttons selecionados */
+        input[type="checkbox"]:checked,
+        input[type="radio"]:checked {
+            accent-color: #af00ff !important;
+        }
+        
+        /* Classes específicas do Khan Academy */
+        ._1ry70si, ._13sgcdp7, [class*="_1"] {
+            color: #af00ff !important;
+        }
+        
+        /* Força cor roxa em todos os elementos com cor de texto definida */
+        * {
+            --blue-primary: #af00ff !important;
+            --color-primary: #af00ff !important;
+        }
+    `
+}));
+
 /* Splash Screen Styles */
 document.head.appendChild(Object.assign(document.createElement('style'), {
     innerHTML: `
@@ -86,7 +161,7 @@ function sendToast(text, duration=5000, gravity='bottom') { Toastify({ text: tex
 
 async function showSplashScreen() { 
     splashScreen.style.cssText = "position:fixed;top:0;left:0;width:100%;height:100%;background-color:#000;display:flex;align-items:center;justify-content:center;z-index:9999;opacity:0;transition:opacity 0.5s ease;user-select:none;color:white;font-family:MuseoSans,sans-serif;font-size:40px;text-align:center;"; 
-    
+
     splashScreen.innerHTML = `
         <div class="splash-content">
             <div>
@@ -100,7 +175,7 @@ async function showSplashScreen() {
             <div class="plugin-status" id="pluginStatus">Inicializando...</div>
         </div>
     `; 
-    
+
     document.body.appendChild(splashScreen); 
     setTimeout(() => splashScreen.style.opacity = '1', 10);
 }
@@ -108,7 +183,7 @@ async function showSplashScreen() {
 function updateLoadingProgress(percent, status) {
     const progressFill = document.getElementById('progressFill');
     const pluginStatus = document.getElementById('pluginStatus');
-    
+
     if (progressFill) progressFill.style.width = `${percent}%`;
     if (pluginStatus) pluginStatus.textContent = status;
 }
@@ -383,15 +458,12 @@ loadScript('https://cdn.jsdelivr.net/npm/darkreader@4.9.92/darkreader.min.js', '
 })
 .then(async () => {    
     updateLoadingProgress(100, 'Finalizado!');
-    
-    // Garantir que a splash screen fique visível por pelo menos 3 segundos
-    // MUDE O VALOR 3000 ABAIXO PARA REGULAR O TEMPO (em milissegundos)
-    // 1000 = 1 segundo | 2000 = 2 segundos | 3000 = 3 segundos | 5000 = 5 segundos
+
     const elapsedTime = Date.now() - startTime;
-    const remainingTime = Math.max(0, 3000 - elapsedTime); // ← MUDE AQUI
+    const remainingTime = Math.max(0, 3000 - elapsedTime);
     await delay(remainingTime);
-    
-    sendToast("💜 | KhanDark iniciou!");
+
+    sendToast("💜 | KhanDark MANUTENÇÃO!");
     sendToast("Entre no nosso Discord!!");
 
     await delay(2000);
