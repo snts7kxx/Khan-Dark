@@ -39,9 +39,13 @@
 # 🎅 Change Log
 
 - v1.02(Recente)
+
 🔌 Tela de Carregamento.
+
 💜 Clique automático. 
-🪛 JavaScript novo.
+
+🪛 JavaScript novo. 
+
 🦺 Mais otimizado e sem erros.
 
 # ☃️ Copyright
