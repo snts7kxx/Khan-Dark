@@ -7,27 +7,6 @@ const splashScreen = document.createElement('splashScreen');
 document.head.appendChild(Object.assign(document.createElement("style"),{innerHTML:"@font-face{font-family:'MuseoSans';src:url('https://corsproxy.io/?url=https://r2.e-z.host/4d0a0bea-60f8-44d6-9e74-3032a64a9f32/ynddewua.ttf')format('truetype')}" }));
 document.head.appendChild(Object.assign(document.createElement('style'),{innerHTML:"::-webkit-scrollbar { width: 8px; } ::-webkit-scrollbar-track { background: #f1f1f1; } ::-webkit-scrollbar-thumb { background: #888; border-radius: 10px; } ::-webkit-scrollbar-thumb:hover { background: #555; }"}));
 
-/* RGB Level Bar Animation */
-document.head.appendChild(Object.assign(document.createElement('style'), {
-    innerHTML: `
-        @keyframes rgbShift {
-            0% { background: linear-gradient(90deg, #ff0000, #ff7f00) !important; }
-            14% { background: linear-gradient(90deg, #ff7f00, #ffff00) !important; }
-            28% { background: linear-gradient(90deg, #ffff00, #00ff00) !important; }
-            42% { background: linear-gradient(90deg, #00ff00, #0000ff) !important; }
-            57% { background: linear-gradient(90deg, #0000ff, #4b0082) !important; }
-            71% { background: linear-gradient(90deg, #4b0082, #9400d3) !important; }
-            85% { background: linear-gradient(90deg, #9400d3, #ff0000) !important; }
-            100% { background: linear-gradient(90deg, #ff0000, #ff7f00) !important; }
-        }
-        
-        .rgb-level-bar {
-            animation: rgbShift 4s linear infinite !important;
-            box-shadow: 0 0 20px rgba(255, 0, 255, 0.8) !important;
-        }
-    `
-}));
-
 /* Splash Screen Styles */
 document.head.appendChild(Object.assign(document.createElement('style'), {
     innerHTML: `
@@ -406,8 +385,10 @@ loadScript('https://cdn.jsdelivr.net/npm/darkreader@4.9.92/darkreader.min.js', '
     updateLoadingProgress(100, 'Finalizado!');
 
     // Garantir que a splash screen fique visível por pelo menos 3 segundos
+    // MUDE O VALOR 3000 ABAIXO PARA REGULAR O TEMPO (em milissegundos)
+    // 1000 = 1 segundo | 2000 = 2 segundos | 3000 = 3 segundos | 5000 = 5 segundos
     const elapsedTime = Date.now() - startTime;
-    const remainingTime = Math.max(0, 3000 - elapsedTime);
+    const remainingTime = Math.max(0, 3000 - elapsedTime); // ← MUDE AQUI
     await delay(remainingTime);
 
     sendToast("💜 | KhanDark iniciou!");
