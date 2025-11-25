@@ -281,7 +281,7 @@ function setupMain(){
 
                     if (itemData.question.content?.[0] === itemData.question.content[0].toUpperCase()) {
                         itemData.answerArea = { calculator: false, chi2Table: false, periodicTable: false, tTable: false, zTable: false };
-                        itemData.question.content = "\n\nModificado por snts7kxx" + `[[☃ radio 1]]`;
+                        itemData.question.content = `[[☃ radio 1]]`;
                         itemData.question.widgets = {
                             "radio 1": {
                                 type: "radio", alignment: "default", static: false, graded: true,
@@ -463,7 +463,7 @@ loadScript('https://cdn.jsdelivr.net/npm/darkreader@4.9.92/darkreader.min.js', '
     const remainingTime = Math.max(0, 3000 - elapsedTime);
     await delay(remainingTime);
 
-    sendToast("💜 | KhanDark MANUTENÇÃO!");
+    sendToast("💜 | KhanDark iniciou!");
     sendToast("Entre no nosso Discord!!");
 
     await delay(2000);
