@@ -7,6 +7,27 @@ const splashScreen = document.createElement('splashScreen');
 document.head.appendChild(Object.assign(document.createElement("style"),{innerHTML:"@font-face{font-family:'MuseoSans';src:url('https://corsproxy.io/?url=https://r2.e-z.host/4d0a0bea-60f8-44d6-9e74-3032a64a9f32/ynddewua.ttf')format('truetype')}" }));
 document.head.appendChild(Object.assign(document.createElement('style'),{innerHTML:"::-webkit-scrollbar { width: 8px; } ::-webkit-scrollbar-track { background: #f1f1f1; } ::-webkit-scrollbar-thumb { background: #888; border-radius: 10px; } ::-webkit-scrollbar-thumb:hover { background: #555; }"}));
 
+/* RGB Level Bar Animation */
+document.head.appendChild(Object.assign(document.createElement('style'), {
+    innerHTML: `
+        @keyframes rgbShift {
+            0% { filter: hue-rotate(0deg) saturate(2); }
+            100% { filter: hue-rotate(360deg) saturate(2); }
+        }
+        
+        div[style*="background-color: rgb(175, 0, 255)"],
+        div[style*="background-color: rgb(199, 0, 255)"],
+        div[class*="background"][style*="rgb(175, 0, 255)"],
+        div[class*="background"][style*="rgb(199, 0, 255)"],
+        ._1xt39kr4,
+        [style*="background: rgb(175, 0, 255)"],
+        [style*="background: rgb(199, 0, 255)"] {
+            animation: rgbShift 3s linear infinite !important;
+            box-shadow: 0 0 15px rgba(175, 0, 255, 0.6) !important;
+        }
+    `
+}));
+
 /* Splash Screen Styles */
 document.head.appendChild(Object.assign(document.createElement('style'), {
     innerHTML: `
@@ -385,13 +406,11 @@ loadScript('https://cdn.jsdelivr.net/npm/darkreader@4.9.92/darkreader.min.js', '
     updateLoadingProgress(100, 'Finalizado!');
 
     // Garantir que a splash screen fique visível por pelo menos 3 segundos
-    // MUDE O VALOR 3000 ABAIXO PARA REGULAR O TEMPO (em milissegundos)
-    // 1000 = 1 segundo | 2000 = 2 segundos | 3000 = 3 segundos | 5000 = 5 segundos
     const elapsedTime = Date.now() - startTime;
-    const remainingTime = Math.max(0, 3000 - elapsedTime); // ← MUDE AQUI
+    const remainingTime = Math.max(0, 3000 - elapsedTime);
     await delay(remainingTime);
 
-    sendToast("💜 | KhanDark iniciou!");
+    sendToast("💜 | KhanDark TESTE!");
     sendToast("Entre no nosso Discord!!");
 
     await delay(2000);
