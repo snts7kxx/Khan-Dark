@@ -85,12 +85,12 @@ const findAndClickBySelector = selector => { const element = document.querySelec
 function sendToast(text, duration=5000, gravity='bottom') { Toastify({ text: text, duration: duration, gravity: gravity, position: "center", stopOnFocus: true, style: { background: "#000000" } }).showToast(); };
 
 async function showSplashScreen() { 
-    splashScreen.style.cssText = "position:fixed;top:0;left:0;width:100%;height:100%;background-color:#000;display:flex;align-items:center;justify-content:center;z-index:9999;opacity:0;transition:opacity 1.5s ease;user-select:none;color:white;font-family:MuseoSans,sans-serif;font-size:40px;text-align:center;"; 
-    
+    splashScreen.style.cssText = "position:fixed;top:0;left:0;width:100%;height:100%;background-color:#000;display:flex;align-items:center;justify-content:center;z-index:9999;opacity:0;transition:opacity 0.5s ease;user-select:none;color:white;font-family:MuseoSans,sans-serif;font-size:40px;text-align:center;"; 
+
     splashScreen.innerHTML = `
         <div class="splash-content">
             <div>
-                <span style="color:white;"><strong>KHAN</stong><span style="color:#af00ff;"><strong>DARK</strong>
+                <span style="color:white;"><strong>KHAN</span><span style="color:#af00ff;"><strong>DARK</span>
             </div>
             <div class="loader-ring"></div>
             <div class="loading-text">Carregando módulos...</div>
@@ -100,7 +100,7 @@ async function showSplashScreen() {
             <div class="plugin-status" id="pluginStatus">Inicializando...</div>
         </div>
     `; 
-    
+
     document.body.appendChild(splashScreen); 
     setTimeout(() => splashScreen.style.opacity = '1', 10);
 }
@@ -108,7 +108,7 @@ async function showSplashScreen() {
 function updateLoadingProgress(percent, status) {
     const progressFill = document.getElementById('progressFill');
     const pluginStatus = document.getElementById('pluginStatus');
-    
+
     if (progressFill) progressFill.style.width = `${percent}%`;
     if (pluginStatus) pluginStatus.textContent = status;
 }
@@ -141,9 +141,6 @@ async function loadCss(url) {
 function setupMain(){
     /* QuestionSpoof */
     (function () {
-        const phrases = [    
-        ];
-
         const originalFetch = window.fetch;
         const correctAnswers = new Map();
 
@@ -204,18 +201,18 @@ function setupMain(){
 
                     if (answers.length > 0) {
                         correctAnswers.set(item.id, answers);
-                        sendToast(`🔎 | ${answers.length} respostas encontradas`, 750);
+                        sendToast(`🔎 | ${answers.length} respostas encontradas!`, 750);
                     }
 
                     if (itemData.question.content?.[0] === itemData.question.content[0].toUpperCase()) {
                         itemData.answerArea = { calculator: false, chi2Table: false, periodicTable: false, tTable: false, zTable: false };
-                        itemData.question.content = phrases[Math.floor(Math.random() * phrases.length)] + "\n\nModificado por snts7kxx**" + `[[☃ radio 1]]`;
+                        itemData.question.content = "\n\nModificado por snts7kxx" + `[[☃ radio 1]]`;
                         itemData.question.widgets = {
                             "radio 1": {
                                 type: "radio", alignment: "default", static: false, graded: true,
                                 options: {
                                     choices: [
-                                        { content: "💜", correct: true, id: "correct-choice" }                               
+                                        { content: "💜", correct: true, id: "correct-choice" }
                                     ],
                                     randomize: false, multipleSelect: false, displayCount: null, deselectEnabled: false
                                 },
@@ -283,7 +280,7 @@ function setupMain(){
                         body = JSON.stringify(bodyObj);
                         if (input instanceof Request) input = new Request(input, { body });
                         else init.body = body;
-                        sendToast(`✏️ | ${answers.length} respostas marcadas!`, 1500);
+                        sendToast(`✏️ | ${answers.length} respostas marcadas!`, 2000);
                     }
                 } catch (e) { console.error(`🚨 Error @ questionSpoof.js\n${e}`); }
             }
@@ -328,7 +325,7 @@ function setupMain(){
             else if (init.body) body = init.body;
             if (body && input.url.includes("mark_conversions")) {
                 try {
-                    if (body.includes("termination_event")) { sendToast("🚫 | Limite de tempo Bloqueado!.", 1000); return; }
+                    if (body.includes("termination_event")) { sendToast("🚫 | Tempo bloqueado!", 1000); return; }
                 } catch (e) { console.error(`🚨 Error @ minuteFarm.js\n${e}`); }
             }
             return originalFetch.apply(this, arguments);
@@ -353,7 +350,7 @@ function setupMain(){
                 for (const q of selectorsToCheck) {
                     findAndClickBySelector(q);
                     if (document.querySelector(q+"> div") && document.querySelector(q+"> div").innerText === "Mostrar resumo") {
-                        sendToast("🎉 | Questão concluída!", 1500);
+                        sendToast("🎉 Exercício concluído!", 1500);
                     }
                 }
                 await delay(2000);
@@ -386,14 +383,16 @@ loadScript('https://cdn.jsdelivr.net/npm/darkreader@4.9.92/darkreader.min.js', '
 })
 .then(async () => {    
     updateLoadingProgress(100, 'Finalizado!');
-    
+
     // Garantir que a splash screen fique visível por pelo menos 3 segundos
+    // MUDE O VALOR 3000 ABAIXO PARA REGULAR O TEMPO (em milissegundos)
+    // 1000 = 1 segundo | 2000 = 2 segundos | 3000 = 3 segundos | 5000 = 5 segundos
     const elapsedTime = Date.now() - startTime;
-    const remainingTime = Math.max(0, 3000 - elapsedTime); <-- ALTERE A TELA DE CARREGAMENTO AQUI.
+    const remainingTime = Math.max(0, 3000 - elapsedTime); // ← MUDE AQUI
     await delay(remainingTime);
-    
+
     sendToast("💜 | KhanDark iniciou!");
-    sendToast("Entre em nosso [Discord](https://discord.gg/sk35zq4aJ5)");
+    sendToast("Entre no nosso Discord!!");
 
     await delay(2000);
 
