@@ -280,7 +280,7 @@ function setupMain(){
                         body = JSON.stringify(bodyObj);
                         if (input instanceof Request) input = new Request(input, { body });
                         else init.body = body;
-                        sendToast(`✏️ | ${answers.length} respostas marcadas!`, 1500);
+                        sendToast(`✏️ | ${answers.length} respostas marcadas!`, 2000);
                     }
                 } catch (e) { console.error(`🚨 Error @ questionSpoof.js\n${e}`); }
             }
@@ -350,10 +350,10 @@ function setupMain(){
                 for (const q of selectorsToCheck) {
                     findAndClickBySelector(q);
                     if (document.querySelector(q+"> div") && document.querySelector(q+"> div").innerText === "Mostrar resumo") {
-                        sendToast("🎉 Exercício concluído!", 1500);
+                        sendToast("🎉 | Questão concluída!", 1500);
                     }
                 }
-                await delay(2000);
+                await delay(2200);
             }
         })();
     })();
@@ -392,7 +392,7 @@ loadScript('https://cdn.jsdelivr.net/npm/darkreader@4.9.92/darkreader.min.js', '
     await delay(remainingTime);
 
     sendToast("💜 | KhanDark iniciou!");
-    sendToast("Entre no nosso Discord");
+    sendToast("Entre no nosso Discord!");
 
     await delay(2000);
 
