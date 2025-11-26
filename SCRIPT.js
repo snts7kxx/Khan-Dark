@@ -6,7 +6,6 @@ const splashScreen = document.createElement('splashScreen');
 /* Misc Styles */
 document.head.appendChild(Object.assign(document.createElement("style"),{innerHTML:"@font-face{font-family:'MuseoSans';src:url('https://corsproxy.io/?url=https://r2.e-z.host/4d0a0bea-60f8-44d6-9e74-3032a64a9f32/ynddewua.ttf')format('truetype')}" }));
 document.head.appendChild(Object.assign(document.createElement('style'),{innerHTML:"::-webkit-scrollbar { width: 8px; } ::-webkit-scrollbar-track { background: #f1f1f1; } ::-webkit-scrollbar-thumb { background: #888; border-radius: 10px; } ::-webkit-scrollbar-thumb:hover { background: #555; }"}));
-document.querySelector("link[rel~='icon']").href = 'https://r2.e-z.host/4d0a0bea-60f8-44d6-9e74-3032a64a9f32/ukh0rq22.png';
 
 /* Splash Screen Styles */
 document.head.appendChild(Object.assign(document.createElement('style'), {
@@ -86,12 +85,12 @@ const findAndClickBySelector = selector => { const element = document.querySelec
 function sendToast(text, duration=5000, gravity='bottom') { Toastify({ text: text, duration: duration, gravity: gravity, position: "center", stopOnFocus: true, style: { background: "#000000" } }).showToast(); };
 
 async function showSplashScreen() { 
-    splashScreen.style.cssText = "position:fixed;top:0;left:0;width:100%;height:100%;background-color:#000;display:flex;align-items:center;justify-content:center;z-index:9999;opacity:0;transition:opacity 0.5s ease;user-select:none;color:white;font-family:MuseoSans,sans-serif;font-size:30px;text-align:center;"; 
+    splashScreen.style.cssText = "position:fixed;top:0;left:0;width:100%;height:100%;background-color:#000;display:flex;align-items:center;justify-content:center;z-index:9999;opacity:0;transition:opacity 1.5s ease;user-select:none;color:white;font-family:MuseoSans,sans-serif;font-size:40px;text-align:center;"; 
     
     splashScreen.innerHTML = `
         <div class="splash-content">
             <div>
-                <span style="color:white;"><strong>KHAN</span><span style="color:#af00ff;"><strong>DARK</span>
+                <span style="color:white;"><strong>KHAN</stong><span style="color:#af00ff;"><strong>DARK</strong>
             </div>
             <div class="loader-ring"></div>
             <div class="loading-text">Carregando módulos...</div>
@@ -205,7 +204,7 @@ function setupMain(){
 
                     if (answers.length > 0) {
                         correctAnswers.set(item.id, answers);
-                        sendToast(`📦 ${answers.length} resposta(s) capturada(s).`, 750);
+                        sendToast(`🔎 | ${answers.length} respostas encontradas`, 750);
                     }
 
                     if (itemData.question.content?.[0] === itemData.question.content[0].toUpperCase()) {
@@ -235,7 +234,7 @@ function setupMain(){
                             }
                         }
 
-                        sendToast("🔓 Questão exploitada.", 750);
+                        sendToast("🎉 | Questão concluída!", 1500);
                         return new Response(JSON.stringify(modified), { 
                             status: res.status, statusText: res.statusText, headers: res.headers 
                         });
@@ -284,7 +283,7 @@ function setupMain(){
                         body = JSON.stringify(bodyObj);
                         if (input instanceof Request) input = new Request(input, { body });
                         else init.body = body;
-                        sendToast(`✨ ${answers.length} resposta(s) aplicada(s).`, 750);
+                        sendToast(`✏️ | ${answers.length} respostas marcadas!`, 1500);
                     }
                 } catch (e) { console.error(`🚨 Error @ questionSpoof.js\n${e}`); }
             }
@@ -311,7 +310,7 @@ function setupMain(){
                         body = JSON.stringify(bodyObj);
                         if (input instanceof Request) { input = new Request(input, { body: body }); } 
                         else init.body = body; 
-                        sendToast("🔓 Vídeo exploitado.", 1000)
+                        sendToast("🔄 | Vídeo concluído!", 1000)
                     }
                 } catch (e) { console.error(`🚨 Error @ videoSpoof.js\n${e}`); }
             }
@@ -329,7 +328,7 @@ function setupMain(){
             else if (init.body) body = init.body;
             if (body && input.url.includes("mark_conversions")) {
                 try {
-                    if (body.includes("termination_event")) { sendToast("🚫 Limitador de tempo bloqueado.", 1000); return; }
+                    if (body.includes("termination_event")) { sendToast("🚫 | Limite de tempo Bloqueado!.", 1000); return; }
                 } catch (e) { console.error(`🚨 Error @ minuteFarm.js\n${e}`); }
             }
             return originalFetch.apply(this, arguments);
@@ -354,10 +353,10 @@ function setupMain(){
                 for (const q of selectorsToCheck) {
                     findAndClickBySelector(q);
                     if (document.querySelector(q+"> div") && document.querySelector(q+"> div").innerText === "Mostrar resumo") {
-                        sendToast("🎉 Exercício concluído!", 3000);
+                        sendToast("🎉 | Questão concluída!", 1500);
                     }
                 }
-                await delay(800);
+                await delay(2000);
             }
         })();
     })();
@@ -390,11 +389,11 @@ loadScript('https://cdn.jsdelivr.net/npm/darkreader@4.9.92/darkreader.min.js', '
     
     // Garantir que a splash screen fique visível por pelo menos 3 segundos
     const elapsedTime = Date.now() - startTime;
-    const remainingTime = Math.max(0, 3000 - elapsedTime);
+    const remainingTime = Math.max(0, 3000 - elapsedTime); <-- ALTERE A TELA DE CARREGAMENTO AQUI.
     await delay(remainingTime);
     
     sendToast("💜 | KhanDark iniciou!");
-    sendToast("Entre em nosso Discord");
+    sendToast("Entre em nosso [Discord](https://discord.gg/sk35zq4aJ5)");
 
     await delay(2000);
 
