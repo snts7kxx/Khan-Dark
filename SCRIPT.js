@@ -1,73 +1,257 @@
 let loadedPlugins = [];
 
 /* Element(s?) */
-const splashScreen = document.createElement('splashScreen');
+const splashScreen = document.createElement('div');
 
 /* Misc Styles */
 document.head.appendChild(Object.assign(document.createElement("style"),{innerHTML:"@font-face{font-family:'MuseoSans';src:url('https://corsproxy.io/?url=https://r2.e-z.host/4d0a0bea-60f8-44d6-9e74-3032a64a9f32/ynddewua.ttf')format('truetype')}" }));
 document.head.appendChild(Object.assign(document.createElement('style'),{innerHTML:"::-webkit-scrollbar { width: 8px; } ::-webkit-scrollbar-track { background: #ffffff; } ::-webkit-scrollbar-thumb { background: #888; border-radius: 10px; } ::-webkit-scrollbar-thumb:hover { background: #555; }"}));
 
-/* Splash Screen Styles */
+/* Splash Screen Styles - VERSÃO MELHORADA */
 document.head.appendChild(Object.assign(document.createElement('style'), {
     innerHTML: `
-        @keyframes spin {
+        @keyframes float {
+            0%, 100% { transform: translateY(0) translateX(0); }
+            25% { transform: translateY(-100px) translateX(50px); }
+            50% { transform: translateY(-50px) translateX(-50px); }
+            75% { transform: translateY(-150px) translateX(30px); }
+        }
+        
+        @keyframes slideUp {
+            from { transform: translateY(50px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+        
+        @keyframes glow {
+            0%, 100% { text-shadow: 0 0 30px #af00ff, 0 0 60px #af00ff; }
+            50% { text-shadow: 0 0 40px #af00ff, 0 0 80px #af00ff, 0 0 100px #af00ff; }
+        }
+        
+        @keyframes hexSpin {
             0% { transform: rotate(0deg); }
             100% { transform: rotate(360deg); }
         }
         
         @keyframes pulse {
+            0%, 100% { transform: scale(1); opacity: 1; }
+            50% { transform: scale(1.2); opacity: 0.7; }
+        }
+        
+        @keyframes fadeInOut {
             0%, 100% { opacity: 1; }
             50% { opacity: 0.5; }
         }
         
-        @keyframes slideUp {
-            from { transform: translateY(20px); opacity: 0; }
-            to { transform: translateY(0); opacity: 1; }
+        @keyframes shimmer {
+            0% { background-position: 200% 0; }
+            100% { background-position: -200% 0; }
         }
         
-        .loader-ring {
-            border: 4px solid rgba(175, 0, 255, 0.1);
-            border-top: 4px solid #af00ff;
-            border-radius: 50%;
-            width: 60px;
-            height: 60px;
-            animation: spin 1s linear infinite;
-            margin: 20px auto;
+        @keyframes slide {
+            0% { transform: translateX(-100%); }
+            100% { transform: translateX(200%); }
         }
         
-        .loading-text {
-            color: #af00ff;
-            font-size: 16px;
-            margin-top: 10px;
-            animation: pulse 1.5s ease-in-out infinite;
+        .kd-splash-screen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, #000000 0%, #1a0033 50%, #000000 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 9999;
+            opacity: 0;
+            transition: opacity 1s ease;
+            user-select: none;
+            font-family: MuseoSans, sans-serif;
         }
         
-        .splash-content {
-            animation: slideUp 0.5s ease-out;
-        }
-        
-        .progress-bar {
-            width: 300px;
-            height: 4px;
-            background: rgba(175, 0, 255, 0.1);
-            border-radius: 2px;
-            margin: 20px auto 10px;
+        .kd-particles {
+            position: absolute;
+            width: 100%;
+            height: 100%;
             overflow: hidden;
         }
         
-        .progress-fill {
-            height: 100%;
-            background: linear-gradient(90deg, #af00ff, #d966ff);
-            width: 0%;
-            transition: width 0.3s ease;
+        .kd-particle {
+            position: absolute;
+            background: #af00ff;
+            border-radius: 50%;
+            animation: float 15s infinite ease-in-out;
+            opacity: 0.1;
+        }
+        
+        .kd-splash-content {
+            position: relative;
+            z-index: 2;
+            text-align: center;
+            animation: slideUp 0.8s cubic-bezier(0.22, 1, 0.36, 1);
+        }
+        
+        .kd-logo-container {
+            position: relative;
+            margin-bottom: 40px;
+        }
+        
+        .kd-logo-text {
+            font-size: 72px;
+            font-weight: bold;
+            letter-spacing: 4px;
+            position: relative;
+            display: inline-block;
+        }
+        
+        .kd-logo-khan {
+            color: white;
+            text-shadow: 0 0 20px rgba(255, 255, 255, 0.5);
+        }
+        
+        .kd-logo-dark {
+            color: #af00ff;
+            text-shadow: 0 0 30px #af00ff, 0 0 60px #af00ff;
+            animation: glow 2s ease-in-out infinite;
+        }
+        
+        .kd-divider {
+            width: 300px;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, #af00ff, transparent);
+            margin: 30px auto;
+            position: relative;
+        }
+        
+        .kd-divider::before,
+        .kd-divider::after {
+            content: '';
+            position: absolute;
+            width: 8px;
+            height: 8px;
+            background: #af00ff;
+            border-radius: 50%;
+            top: -3px;
             box-shadow: 0 0 10px #af00ff;
         }
         
-        .plugin-status {
-            color: rgba(255, 255, 255, 0.6);
-            font-size: 12px;
-            margin-top: 15px;
+        .kd-divider::before { left: 0; }
+        .kd-divider::after { right: 0; }
+        
+        .kd-loader-container {
+            margin: 40px 0;
+        }
+        
+        .kd-hexagon-loader {
+            width: 80px;
+            height: 80px;
+            margin: 0 auto;
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .kd-hexagon {
+            position: absolute;
+            width: 60px;
+            height: 60px;
+            border: 3px solid transparent;
+            border-top-color: #af00ff;
+            border-bottom-color: #af00ff;
+            border-radius: 10px;
+            animation: hexSpin 2s linear infinite;
+        }
+        
+        .kd-hexagon:nth-child(2) {
+            width: 45px;
+            height: 45px;
+            border-top-color: #d966ff;
+            border-bottom-color: #d966ff;
+            animation-duration: 1.5s;
+            animation-direction: reverse;
+        }
+        
+        .kd-hexagon-core {
+            width: 20px;
+            height: 20px;
+            background: #af00ff;
+            border-radius: 50%;
+            box-shadow: 0 0 20px #af00ff;
+            animation: pulse 1.5s ease-in-out infinite;
+        }
+        
+        .kd-loading-text {
+            color: #af00ff;
+            font-size: 18px;
+            margin-top: 20px;
+            font-weight: 500;
+            letter-spacing: 2px;
+            animation: fadeInOut 2s ease-in-out infinite;
+        }
+        
+        .kd-progress-container {
+            width: 400px;
+            margin: 30px auto 20px;
+            position: relative;
+        }
+        
+        .kd-progress-bar {
+            width: 100%;
+            height: 6px;
+            background: rgba(175, 0, 255, 0.1);
+            border-radius: 10px;
+            overflow: hidden;
+            position: relative;
+            box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.5);
+        }
+        
+        .kd-progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #8b00cc, #af00ff, #d966ff, #af00ff);
+            background-size: 200% 100%;
+            width: 0%;
+            transition: width 0.5s cubic-bezier(0.22, 1, 0.36, 1);
+            box-shadow: 0 0 20px #af00ff;
+            animation: shimmer 2s linear infinite;
+            position: relative;
+        }
+        
+        .kd-progress-fill::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+            animation: slide 1.5s infinite;
+        }
+        
+        .kd-progress-percent {
+            text-align: center;
+            color: rgba(255, 255, 255, 0.7);
+            font-size: 14px;
+            margin-top: 10px;
+            font-weight: 500;
+        }
+        
+        .kd-plugin-status {
+            color: rgba(255, 255, 255, 0.5);
+            font-size: 13px;
+            margin-top: 20px;
             min-height: 20px;
+            letter-spacing: 1px;
+        }
+        
+        .kd-version {
+            position: absolute;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            color: rgba(175, 0, 255, 0.5);
+            font-size: 12px;
+            letter-spacing: 2px;
         }
     `
 }));
@@ -85,35 +269,74 @@ const findAndClickBySelector = selector => { const element = document.querySelec
 function sendToast(text, duration=5000, gravity='bottom') { Toastify({ text: text, duration: duration, gravity: gravity, position: "center", stopOnFocus: true, style: { background: "#000000" } }).showToast(); };
 
 async function showSplashScreen() { 
-    splashScreen.style.cssText = "position:fixed;top:0;left:0;width:100%;height:100%;background-color:#000;display:flex;align-items:center;justify-content:center;z-index:9999;opacity:0;transition:opacity 1.5s ease;user-select:none;color:white;font-family:MuseoSans,sans-serif;font-size:43px;text-align:center;"; 
+    splashScreen.className = 'kd-splash-screen';
+    
+    // Criar partículas
+    const particlesContainer = document.createElement('div');
+    particlesContainer.className = 'kd-particles';
+    for (let i = 0; i < 30; i++) {
+        const particle = document.createElement('div');
+        particle.className = 'kd-particle';
+        particle.style.width = Math.random() * 5 + 2 + 'px';
+        particle.style.height = particle.style.width;
+        particle.style.left = Math.random() * 100 + '%';
+        particle.style.top = Math.random() * 100 + '%';
+        particle.style.animationDelay = Math.random() * 15 + 's';
+        particle.style.animationDuration = Math.random() * 10 + 10 + 's';
+        particlesContainer.appendChild(particle);
+    }
 
     splashScreen.innerHTML = `
-        <div class="splash-content">
-            <div>
-                <span style="color:white;">KHAN</span><span style="color:#af00ff;">DARK</span>
+        <div class="kd-splash-content">
+            <div class="kd-logo-container">
+                <div class="kd-logo-text">
+                    <span class="kd-logo-khan">KHAN</span><span class="kd-logo-dark">DARK</span>
+                </div>
             </div>
-            <div class="loader-ring"></div>
-            <div class="loading-text">Carregando módulos...</div>
-            <div class="progress-bar">
-                <div class="progress-fill" id="progressFill"></div>
-            </div>
-            <div class="plugin-status" id="pluginStatus">Inicializando...</div>
-        </div>
-    `; 
 
+            <div class="kd-divider"></div>
+
+            <div class="kd-loader-container">
+                <div class="kd-hexagon-loader">
+                    <div class="kd-hexagon"></div>
+                    <div class="kd-hexagon"></div>
+                    <div class="kd-hexagon-core"></div>
+                </div>
+            </div>
+
+            <div class="kd-loading-text" id="loadingText">INICIALIZANDO</div>
+
+            <div class="kd-progress-container">
+                <div class="kd-progress-bar">
+                    <div class="kd-progress-fill" id="progressFill"></div>
+                </div>
+                <div class="kd-progress-percent" id="progressPercent">0%</div>
+            </div>
+
+            <div class="kd-plugin-status" id="pluginStatus">Preparando módulos...</div>
+        </div>
+
+        <div class="kd-version">v2.0 • SNTS7KXX</div>
+    `; 
+    
+    splashScreen.insertBefore(particlesContainer, splashScreen.firstChild);
     document.body.appendChild(splashScreen); 
     setTimeout(() => splashScreen.style.opacity = '1', 10);
 }
 
 function updateLoadingProgress(percent, status) {
     const progressFill = document.getElementById('progressFill');
+    const progressPercent = document.getElementById('progressPercent');
     const pluginStatus = document.getElementById('pluginStatus');
 
     if (progressFill) progressFill.style.width = `${percent}%`;
+    if (progressPercent) progressPercent.textContent = `${Math.floor(percent)}%`;
     if (pluginStatus) pluginStatus.textContent = status;
 }
 
 async function hideSplashScreen() { 
+    document.getElementById('loadingText').textContent = 'CONCLUÍDO';
+    await delay(500);
     splashScreen.style.opacity = '0'; 
     setTimeout(() => splashScreen.remove(), 1000); 
 }
@@ -384,11 +607,8 @@ loadScript('https://cdn.jsdelivr.net/npm/darkreader@4.9.92/darkreader.min.js', '
 .then(async () => {    
     updateLoadingProgress(100, 'Finalizado!');
 
-    // Garantir que a splash screen fique visível por pelo menos 3 segundos
-    // MUDE O VALOR 3000 ABAIXO PARA REGULAR O TEMPO (em milissegundos)
-    // 1000 = 1 segundo | 2000 = 2 segundos | 3000 = 3 segundos | 5000 = 5 segundos
     const elapsedTime = Date.now() - startTime;
-    const remainingTime = Math.max(0, 3000 - elapsedTime); // ← MUDE AQUI
+    const remainingTime = Math.max(0, 3000 - elapsedTime);
     await delay(remainingTime);
 
     sendToast("💜 | KhanDark iniciou!");
