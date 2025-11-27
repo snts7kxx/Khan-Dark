@@ -18,8 +18,6 @@
 
 📝 Modificado por **Matheus Henrique**
 
-💼 Supervisor: **Gabriel Souza**
-
 🔰 Organizador: **Gabriel Seles**
 
 # ❄️ Compatibilidade
