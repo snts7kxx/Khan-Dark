@@ -530,7 +530,7 @@ function setupMain(){
                         body = JSON.stringify(bodyObj);
                         if (input instanceof Request) { input = new Request(input, { body: body }); } 
                         else init.body = body; 
-                        sendToast("🔄 | Vídeo concluído!", 1250)
+                        sendToast("🔄 | Vídeo concluído!", 1000)
                     }
                 } catch (e) { console.error(`🚨 Error @ videoSpoof.js\n${e}`); }
             }
@@ -576,7 +576,7 @@ function setupMain(){
                         sendToast("🎉 | Questão concluída!", 1500);
                     }
                 }
-                await delay(2200);
+                await delay(1900);
             }
         })();
     })();
@@ -612,7 +612,6 @@ loadScript('https://cdn.jsdelivr.net/npm/darkreader@4.9.92/darkreader.min.js', '
     await delay(remainingTime);
 
     sendToast("💜 | KhanDark iniciou!");
-    sendToast("Entre no nosso Discord!");
 
     await delay(2000);
 
