@@ -614,6 +614,8 @@ loadScript('https://cdn.jsdelivr.net/npm/darkreader@4.9.92/darkreader.min.js', '
     sendToast("💜 | KhanDark iniciou!");
     sendToast("Entre em nosso Discord!");
 
+    await delay(2000);
+
     hideSplashScreen();
     setupMain();
 
