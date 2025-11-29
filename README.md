@@ -14,12 +14,6 @@
 
 > 🌌 Interface e tema escuro inspirados no modo "Dark"
 
-# ☃️ Desenvolvedores
-
-📝 Modificado por **Matheus Henrique**
-
-🔰 Organizador: **Gabriel Seles**
-
 # ❄️ Compatibilidade
 
 ✅️ Google Chrome
