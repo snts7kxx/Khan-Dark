@@ -30,15 +30,11 @@
 
 # 🎅 Change Log
 
-- v1.02(Recente)
-
-🔌 Tela de Carregamento.
-
-💜 Clique automático. 
-
-🪛 JavaScript novo. 
-
-🦺 Mais otimizado e sem erros.
+> Versão: 1.3( Recente ).
+Novidades:
+● Tela de Carregamento Robusta e diferenciada.
+● Tempo de AutoAnswer otimizado e sem erros.
+● Script um pouco diferenciado.
 
 # ☃️ Copyright
 
