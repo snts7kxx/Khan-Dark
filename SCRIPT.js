@@ -34,7 +34,7 @@ document.head.appendChild(Object.assign(document.createElement('style'), {
         
         @keyframes pulse {
             0%, 100% { transform: scale(1); opacity: 1; }
-            50% { transform: scale(1.2); opacity: 0.6; }
+            50% { transform: scale(1.2); opacity: 0.7; }
         }
         
         @keyframes fadeInOut {
@@ -270,7 +270,7 @@ function sendToast(text, duration=5000, gravity='bottom') { Toastify({ text: tex
 
 async function showSplashScreen() { 
     splashScreen.className = 'kd-splash-screen';
-
+    
     // Criar partículas
     const particlesContainer = document.createElement('div');
     particlesContainer.className = 'kd-particles';
@@ -316,9 +316,9 @@ async function showSplashScreen() {
             <div class="kd-plugin-status" id="pluginStatus">Preparando módulos...</div>
         </div>
 
-        <div class="kd-version">v1.3 • SNTS7KXX</div>
+        <div class="kd-version">v2.0 • SNTS7KXX</div>
     `; 
-
+    
     splashScreen.insertBefore(particlesContainer, splashScreen.firstChild);
     document.body.appendChild(splashScreen); 
     setTimeout(() => splashScreen.style.opacity = '1', 10);
@@ -336,7 +336,7 @@ function updateLoadingProgress(percent, status) {
 
 async function hideSplashScreen() { 
     document.getElementById('loadingText').textContent = 'CONCLUÍDO';
-    await delay(1000);
+    await delay(500);
     splashScreen.style.opacity = '0'; 
     setTimeout(() => splashScreen.remove(), 1000); 
 }
@@ -503,7 +503,7 @@ function setupMain(){
                         body = JSON.stringify(bodyObj);
                         if (input instanceof Request) input = new Request(input, { body });
                         else init.body = body;
-                        sendToast(`✏️ | ${answers.length} respostas marcadas!`, 1500);
+                        sendToast(`✏️ | ${answers.length} respostas marcadas!`, 2000);
                     }
                 } catch (e) { console.error(`🚨 Error @ questionSpoof.js\n${e}`); }
             }
@@ -530,7 +530,7 @@ function setupMain(){
                         body = JSON.stringify(bodyObj);
                         if (input instanceof Request) { input = new Request(input, { body: body }); } 
                         else init.body = body; 
-                        sendToast("🔄 | Vídeo concluído!", 1000)
+                        sendToast("🔄 | Vídeo concluído!", 1250)
                     }
                 } catch (e) { console.error(`🚨 Error @ videoSpoof.js\n${e}`); }
             }
@@ -576,7 +576,7 @@ function setupMain(){
                         sendToast("🎉 | Questão concluída!", 1500);
                     }
                 }
-                await delay(1900);
+                await delay(2200);
             }
         })();
     })();
@@ -608,11 +608,11 @@ loadScript('https://cdn.jsdelivr.net/npm/darkreader@4.9.92/darkreader.min.js', '
     updateLoadingProgress(100, 'Finalizado!');
 
     const elapsedTime = Date.now() - startTime;
-    const remainingTime = Math.max(0, 3000 - elapsedTime); <--- TEMPO DA TELA DE CARREGAMENTO.
+    const remainingTime = Math.max(0, 3000 - elapsedTime);
     await delay(remainingTime);
 
     sendToast("💜 | KhanDark iniciou!");
-    sendToast("Entre em nosso Discord!");
+    sendToast("Entre no nosso Discord!");
 
     await delay(2000);
 
