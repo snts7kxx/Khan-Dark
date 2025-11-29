@@ -35,7 +35,9 @@
 Novidades:
 
 ● Tela de Carregamento Robusta e diferenciada.
+
 ● Tempo de AutoAnswer otimizado e sem erros.
+
 ● Script um pouco diferenciado.
 
 # ☃️ Copyright
