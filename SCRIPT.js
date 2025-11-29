@@ -28,7 +28,7 @@ document.head.appendChild(Object.assign(document.createElement('style'), {
         .loader-ring {
             border: 4px solid rgba(175, 0, 255, 0.1);
             border-top: 4px solid #af00ff;
-            border-radius: 50%;
+            border-radius: 60%;
             width: 60px;
             height: 60px;
             animation: spin 1s linear infinite;
@@ -85,7 +85,7 @@ const findAndClickBySelector = selector => { const element = document.querySelec
 function sendToast(text, duration=5000, gravity='bottom') { Toastify({ text: text, duration: duration, gravity: gravity, position: "center", stopOnFocus: true, style: { background: "#000000" } }).showToast(); };
 
 async function showSplashScreen() { 
-    splashScreen.style.cssText = "position:fixed;top:0;left:0;width:100%;height:100%;background-color:#000;display:flex;align-items:center;justify-content:center;z-index:9999;opacity:0;transition:opacity 1.5s ease;user-select:none;color:white;font-family:MuseoSans,sans-serif;font-size:43px;text-align:center;"; 
+    splashScreen.style.cssText = "position:fixed;top:0;left:0;width:100%;height:100%;background-color:#000;display:flex;align-items:center;justify-content:center;z-index:9999;opacity:0;transition:opacity 1.0s ease;user-select:none;color:white;font-family:MuseoSans,sans-serif;font-size:43px;text-align:center;"; 
 
     splashScreen.innerHTML = `
         <div class="splash-content">
@@ -280,7 +280,7 @@ function setupMain(){
                         body = JSON.stringify(bodyObj);
                         if (input instanceof Request) input = new Request(input, { body });
                         else init.body = body;
-                        sendToast(`✏️ | ${answers.length} respostas marcadas!`, 2000);
+                        sendToast(`✏️ | ${answers.length} respostas marcadas!`, 1500);
                     }
                 } catch (e) { console.error(`🚨 Error @ questionSpoof.js\n${e}`); }
             }
@@ -307,7 +307,7 @@ function setupMain(){
                         body = JSON.stringify(bodyObj);
                         if (input instanceof Request) { input = new Request(input, { body: body }); } 
                         else init.body = body; 
-                        sendToast("🔄 | Vídeo concluído!", 1250)
+                        sendToast("🔄 | Vídeo concluído!", 1000)
                     }
                 } catch (e) { console.error(`🚨 Error @ videoSpoof.js\n${e}`); }
             }
@@ -353,7 +353,7 @@ function setupMain(){
                         sendToast("🎉 | Questão concluída!", 1500);
                     }
                 }
-                await delay(2200);
+                await delay(2000);
             }
         })();
     })();
