@@ -30,7 +30,7 @@
 
 # 🎅 Change Log
 
-> Versão: 1.3( Recente ).
+- Versão: 1.3( Recente ).
 
 Novidades:
 
