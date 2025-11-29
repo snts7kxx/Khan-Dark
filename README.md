@@ -30,15 +30,15 @@
 
 # 🎅 Change Log
 
-- Versão: 1.3( Recente ).
+Versão: 1.3( Recente ).
 
 Novidades:
 
-● Tela de Carregamento Robusta e diferenciada.
+- Tela de Carregamento Robusta e diferenciada.
 
-● Tempo de AutoAnswer otimizado e sem erros.
+- Tempo de AutoAnswer otimizado e sem erros.
 
-● Script um pouco diferenciado.
+- Script um pouco diferenciado.
 
 # ☃️ Copyright
 
