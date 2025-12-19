@@ -30,7 +30,7 @@
 
 # 🎅 Change Log
 
-Versão: 1.4(Recente).
+Versão: 1.4(Recente)(Não Disponível ainda).
 
 -🎨 Variedades de Cores.
 
