@@ -411,7 +411,7 @@ loadScript('https://cdn.jsdelivr.net/npm/darkreader@4.9.92/darkreader.min.js', '
     flushToasts(); // ✅ agora despacha toasts que ficaram na fila
     const elapsed = Date.now() - startTime;
     await delay(Math.max(0, 3000 - elapsed));
-    sendToast("💜 | KhanDark iniciou!");
+    sendToast("Teste");
     await delay(2000);
     hideSplashScreen();
     setupAutoClick();
